@@ -2,7 +2,7 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| | |
+| Sylvai Lugeon| |270902
 | | |
 | | |
 
