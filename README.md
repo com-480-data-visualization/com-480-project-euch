@@ -12,6 +12,8 @@
 
 **10% of the final grade**
 
+Report of milestone 1 is in [milestone1_euch.pdf](milestone1_euch.pdf) and the python notebook containing the exploratory data analysis can be found in [EDA.ipynb](Exploratory_data_analysis/EDA.ipynb). 
+
 
 ## Milestone 2 (Friday 1st May, 5pm)
 
