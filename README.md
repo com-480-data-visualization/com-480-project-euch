@@ -19,7 +19,7 @@ Report of milestone 1 is in [milestone1_euch.pdf](https://github.com/com-480-dat
 
 **10% of the final grade**
 
-Report of milestone 2 is in [milestone2_euch.pdf](https://github.com/com-480-data-visualization/com-480-project-euch/blob/master/Milestones/milestone2_euch.pdf) and the protoype of the homepage of the website is [index.html](https://github.com/com-480-data-visualization/com-480-project-euch/blob/master/Code/Website/index.html).
+Report of milestone 2 is in [milestone2_euch.pdf](https://github.com/com-480-data-visualization/com-480-project-euch/blob/master/Milestones/milestone2_euch.pdf) and the prototype of the homepage of the website is [index.html](https://github.com/com-480-data-visualization/com-480-project-euch/blob/master/Code/Website/index.html).
 
 
 
