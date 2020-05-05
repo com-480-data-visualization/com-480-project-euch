@@ -31,30 +31,43 @@
 	</header>
 
 	<main>
-		<div id = buttons>
-			<select id="sport_selector"></select>
-			<select id="event_selector"></select> 
-			<button id="btn">Show data</button>
+
+		<div id="physique">
+			<div id = buttons style="text-align:left">
+				<select id="sport_selector"></select>
+				<select id="event_selector"></select>
+				<button id="btn">Show data</button>
+			</div>
+			<div id="visualization1">
+				<svg id="display" x=-10 y=0 width=100% height=50%>
+					<text id='sport_disp' x='10' y='20'></text>
+					<text id='event_disp' x='10' y='40'></text>
+					<text id='years_disp' x='10' y='60'></text>
+					<text id='samples_disp' x='10' y='80'></text>
+					<text id='age_disp' x='10' y='100'></text>
+					<text id='height_disp' x='10' y='120'></text>
+					<text id='weight_disp' x='10' y='140'></text>
+				</svg>
+			</div>
+			<div id="chart1div">
+			</div>
+
+
 		</div>
-		<div id="visualization1">
-			<svg id="display" width=300 height=300>
-				<text id='sport_disp' x='10' y='20'></text>
-				<text id='event_disp' x='10' y='40'></text>
-				<text id='years_disp' x='10' y='60'></text>
-				<text id='samples_disp' x='10' y='80'></text>
-				<text id='age_disp' x='10' y='100'></text>
-				<text id='height_disp' x='10' y='120'></text>
-				<text id='weight_disp' x='10' y='140'></text>
+		<div id="multiples">
+			<svg id="multiplessvg">
 			</svg>
 		</div>
 	</main>
 
-	<hr>
-	<footer>
-  		<span>CS-480 Data Visualization EPFL, group: euch</span>
-	</footer>
-
+</body>
 <script src="../lib/d3.min.js"></script>
 <script src="../script_viz1.js"></script>
-</body>
+<footer>
+	<hr>
+	<span>CS-480 Data Visualization EPFL, group: euch</span>
+</footer>
+
 </html>
+
+

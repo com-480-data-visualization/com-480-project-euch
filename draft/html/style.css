@@ -1,12 +1,12 @@
 
 #banner {
-	height: 40%;
-	width: 40%;
-	text-align: middle;
+	height: 25%;
+	width: 25%;
+	text-align: center;
 }
 
 body {
-	background-color: #fffff0;
+	background-color: #ffffc0;
 }
 
 footer {
@@ -72,9 +72,41 @@ nav.borderXwidth a:hover:before, nav.borderXwidth a:hover:after
 #description {
     padding: 2em 5em;
 }
+#physique{
+    margin :0 12% 0 12%;
+    height: 400px;
+}
 
-#visualization1 img {
-	width: 100%;
+#multiples {
+    margin :2% 12% 0 12%;
+    height: 400px;
+}
+
+#buttons  {
+    padding: 2mm 0mm;
+}
+
+#visualization1 {
+
+    width: 40%;
+    height: 70%;
+    background-color: blanchedalmond; /*testing*/
+    float:left;
+    padding:0;
+
+}
+
+#chart1div {
+    width: 50%;
+    height: 100%;
+    float:right;
+    padding:0;
+}
+
+#multiplessvg {
+    width : 100%;
+    height : 100%;
+    background-color: red;
 }
 
 
@@ -83,6 +115,10 @@ nav.borderXwidth a:hover:before, nav.borderXwidth a:hover:after
 	border-color: black;
 	border-style: solid;
 	height: 800px;
+}
+
+footer {
+
 }
 
  table{

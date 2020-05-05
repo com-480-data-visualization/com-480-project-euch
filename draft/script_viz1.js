@@ -51,12 +51,34 @@ function createResultArray(resArray) {
 	});
 }
 
+
+// set the dimensions and margins of the graph
+var margin = {top: 30, right: 30, bottom: 50, left: 90},
+	width = 700 - margin.right - margin.left;
+	height = 360 - margin.top - margin.bottom;
+
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart1div")
+	.append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.append("g")
+	.attr("transform",
+		"translate(" + margin.left + "," + margin.top + ")")
+
+
+
 // create an average athlete that represents all athletes from a given sport, event and time window
 function averageAthlete(start_year, end_year, sport, event, resArray){
 
+	//reset chart
+	svg.selectAll("g").remove();
+	svg.selectAll("text").remove();
+
 	data_f = resArray.filter(function(d){
-		sameEvent = event == 'All' ? true : d.event == event;
-		sameSport = d.sport == sport;
+		sameEvent = event === 'All' ? true : d.event === event;
+		sameSport = d.sport === sport;
 		btwYear = d.year >= start_year && d.year <= end_year;
 		return sameEvent && sameSport && btwYear;
 	});
@@ -65,6 +87,61 @@ function averageAthlete(start_year, end_year, sport, event, resArray){
 	const mean_weight = d3.mean(data_f, function(d) { return d.weight; });
 	const mean_height = d3.mean(data_f, function(d) { return d.height; });
 	const nb_samples = data_f.length;
+
+
+	// Add X axis --> it is a date format
+	var x = d3.scaleTime()
+		.domain(d3.extent(data_f, function(d) { return d.year; }))
+		.range([ 0, width ]);
+	svg.append("g")
+		.attr("transform", "translate(0," + (height+5)  + ")")
+		.call(d3.axisBottom(x).tickSize(-height * 1.1))
+		.select(".domain").remove()
+
+
+	// Add Y axis
+	var y = d3.scaleLinear()
+		.domain([d3.min(data_f, function(d) {return d.height}),d3.max(data_f, function (d){return d.height})])
+		.range([ height, 0 ]);
+	svg.append("g")
+		.attr("transform", "translate(-15,0)")
+		.call(d3.axisLeft(y).tickSize(-width * 1.1))
+		.select(".domain").remove()
+
+	// Add X axis label:
+	svg.append("text")
+		.attr("text-anchor", "end")
+		.attr("x", width/2 + margin.left  )
+		.attr("y", height + margin.bottom)
+		.text("Year of event");
+
+	// Y axis label:
+	svg.append("text")
+		.attr("text-anchor", "end")
+		.attr("transform", "rotate(-90)")
+		.attr("y", -margin.left + 20)
+		.attr("x", -margin.top - height/2 +60)
+		.text("Average Height")
+
+	//compute avg per year
+	let groupByYear = d3.nest()
+		.key(function(d){return d.year; }) //NB: use "d.year", not "year"
+		.rollup(function(v) { return d3.mean(v, function(d) { return d.height; }); })
+		.entries(data_f);
+
+	// Customization
+	svg.selectAll(".tick line").attr("stroke", "#C0C0C0")
+
+	// Add dots
+	svg.append('g')
+		.selectAll("dot")
+		.data(groupByYear)
+		.enter()
+		.append("circle")
+		.attr("cx", function (d) { return x(d.key); } )
+		.attr("cy", function (d) { return y(d.value); } )
+		.attr("r", 4.5)
+		.style("fill", "#8B0000")
 
 	return new Athlete(start_year, end_year, nb_samples, mean_age, mean_height, mean_weight, sport, event);
 }
@@ -106,7 +183,7 @@ function updateEventOptions(eventSel, selectedSport){
 
 whenDocumentLoaded(() => {
 
-	// create the results array	
+	// create the results array
 	resArray = [];
 	createResultArray(resArray);
 
@@ -124,7 +201,7 @@ whenDocumentLoaded(() => {
 		const selectedSport = sportSel.value
 		updateEventOptions(eventSelD3, selectedSport);
 	});
-	
+
 
 	// add svg text that describes the mean athletes in the selected sport and event
 	button = document.getElementById('btn');
@@ -157,3 +234,5 @@ whenDocumentLoaded(() => {
 		.text("Mean weight : " + ath.weight);
 	});
 });
+
+
