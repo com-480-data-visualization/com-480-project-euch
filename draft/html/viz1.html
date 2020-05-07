@@ -9,6 +9,7 @@
 	<meta name="author" content="euch">
 
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="viz1_style.css">
 
 </head>
 
@@ -31,22 +32,82 @@
 	</header>
 
 	<main>
-		<div id = buttons>
-			<select id="sport_selector"></select>
-			<select id="event_selector"></select> 
-			<button id="btn">Show data</button>
-		</div>
 		<div id="visualization1">
-			<svg id="display" width=300 height=300>
-				<text id='sport_disp' x='10' y='20'></text>
-				<text id='event_disp' x='10' y='40'></text>
-				<text id='years_disp' x='10' y='60'></text>
-				<text id='samples_disp' x='10' y='80'></text>
-				<text id='age_disp' x='10' y='100'></text>
-				<text id='height_disp' x='10' y='120'></text>
-				<text id='weight_disp' x='10' y='140'></text>
-			</svg>
-		</div>
+			<!-- div that contains element that selects and display -->
+			<div id ="selection" >
+				<!-- div that contains elements to select a sport/discipline-->
+				<div id ="buttons">
+					<select id="sport_selector"></select>
+					<select id="event_selector"></select> 
+					<button id="btn">Show data</button>
+				</div>
+
+				<!-- div that contains chart about the selection -->
+				<div id="chart_selection">
+					chart
+				</div>
+
+				<!-- div that contains some data about the selection-->
+				<div id="data_selection">
+					<svg id="display" width=300 height=400>
+						<text id='sport_disp' x='10' y='20'></text>
+						<text id='event_disp' x='10' y='40'></text>
+						<text id='years_disp' x='10' y='60'></text>
+						<text id='samples_disp' x='10' y='80'></text>
+						<text id='age_disp' x='10' y='100'></text>
+						<text id='height_disp' x='10' y='120'></text>
+						<text id='weight_disp' x='10' y='140'></text>
+					</svg>
+				</div>
+
+			</div>
+
+			<!-- div that contains the small multiple element 1 to 8 in the following way-->
+			<!-- elem_1, elem_2, elem_3, elem_4 -->
+			<!-- elem_5, elem_6, elem_7, elem_8 -->
+			<div id=small_multiple>
+				<!-- div buttons to filter the small multiple-->			
+				<div id="filter">
+					filter
+				</div>
+
+				<!-- div for elem_1 of the Small Multiple-->
+				<div id="elem_1", class="elements_SM">
+					element 1
+				</div>
+				<!-- div for elem_2 of the Small Multiple-->
+				<div id="elem_2", class="elements_SM">
+					element 2
+				</div>
+				<!-- div for elem_3 of the Small Multiple-->
+				<div id="elem_3", class="elements_SM">
+					element 3
+				</div>				
+				<!-- div for elem_4 of the Small Multiple-->
+				<div id="elem_4", class="elements_SM">
+					element 4
+				</div>
+				<!-- div for elem_5 of the Small Multiple-->
+				<div id="elem_5", class="elements_SM">
+					element 5
+				</div>					
+				<!-- div for elem_6 of the Small Multiple-->
+				<div id="elem_6", class="elements_SM">
+					element 6
+				</div>					
+				<!-- div for elem_7 of the Small Multiple-->
+				<div id="elem_7", class="elements_SM">
+					element 7
+				</div>
+				<!-- div for elem_8 of the Small Multiple-->
+				<div id="elem_8", class="elements_SM">
+					element 8
+				</div>
+
+
+			</div>
+
+
 	</main>
 
 	<hr>

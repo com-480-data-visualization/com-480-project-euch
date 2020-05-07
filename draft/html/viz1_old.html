@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Olympic Visualization</title>
+	<meta name="description" content="Data-Viz">
+	<meta name="author" content="euch">
+
+	<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+	<!--Header containing banner and navigation-->
+	<header>
+		<!-- Banner-->
+		<p style="text-align:center;">
+			<img src="olympic_rings.jpg" alt="olympic rings" id="banner"/>
+		</p>
+
+		<!-- Menu -->
+		<nav class="container borderXwidth">
+			<a href="index.html">HOME</a>
+			<a href="viz1.html">VISUALIZATION 1</a>
+			<a href="viz2.html">VISUALIZATION 2</a>
+			<a href="about.html">ABOUT</a>
+		</nav>
+	</header>
+
+	<main>
+		<div id = buttons>
+			<select id="sport_selector"></select>
+			<select id="event_selector"></select> 
+			<button id="btn">Show data</button>
+		</div>
+		<div id="visualization1">
+			<svg id="display" width=300 height=300>
+				<text id='sport_disp' x='10' y='20'></text>
+				<text id='event_disp' x='10' y='40'></text>
+				<text id='years_disp' x='10' y='60'></text>
+				<text id='samples_disp' x='10' y='80'></text>
+				<text id='age_disp' x='10' y='100'></text>
+				<text id='height_disp' x='10' y='120'></text>
+				<text id='weight_disp' x='10' y='140'></text>
+			</svg>
+		</div>
+		<div>
+			<svg id='athlete'width="300" height="300"></svg>
+		</div>
+	</main>
+
+	<hr>
+	<footer>
+  		<span>CS-480 Data Visualization EPFL, group: euch</span>
+	</footer>
+
+<script src="../lib/d3.min.js"></script>
+<script src="../script_viz1.js"></script>
+</body>
+</html>
