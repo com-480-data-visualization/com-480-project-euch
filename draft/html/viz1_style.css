@@ -16,6 +16,12 @@ div {
 	background-color:green;
 }
 
+#display {
+	height: 100%;
+	width: 100%;
+	background-color:white;
+}
+
 #selection #buttons {
 	float:left;
 	display: inline-block;
@@ -32,9 +38,9 @@ div {
 	display: inline-block;
 	background-color: DarkGreen;
 	margin-left: 1%;
-	padding: 1%;
-	height: 76%;
-	width: 23%;
+	padding: 0%;
+	height: 70%;
+	width: 25%;
 }
 
 #selection #chart_selection {
