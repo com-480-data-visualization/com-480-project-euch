@@ -1,13 +1,17 @@
+/** Either draw the full description of an athlete in the center of the SVG, or update the one that already exists in the container.
+ * @param  {} athlete
+ * @param  {} svgContainer
+ * @param  {} xOffset relative x postition
+ * @param  {} yOffset relative y position 
+ */
 function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
-	svgContainer.selectAll('#ageAxisGroup').remove();
-	svgContainer.selectAll('#labelsGroup').remove();
 
-	svgHeight = parseInt(svgContainer.style("height"));
-	svgWidth = parseInt(svgContainer.style("width"));
+	svgHeight = parseInt(svg.style("height"));
+	svgWidth = parseInt(svg.style("width"));
 
 	// create gradient for age axis
 	if(svgContainer.select('defs').empty()){
-		var svgDefs = svgContainer.append('defs');
+		var svgDefs = svg.append('defs');
 		var gradient = svgDefs.append('linearGradient')
 			.attr('id', 'gradient');
 	
@@ -19,65 +23,85 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 				.attr("offset", "100%")
 				.attr("stop-color", darkGreen);
 	}
-	
-	// create groups for differents axis
-	//const weightAxisGroup = svgContainer.append("g").attr('id', 'weightAxisGroup');
-	const ageAxisGroup = svgContainer.append("g").attr('id', 'ageAxisGroup');
-	const labelsGroup = svgContainer.append("g").attr('id', 'labelsGroup');
 
+	// constants for the animation duration
 	const slowAnim = 1500; const midAnim = 900; const fastAnim = 600;
 
-
-	// limits of the drawing of the athlete
+	// controls the space of the drawing in the SVG
 	const xFactor = 0.28;
 	const xLeft = xFactor * svgWidth;
 	const xRight = (1 - xFactor) * svgWidth;
 	const axisBottom = 0.8 * svgHeight;
 	const axisTop = 0.3 * svgHeight;
 
-	// ****************************** height axis ******************************
+	// ******************************************* HEIGHT *******************************************
 
 	const heightAxisScale = d3.scaleLinear()
 		.domain([0, maxHeight])	
 		.range([axisBottom, axisTop]);
 	
-	let axisGenerator = d3.axisLeft(heightAxisScale);
+	// height axis
+	const axisGenerator = d3.axisLeft(heightAxisScale);
 	axisGenerator.ticks(4);
 	axisGenerator.tickValues([50,100,150,200]);
-		
+
+	// height line at the top of the athlete
 	const athleteHeightLine = [
-		{'class' : 'athleteHeightLine', "x1":  xLeft, "y1":  heightAxisScale(athlete.height), "x2": xRight, "y2": heightAxisScale(athlete.height)} // athlete height line
+		{'class' : 'athleteHeightLine',
+		 "x1":  xLeft, "y1":  heightAxisScale(athlete.height), 
+		 "x2": xRight, "y2": heightAxisScale(athlete.height)}
 	];
 
+	// label on top of the height line
 	const heightLabel = [
 		{'y': heightAxisScale(athlete.height) - 3, 'content': athlete.height.toFixed(1) + 'cm'}
 	];
 
 	let prevHeight = -1;
 
+	// if no description yet, append the height axis
 	if (svgContainer.select("#heightGroup").empty()) {
 
 		svgContainer.append("g")
 			.attr('id', 'heightGroup')
 			.append("g")
-		.attr("transform", d3Transform().translate([xLeft, 0])) 
-		.call(axisGenerator);	
+			.attr("transform", d3Transform().translate([xLeft, 0])) 
+			.call(axisGenerator);	
 
 	} else {
 		prevHeight = svgContainer.select("#heightGroup").select(".label").text().slice(0, -2);
 	}
 
+	// control which of the athlete, the line or the label moves first
 	const up = prevHeight < athlete.height;
-	
 	const labelDuration= up ? fastAnim : slowAnim;
 	const lineDuration = midAnim;
 	const athleteDuration = up ? slowAnim : fastAnim;
 
 	const heightGroup = svgContainer.select("#heightGroup");
 
-	const u_heightLabel = heightGroup.selectAll(".label")
-		.data(heightLabel);
+	const u_athleteHeightLine = heightGroup.selectAll(".athleteHeightLine").data(athleteHeightLine);
 
+	// append the height line
+	u_athleteHeightLine.enter()
+		.append('line')
+		.attr('class',(d,i) => {return d.class;})
+		.attr('x1', (d,i) => {return d.x1})
+		.attr('y1', (d,i) => {return d.y1})
+		.attr('x2', (d,i) => {return d.x2})
+		.attr('y2', (d,i) => {return d.y2})
+		.style('stroke', 'black')
+		.style('stroke_width', 1);
+	
+	// animate the height line
+	u_athleteHeightLine.transition()
+		.duration(lineDuration)
+		.attr('y1', (d,i) => {return d.y1})
+		.attr('y2', (d,i) => {return d.y2});
+	
+	const u_heightLabel = heightGroup.selectAll(".label").data(heightLabel);
+
+	// append the height label
 	u_heightLabel.enter()	
 		.append('text')
 		.attr('class', 'label')
@@ -90,10 +114,10 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 		.attr("fill", "black")
 		.attr('font-weight', 'bold');
 
+	// animate the height label
 	u_heightLabel.transition()
 		.duration(labelDuration)
 		.attr('y', (d) => d.y)
-		// use of tweeing for the height label, can't interpolate automatically
 		.tween('text', function() {				
 			const self = this;
 			const currentValue = this.textContent.slice(0, -2);
@@ -103,58 +127,43 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 			};
 		});
 
-	const u_athleteHeightLine = heightGroup.selectAll(".athleteHeightLine")
-		.data(athleteHeightLine);
+	// draw the athlete
+	drawAthlete(athlete, svgContainer, axisBottom-axisTop, 0, axisBottom - svgHeight, athleteDuration);
 
-	u_athleteHeightLine.enter()
-		.append('line')
-		.attr('class',(d,i) => {return d.class;})
-		.attr('x1', (d,i) => {return d.x1})
-		.attr('y1', (d,i) => {return d.y1})
-		.attr('x2', (d,i) => {return d.x2})
-		.attr('y2', (d,i) => {return d.y2})
-		.style('stroke', 'black')
-		.style('stroke_width', 1);
-	
-	u_athleteHeightLine.transition()
-		.duration(lineDuration)
-		.attr('y1', (d,i) => {return d.y1})
-		.attr('y2', (d,i) => {return d.y2});
-	
-	athDraw = drawAthlete(athlete, svgContainer, axisBottom-axisTop, 0, axisBottom - svgHeight, athleteDuration);
+	// ******************************************* WEIGHT *******************************************
 
-	// ****************************** weight axis ******************************
-	const verticalPadding = 20;
-	const radius = 0.8 * (xRight - xLeft) / 2;
-	const arcCenterX = 0.5 * svgWidth;
-	const arcCenterY = axisTop - verticalPadding;
+	const weightPadding = 20; // padding between height groupe and weight group
+	const radius = 0.8 * (xRight - xLeft) / 2; // radius of the weight axis
+	const arcCenterX = 0.5 * svgWidth; 
+	const arcCenterY = axisTop - weightPadding;
 
 	const weightAxisScale = d3.scaleLinear()
 		.domain([0, maxWeight])
 		.range([0, Math.PI]);
 
+	// if no description yet, append the weight axis 
 	if (svgContainer.select("#weightGroup").empty()) {
 
-		const weightGroup = svgContainer.append("g")
-			.attr('id', 'weightGroup')
+		const weightGroup = svgContainer.append("g").attr('id', 'weightGroup')
 
-		var arcTranslation = d3Transform()
-			.translate([arcCenterX, arcCenterY])
+		var arcTranslation = d3Transform().translate([arcCenterX, arcCenterY])
 	 
+		// half circle with a stroke 
 		var arc = d3.arc()
 			.innerRadius(radius-0.1) // so that it looks like a stroke
 			.outerRadius(radius)
 			.startAngle(-Math.PI/2)
 			.endAngle(Math.PI/2)
  
-			weightGroup.append("path")
+		weightGroup.append("path")
 			.attr("d", arc)
 			.attr("fill", 'black')
 			.attr("fill-opacity", 0)
 			.attr("transform", arcTranslation)
 			.style('stroke', 'black')
 			.style('stroke-width', 1);
-	
+		
+		// ticks label, shifted manually so that it looks nice
 		const ticksArc = [
 			{"tick": 0, 'xshift':1, 'yshift':3},
 			{"tick": 50, 'xshift':1, 'yshift':8},
@@ -165,6 +174,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
  
 		const ticksArcLength = radius * 0.1;
 	
+		// append the ticks
 		weightGroup.selectAll("line")
 			.data(ticksArc)
 			.enter()
@@ -176,6 +186,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 			.style('stroke', 'black')
 			.style('stroke-width', 1);	
 	
+		// append the ticks label
 		weightGroup.selectAll("text")
 			.data(ticksArc)
 			.enter()
@@ -187,6 +198,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 			.attr("font-size", "10px")
 			.attr("fill", "black")
 
+		// append the middle circle
 		weightGroup.append('circle')
 			.attr('cx', arcCenterX)
 			.attr('cy', arcCenterY)
@@ -196,6 +208,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 
 	const weightGroup = svgContainer.select('#weightGroup');
 
+	// athlete weight line
 	const arrowLength = radius * 1;
 	const athleteWeightLine = [
 		{'class': 'athleteWeightLine',
@@ -205,9 +218,9 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 		'y2': arcCenterY - Math.sin(weightAxisScale(athlete.weight)) * arrowLength}
 	];
 
-	const u_athleteWeightLine = weightGroup.selectAll(".athleteWeightLine")
-		.data(athleteWeightLine);
+	const u_athleteWeightLine = weightGroup.selectAll(".athleteWeightLine").data(athleteWeightLine);
 
+	// append weight line
 	u_athleteWeightLine.enter()
 		.append('line')
 		.attr('class', (d) => {return d.class})
@@ -218,30 +231,24 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 		.style('stroke', 'black')
 		.style('stroke-width', 2);
 	
+	// animate weight line
 	u_athleteWeightLine.transition()
 		.duration(slowAnim)
 		.attr('x2', (d) => {return d.x2})
 		.attr('y2', (d) => {return d.y2})
 
-	// weight label, use a padding from the circle to place the text correctly
+	// distance between the weight circle and the center of the label text
 	const paddingFromCircle = 12
-
 	const weightLabelTranslation = d3Transform()
 		.translate([
-			arcCenterX 
-			- Math.cos(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle)
-			,
-			arcCenterY 
-			- Math.sin(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle)
-		]);
+			arcCenterX - Math.cos(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle),
+			arcCenterY - Math.sin(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle)]);
 
-	const weightLabel = [
-			{'class': 'label', 'content': athlete.weight.toFixed(1)}
-	];
+	const weightLabel = [{'class': 'label', 'content': athlete.weight.toFixed(1)}];
 
-	const u_weightLabel = weightGroup.selectAll(".label")
-		.data(weightLabel);
+	const u_weightLabel = weightGroup.selectAll(".label").data(weightLabel);
 
+	// append weight label
 	u_weightLabel.enter()
 		.append('text')
 		.attr('class', (d) => {return d.class})
@@ -254,6 +261,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 		.attr('font-weight', 'bold')
 		.attr('transform', weightLabelTranslation);
 
+	// animate weight label
 	u_weightLabel.transition()
 		.duration(slowAnim)
 		.attr('transform', weightLabelTranslation)
@@ -267,55 +275,95 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 		});
 
 
-	// ****************************** age axis ******************************
+	// ******************************************* AGE *******************************************
 	
 	const ageBarHeight = 15;
-
-	ageAxisGroup.append('rect')
-		.attr('x', xLeft)
-		.attr('y', axisBottom + verticalPadding)
-		.attr('width', xRight - xLeft)
-		.attr('height', ageBarHeight)
-		.style('fill', 'url(#gradient)');
+	const agePadding = 15
 
 	const ageAxisScale = d3.scaleLinear()
 		.domain([minAge, maxAge])
 		.range([xLeft, xRight]);
 
-	const labelsAgeAxis = [
-		{'value': minAge, 'aligned': 'end', 'xPadding': -3},
-		{'value': maxAge, 'aligned': 'start', 'xPadding': 3}
-	];
+	// if no description yet, append the age rectangle with gradient
+	if (svgContainer.select("#ageGroup").empty()) {
 
-	ageAxisGroup.selectAll('text')
-		.data(labelsAgeAxis)
-		.enter()
-		.append('text')
-		.attr('x', (d,i) => {return ageAxisScale(d.value) + d.xPadding})
-		.attr('y', axisBottom + verticalPadding + 0.7 * ageBarHeight)
-		.text((d,i) => {return d.value})
-		.attr('text-anchor', (d,i) => {return d.aligned})
-		.attr("font-family", "sans-serif")
-		.attr("font-size", "10px")
-		.attr("fill", "black")
+		const ageGroup = svgContainer.append("g").attr('id', 'ageGroup')
 
+		ageGroup.append('rect')
+			.attr('x', xLeft)
+			.attr('y', axisBottom + agePadding)
+			.attr('width', xRight - xLeft)
+			.attr('height', ageBarHeight)
+			.style('fill', 'url(#gradient)');
 
-	ageAxisGroup.append('line')
-		.attr('x1', ageAxisScale(athlete.age))
-		.attr('y1', axisBottom + verticalPadding)
-		.attr('x2', ageAxisScale(athlete.age))
-		.attr('y2', axisBottom + verticalPadding + ageBarHeight)
+		const ticksAgeAxis = [
+			{'value': minAge, 'aligned': 'end', 'xPadding': -3},
+			{'value': maxAge, 'aligned': 'start', 'xPadding': 3}
+		];
+
+		ageGroup.selectAll('text')
+			.data(ticksAgeAxis)
+			.enter()
+			.append('text')
+			.attr('x', (d,i) => {return ageAxisScale(d.value) + d.xPadding})
+			.attr('y', axisBottom + agePadding + 0.7 * ageBarHeight)
+			.text((d,i) => {return d.value})
+			.attr('text-anchor', (d,i) => {return d.aligned})
+			.attr("font-family", "sans-serif")
+			.attr("font-size", "10px")
+			.attr("fill", "black")
+	}
+
+	const ageGroup = svgContainer.select("#ageGroup");
+
+	const athleteAgeLine = [{'class': 'athleteAgeLine', 'x': ageAxisScale(athlete.age)}];
+
+	u_athleteAgeLine = ageGroup.selectAll('.athleteAgeLine').data(athleteAgeLine)
+
+	// append age line
+	u_athleteAgeLine.enter()
+		.append('line')
+		.attr('class', (d) => {return d.class;})
+		.attr('x1', (d) => {return d.x;})
+		.attr('y1', axisBottom + agePadding)
+		.attr('x2', (d) => {return d.x;})
+		.attr('y2', axisBottom + agePadding + ageBarHeight)
 		.attr('stroke', 'black')
 		.attr('stroke-width', 2);
+	
+	// animate age line
+	u_athleteAgeLine.transition()
+		.duration(slowAnim)
+		.attr('x2', (d) => {return d.x;})
+		.attr('x1', (d) => {return d.x;})
 
-	ageAxisGroup.append('text')
+	const ageLabel = [{'class': 'label', 'content': athlete.age.toFixed(1)}];
+
+	const u_ageLabel = ageGroup.selectAll(".label").data(ageLabel);
+
+	// append age label
+	u_ageLabel.enter()
+		.append('text')
+		.attr('class', (d) => {return d.class;})
 		.attr('x', ageAxisScale(athlete.age))
-		.attr('y', axisBottom + verticalPadding + ageBarHeight + 14)
-		.text(athlete.age.toFixed(1) + ' years')
+		.attr('y', axisBottom + agePadding + ageBarHeight + 14)
+		.text((d) => {return d.content + ' years'})
 		.attr("font-family", "sans-serif")
 		.attr('text-anchor', 'middle')
 		.attr("font-size", "11px")
 		.attr("fill", "black")
 		.attr('font-weight', 'bold');
 
+	// animate age label
+	u_ageLabel.transition()
+		.duration(slowAnim)
+		.attr('x', ageAxisScale(athlete.age))
+		.tween('text', function() {				
+			const self = this;
+			const currentValue = this.textContent.slice(0, -6);
+			const i = d3.interpolate(currentValue, athlete.age);
+			return function(t) {
+				self.textContent = i(t).toFixed(1) + ' years';
+			};
+		});
 }

@@ -1,5 +1,11 @@
-// draw given athlete at the bottom of the given svg. xOffset and yOffset control its relative position and
-// maxFigureHeight effects the scaling of the draws such that the draw with the maximum height is below this argument. 
+/** Either draw a new athlete at the bottom of an SVG container or update the one that already exists with animation.
+ * @param  {} athlete 
+ * @param  {} svgContainer
+ * @param  {} maxFigureHeight the maximum drawing height in the SVG
+ * @param  {} xOffset control the relative x position of the drawing
+ * @param  {} yOffset control the relative x position of the drawing
+ * @param  {} animDuration control the animation duration if there is already an athlete
+ */
 function drawAthlete(athlete, svgContainer, maxFigureHeight, xOffset, yOffset, animDuration){
 
 	const bmi = athlete.weight / Math.pow(athlete.height/100, 2);
@@ -58,7 +64,7 @@ function drawAthlete(athlete, svgContainer, maxFigureHeight, xOffset, yOffset, a
 			   yOffset + parseInt(svgContainer.style("height"))])
 		.scale(scalingToMaxHeight * heightScale(athlete.height));
 
-	// if no athelte drawing, create one and append the transform
+	// if no athlete drawing, create one and append the transform
 	if(svgContainer.select(".athlete_drawing").empty()) {
 		svgContainer.append('g').attr('class', 'athlete_drawing')
 			.attr('transform', athleteTransform);
@@ -78,7 +84,7 @@ function drawAthlete(athlete, svgContainer, maxFigureHeight, xOffset, yOffset, a
 		.attr('transform', (d,i) => { return "rotate(" + d.rotation + ")"})
 		.attr('fill', ageScale(athlete.age))
 	
-	// animate the ellispis
+	// animate the ellispis if they already exist
 	u_ellipsis.transition()
 		.duration(animDuration)
 		.attr("cx", (d,i) => { return d.cx; })
