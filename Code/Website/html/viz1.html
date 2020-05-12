@@ -1,0 +1,137 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Olympic Visualization</title>
+	<meta name="description" content="Data-Viz">
+	<meta name="author" content="euch">
+
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="viz1_style.css">
+
+</head>
+
+<body>
+
+	<!--Header containing banner and navigation-->
+	<header>
+		<!-- Banner-->
+		<p style="text-align:center;">
+			<img src="olympic_rings.jpg" alt="olympic rings" id="banner"/>
+		</p>
+
+		<!-- Menu -->
+		<nav class="container borderXwidth">
+			<a href="index.html">HOME</a>
+			<a href="viz1.html">VISUALIZATION 1</a>
+			<a href="viz2.html">VISUALIZATION 2</a>
+			<a href="about.html">ABOUT</a>
+		</nav>
+	</header>
+
+	<main>
+		<div id="visualization1">
+			<!-- div that contains element that selects and display -->
+			<div id ="selection" >
+				<!-- div that contains elements to select a sport/discipline-->
+				<div id ="buttons">
+					<select id="sport_selector"></select>
+					<select id="event_selector"></select> 
+					<button id="btn">Show data</button>
+				</div>
+
+				<!-- div that contains chart about the selection -->
+				<div id="chart_selection">
+					<div id="chart1">
+					</div>
+					<div id="chart2">
+					</div>
+					<div id="chart3">
+					</div>
+				</div>
+
+				<!-- div that contains some data about the selection-->
+				<div id="data_selection">
+					<svg id="display">
+
+					</svg>
+				</div>
+
+			</div>
+
+			<!-- div that contains the small multiple element 1 to 8 in the following way-->
+			<!-- elem_1, elem_2, elem_3, elem_4 -->
+			<!-- elem_5, elem_6, elem_7, elem_8 -->
+			<div id=small_multiple>
+				<!-- div buttons to filter the small multiple-->			
+				<div id="filter">
+					filter
+				</div>
+
+				<!-- div for elem_0 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_0">
+
+					</svg>
+				</div>
+				<!-- div for elem_1 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_1">
+
+					</svg>
+				</div>
+				<!-- div for elem_2 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_2">
+
+					</svg>
+				</div>				
+				<!-- div for elem_3 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_3">
+
+					</svg>
+				</div>
+				<!-- div for elem_4 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_4">
+
+					</svg>
+				</div>					
+				<!-- div for elem_5 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_5">
+
+					</svg>
+				</div>					
+				<!-- div for elem_ of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_6">
+
+					</svg>
+				</div>
+				<!-- div for elem_7 of the Small Multiple-->
+				<div class="elements_SM">
+					<svg id="elem_7">
+
+					</svg>
+				</div>
+
+
+			</div>
+
+
+	</main>
+
+	<hr>
+	<footer>
+  		<span>CS-480 Data Visualization EPFL, group: euch</span>
+	</footer>
+
+<script src="../lib/d3.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.min.js"></script>
+<script src="../script_viz1.js"></script>
+</body>
+</html>
