@@ -6,7 +6,7 @@
 }
 
 body {
-	background-color: white;
+	background-color: #eeeeee;;
 }
 
 footer {
@@ -78,13 +78,6 @@ nav.borderXwidth a:hover:before, nav.borderXwidth a:hover:after
 }
 
 
-#visualization2 {
-	border-width: 2px;
-	border-color: black;
-	border-style: solid;
-	height: 800px;
-}
-
  table{
    margin-left:auto;
    margin-right:auto;
@@ -97,4 +90,8 @@ table, th, td {
 
 th, td {
   padding: 15px;
+}
+
+header {
+    border-bottom: 0px solid black;
 }

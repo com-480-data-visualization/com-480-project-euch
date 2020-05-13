@@ -42,7 +42,7 @@ function createResultArray(resArray) {
 function addSportOptions(sportSel, sports){
 	sportSel.selectAll('option').remove();
 	sportSel.selectAll('option')
-		.data(sports.sort())
+		.data(['None'].concat(sports.sort()))
 		.enter()
 		.append('option')
 		.text(function(d) {
@@ -113,7 +113,7 @@ whenDocumentLoaded(() => {
 	
 
 	// add svg text that describes the mean athlete in the selected sport and event
-	button = document.getElementById('btn');
+	button = document.getElementById('select_btn');
 	button.addEventListener('click', () => {
 
 		const sport = sportSel.value;
