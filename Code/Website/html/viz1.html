@@ -37,9 +37,9 @@
 			<div id ="selection" >
 				<!-- div that contains elements to select a sport/discipline-->
 				<div id ="buttons">
-					<select id="sport_selector"></select>
-					<select id="event_selector"></select> 
-					<button id="btn">Show data</button>
+					<select class='selection_button' id="sport_selector"></select>
+					<select class='selection_button' id="event_selector"></select> 
+					<button class='selection_button' id="btn">Show data</button>
 				</div>
 
 				<!-- div that contains chart about the selection -->
@@ -67,7 +67,19 @@
 			<div id=small_multiple>
 				<!-- div buttons to filter the small multiple-->			
 				<div id="filter">
-					filter
+					<select id="sort_selector">
+						<option value="none">No sorting</option>
+						<option value="weight">Sort by weight</option>
+						<option value="height">Sort by height</option>
+						<option value="age">Sort by age</option>
+					</select>
+
+					<select id="asc_selector">
+						<option value="ascending">Ascending</option>
+						<option value="descending">Descending</option>
+					</select>
+
+					<button id="remove_all">Remove all</button>
 				</div>
 
 				<!-- div for elem_0 of the Small Multiple-->

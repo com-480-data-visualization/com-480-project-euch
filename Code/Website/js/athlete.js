@@ -17,8 +17,8 @@ var margin = {top: 15, right: 30, bottom: 50, left: 90},
 	width = 700 - margin.right - margin.left;
 	height = 360 - margin.top - margin.bottom;
 
-var chartHeight = 100;
-var chartWidth = 600;
+var chartHeight = 50;
+var chartWidth = 400;
 
 // append the svg object to the body of the page
 var svgChart1 = d3.select("#chart1")
@@ -36,6 +36,7 @@ var svgChart2 = d3.select("#chart2")
 	.append("g")
 	.attr("transform",
 		"translate(" + margin.left + "," + margin.top + ")")
+
 
 var svgChart3 = d3.select("#chart3")
 	.append("svg")

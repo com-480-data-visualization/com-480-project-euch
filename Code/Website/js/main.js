@@ -21,7 +21,7 @@ class Result {
 
 // store the results, add unique sports as option to the sports selection list
 function createResultArray(resArray) {
-	d3.csv("../data/athlete_events.csv", function(d) {
+	d3.csv("../data/athlete_events_red.csv", function(d) {
 
 		// add eash row to resArray and return the sport feature only
 		resArray.push(new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event, +d["Year"]));
