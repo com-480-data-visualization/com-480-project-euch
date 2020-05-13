@@ -36,8 +36,12 @@
 			<div id ="selection" >
 				<!-- div that contains elements to select a sport/discipline-->
 				<div id ="buttons">
-					<select class='selection_button' id="sport_selector"></select>
-					<select class='selection_button' id="event_selector"></select> 
+					<select class='selection_button' id="sport_selector">
+						<option value="none">None</option>
+					</select>
+					<select class='selection_button' id="event_selector">
+						<option value="all">All</option>
+					</select> 
 					<button class='selection_button' id="select_btn">Select</button>
 					<button class='selection_button' id="add_btn">Add to grid</button>
 				</div>
@@ -118,7 +122,6 @@
 
 	</main>
 
-	<hr>
 	<footer>
   		<span>CS-480 Data Visualization EPFL, group: euch</span>
 	</footer>

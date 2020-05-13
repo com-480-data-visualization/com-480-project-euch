@@ -91,6 +91,11 @@ const darkGreen = d3.color('hsl(94, 38%, 30%)');
 whenDocumentLoaded(() => {
 
 	SM = new Small_multiples(8);
+	const ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
+
+	svg = d3.select('#display');
+
+	drawAthleteDescription(ath0, svg, 0, 0, lightGreen, darkGreen);
 
 	// create the results array	
 	resArray = [];
@@ -119,7 +124,7 @@ whenDocumentLoaded(() => {
 		const sport = sportSel.value;
 		const event = eventSel.value;
 
-		const ath = averageAthlete(1992, 2016, sport, event, resArray)
+		let ath = averageAthlete(1992, 2016, sport, event, resArray)
 
 		d3.select("#sport_disp")
 		.text("Sport : " + ath.sport);
@@ -146,10 +151,11 @@ whenDocumentLoaded(() => {
 
 		//drawAthlete(ath, svg3d, 200, 0, 0)
 	
-		svg = d3.select('#display');
-	
 		//const ath = new Athlete(2012, 2016, 1, 22, 200, 134, 'sport', 'event');
 	
+		if(ath.nb_samples == 0){
+			ath = ath0
+		}
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 		SM.add(ath)
 	});

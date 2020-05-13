@@ -1,16 +1,10 @@
-@font-face {
-	font-family: 'Avenir Next';
-	src: url("http://www.yoursite.com/fonts/Avenir_Next.otf"); /* File to be stored at your site */
-}
-
 #visualization1 {
 	width: 1200px;
 	height: 700px;
 	background-color: transparent;
 	margin: 0 auto;
-	margin-top: 20px;
-	margin-bottom: 100px;
-
+	margin-top: 80px;
+	margin-bottom: 500px;
 }
 
 div {
@@ -18,15 +12,21 @@ div {
 	box-sizing: border-box;
 }
 
+
+select, option {
+	border: 0 none;
+	outline: 1px none;
+	}
+
 #selection {
 	display: inline-block;
 	margin-top: 1%; 	
 	margin-left: 1%; 
 	margin-right: 1%; 
-	margin-bottom: 1%; 
+	margin-bottom: 40px; 
 	width: 98%;
 	height: 60%;
-	background-color:#ffffff;
+	background-color:#fffffff0;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	border-left: 1px solid black;
@@ -91,7 +91,7 @@ div {
 	border-right: 1px dashed black;
 	border-top: 0px dashed black;
 	border-bottom: 0px dashed black;
-	background-color: white;
+	background-color: #fffffff0;
 }
 
 #elem_0_div {
@@ -165,6 +165,16 @@ div {
 }
 #chart3 {
     height: 33.3%;
+}
+
+.label {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.axis {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 

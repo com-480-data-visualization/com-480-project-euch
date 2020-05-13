@@ -17,8 +17,8 @@ var margin = {top: 15, right: 30, bottom: 50, left: 90},
 	width = 700 - margin.right - margin.left;
 	height = 360 - margin.top - margin.bottom;
 
-var chartHeight = 50;
-var chartWidth = 400;
+var chartHeight = 40;
+var chartWidth = 600;
 
 // append the svg object to the body of the page
 var svgChart1 = d3.select("#chart1")
@@ -66,7 +66,7 @@ function startChart(svg_, data, type) {
 	switch(type) {
 		case 0:
 			// weight
-			lineColor = "#CC0000"
+			lineColor ='hsl(274, 44%, 65%)';
 			// Y axis label:
 			svg_.append("text")
 				.attr("text-anchor", "end")
@@ -82,7 +82,7 @@ function startChart(svg_, data, type) {
 			break;
 		case 1:
 			//height
-			lineColor = "#0000CC";
+			lineColor = 'hsl(11, 56%, 66%)';
 			y = d3.scaleLinear()
 				.domain([d3.min(data_f, function(d) {return d.height}),d3.max(data_f, function (d){return d.height})])
 				.range([ chartHeight, 0 ]);
@@ -99,7 +99,7 @@ function startChart(svg_, data, type) {
 			break;
 		case 2:
 			//age
-			lineColor = "#00CC00";
+			lineColor = 'hsl(94, 38%, 50%)';
 			y = d3.scaleLinear()
 				.domain([d3.min(data_f, function(d) {return d.age}),d3.max(data_f, function (d){return d.age})])
 				.range([ chartHeight, 0 ]);

@@ -28,7 +28,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 	const slowAnim = 1500; const midAnim = 900; const fastAnim = 600;
 
 	// controls the space of the drawing in the SVG
-	const xFactor = 0.28;
+	const xFactor = 0.25;
 	const xLeft = xFactor * svgWidth;
 	const xRight = (1 - xFactor) * svgWidth;
 	const axisBottom = 0.8 * svgHeight;
@@ -109,7 +109,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 		.attr('y', (d) => d.y)
 		.attr('text-anchor', 'end')
 		.text((d) => d.content)
-		.attr("font-family", "sans-serif")
+		.attr("font-family", 'Arial, Helvetica, sans-serif')
 		.attr("font-size", "11px")
 		.attr("fill", "black")
 		.attr('font-weight', 'bold');
@@ -132,7 +132,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 
 	// ******************************************* WEIGHT *******************************************
 
-	const weightPadding = 20; // padding between height groupe and weight group
+	const weightPadding = 10; // padding between height groupe and weight group
 	const radius = 0.8 * (xRight - xLeft) / 2; // radius of the weight axis
 	const arcCenterX = 0.5 * svgWidth; 
 	const arcCenterY = axisTop - weightPadding;
@@ -194,7 +194,7 @@ function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
 			.attr('x', (d,i) => {return arcCenterX - Math.cos(weightAxisScale(d.tick)) * (radius-ticksArcLength) + d.xshift})
 			.attr('y', (d,i) => {return arcCenterY - Math.sin(weightAxisScale(d.tick)) * (radius-ticksArcLength) + d.yshift})
 			.text((d,i) => {return d.tick})
-			.attr("font-family", "sans-serif")
+			.attr("font-family", 'Arial, Helvetica, sans-serif')
 			.attr("font-size", "10px")
 			.attr("fill", "black")
 

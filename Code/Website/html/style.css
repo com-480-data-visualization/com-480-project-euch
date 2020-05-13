@@ -1,13 +1,18 @@
 
 #banner {
-	height: 40%;
-	width: 40%;
+	height: 100px;
+	width: auto;
 	text-align: middle;
 }
 
+
 body {
-	background-color: #eeeeee;;
-}
+    content: "";
+    background: url('../res/flag.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
 
 footer {
 	font-family: Raleway;
