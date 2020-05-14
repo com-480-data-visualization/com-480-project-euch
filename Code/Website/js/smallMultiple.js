@@ -64,15 +64,37 @@ function createTextAthlete(svg,athlete) {
 
 	event.append("text")
 		.attr("x",5)
-		.attr("y",70)
+		.attr("y",65)
 		.text(athlete.event)
+		.attr("font-family","sans-serif")
+		.attr("font-size",10);
+
+	event.append("text")
+		.attr("x",5)
+		.attr("y",80)
+		.text("From "+athlete.start_year+" to "+athlete.end_year)
 		.attr("font-family","sans-serif")
 		.attr("font-size",10);
 }
 
 
+function addSex(athlete,svg){
+	var sex = svg.append("g");
+
+	//To add a sex to the class athlete...
+	svg.append('image')
+    .attr('xlink:href', '../res/male-svgrepo-com.svg')
+    .attr('width', 30)
+    .attr('height', 30)
+    .attr('x', parseInt(svg.style("width")) - 35)
+    .attr('y',5);
+}
+
 //Create a small multiple frame
 function createSMFrame(SM,athlete,svg,index){
+	//Add Sex of the athlete
+	addSex(athlete,svg);
+
 	//Create de button
 	createButton(SM,svg,index);
 
@@ -89,20 +111,22 @@ class Small_multiples {
 		this.cursor = 0;
 		this.number_SM = number_SM;
 		this.athletes = [];
-
+		this.sorted_by = "No sorting";
+		this.ascending = true;
 	}
+
+
 
 	//add an athlete to the SM
 	//if it is already full it is FIFO
 	add(athlete){
-		//add the element in the first position
-		this.athletes.unshift(athlete);
+		//add the element in the last position
+		this.athletes.push(athlete);
+		this.cursor = this.cursor + 1;
 
-		if(this.cursor == this.number_SM){
-			//it means the array is full, so last element is popped
-			this.athletes.pop();
-		} else {
-			this.cursor = this.cursor + 1;
+		//If it should be sorted, then keep it sorted
+		if (!(this.sorted_by == "No sorting")){
+			this.sort(this.sorted_by,this.ascending)
 		}
 
 		//Refresh the visualization
@@ -114,6 +138,61 @@ class Small_multiples {
 		this.athletes.splice(index,1);
 		this.cursor = this.cursor -1;
 		this.refresh_SM();
+	}
+
+	//remove all elements
+	removeAll() {
+		this.athletes = [];
+		this.cursor = 0;
+		this.refresh_SM();
+	}
+
+	isFull(){
+		return this.cursor == this.number_SM;
+	}
+
+	sort(sort_by, ascending) {
+
+		if(sort_by == ""){
+			sort_by = this.sorted_by;
+			this.ascending = ascending;
+		}
+
+		if(ascending == ""){
+			ascending = this.ascending;
+			this.sorted_by = sort_by;
+		}
+
+		//Dynamic sort function
+		function sortFunction(sorted_by,ascending) {
+			return function compare(a,b){
+				const to_compare_a = a[sorted_by];
+				const to_compare_b = b[sorted_by];
+				if(ascending){
+					if (to_compare_a < to_compare_b) {
+						return -1;
+					}
+					if (to_compare_b < to_compare_a) {
+						return 1;
+					}
+				} else {
+					if (to_compare_a > to_compare_b) {
+						return -1;
+					}
+					if (to_compare_b > to_compare_a) {
+						return 1;
+					}
+				}
+				// a must be equal to b
+				return 0;
+				}
+		}
+
+		if (!(this.sorted_by == "No sorting")){
+			this.athletes.sort(sortFunction(this.sorted_by,this.ascending));
+			this.refresh_SM();
+		} 
+		
 	}
 
 	refresh_SM(){

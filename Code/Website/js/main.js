@@ -90,7 +90,7 @@ const darkGreen = d3.color('hsl(94, 38%, 30%)');
 
 whenDocumentLoaded(() => {
 
-	SM = new Small_multiples(8);
+	SM = new Small_multiples(5);
 	const ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
 
 	svg = d3.select('#display');
@@ -117,9 +117,51 @@ whenDocumentLoaded(() => {
 	});
 	
 
+
+	//Buttons of filter
+	
+	//remove all elements of SM
+	document.getElementById('remove_all')
+		.addEventListener('click',() => {SM.removeAll();});
+	
+
+	//sorted by selector
+	document.getElementById('sort_selector').addEventListener("change", () => {
+		SM.sort(sort_selector.value,"");
+	});
+
+
+	//ascending selector
+	document.getElementById('asc_selector').addEventListener("change", () => {
+		SM.sort("",asc_selector.value == "ascending");
+	});
+
+
+
+	//add button, may write an error
+	error = document.getElementById("error_message");
+	document.getElementById('add_btn')
+		.addEventListener('click',() => {
+			const sport = sportSel.value;
+			const event = eventSel.value;
+			if(SM.isFull()){
+				error.innerHTML = "The small multiples is Full. Please remove an element";
+			} else if(sport == "None") {
+				error.innerHTML = "Please select a sport to add in the small multiples.";
+			} else {
+				error.innerHTML = "";
+				let ath = averageAthlete(1992, 2016, sport, event, resArray);
+				SM.add(ath);
+				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
+			}
+			});
+
+
 	// add svg text that describes the mean athlete in the selected sport and event
 	button = document.getElementById('select_btn');
 	button.addEventListener('click', () => {
+
+		error.innerHTML = "";
 
 		const sport = sportSel.value;
 		const event = eventSel.value;
@@ -157,7 +199,6 @@ whenDocumentLoaded(() => {
 			ath = ath0
 		}
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
-		SM.add(ath)
 	});
 	
 
