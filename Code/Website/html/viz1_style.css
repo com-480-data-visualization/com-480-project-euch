@@ -128,8 +128,6 @@ select, option {
 	margin-left: 14px;
 }
 
-
-
 #remove_all, #sort_selector, #asc_selector, 
 #sport_selector, #event_selector, #select_btn, #add_btn{
 	width: 120px;
@@ -144,8 +142,16 @@ select, option {
 	border: 1px solid #494949 !important;
 	display: inline-block;
 
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Quicksand';
 	font-size: 12px;
+}
+
+optgroup {
+	font-family: 'Quicksand';
+}
+
+#event_selector {
+	width: 180px;
 }
 
 #remove_all:hover, #select_btn:hover, #add_btn:hover{
@@ -169,9 +175,8 @@ select, option {
     height: 30%;
 }
 #chart3 {
-    height: 30%;
+	height: 30%;
 }
-
 #chartx {
 	height: 10%;
 }
