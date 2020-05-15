@@ -1,6 +1,7 @@
 <!doctype html>
 
 <html lang="en">
+<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
 <head>
 	<meta charset="utf-8">
 
@@ -37,13 +38,17 @@
 				<!-- div that contains elements to select a sport/discipline-->
 				<div id ="buttons">
 					<select class='selection_button' id="sport_selector">
-						<option value="none">None</option>
+						<optgroup>
+							<option value="none">None</option>
+						</optgroup>
+
 					</select>
 					<select class='selection_button' id="event_selector">
-						<option value="all">All</option>
+						<optgroup>
+							<option value="all">All</option>
+						</optgroup>
 					</select> 
-					<button class='selection_button' id="select_btn">Select</button>
-					<button class='selection_button' id="add_btn">Add to grid</button>
+					<button class='selection_button' id="add_btn">Compare</button>
 					<p id="error_message"><p>
 				</div>
 

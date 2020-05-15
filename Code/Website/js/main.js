@@ -42,8 +42,8 @@ function createResultArray(resArray) {
 
 // add the given list of sports as options to the given selection list (in d3), remove all previous options
 function addSportOptions(sportSel, sports){
-	sportSel.selectAll('option').remove();
-	sportSel.selectAll('option')
+	sportSel.select('optgroup').selectAll('option').remove();
+	sportSel.select('optgroup').selectAll('option')
 		.data(['None'].concat(sports.sort()))
 		.enter()
 		.append('option')
@@ -57,12 +57,12 @@ function addSportOptions(sportSel, sports){
 
 // add the given list of event as options to the given selection list (in d3), remove all previous options
 function updateEventOptions(eventSel, selectedSport){
-	eventSel.selectAll('option').remove();
+	eventSel.select('optgroup').selectAll('option').remove();
 	const events = resArray.filter(function(d){
 		return d.sport == selectedSport;
 	});
 	const events_unique = d3.map(events, function(d){return d.event;}).keys();
-	eventSel.selectAll('option')
+	eventSel.select('optgroup').selectAll('option')
 		.data(['All'].concat(events_unique.sort())) // add All field
 		.enter()
 		.append('option')
@@ -114,8 +114,40 @@ whenDocumentLoaded(() => {
 
 	// update events selection list given change in sports selection list
 	sportSel.addEventListener("change", () => {
-		const selectedSport = sportSel.value
-		updateEventOptions(eventSelD3, selectedSport);
+		const sport = sportSel.value
+
+		let ath = averageAthlete(1992, 2016, sport, 'All', resArray)
+
+		const svg3d = d3.select('#display');
+
+		//drawAthlete(ath, svg3d, 200, 0, 0)
+	
+		//const ath = new Athlete(2012, 2016, 1, 22, 200, 134, 'sport', 'event');
+	
+		if(ath.nb_samples == 0){
+			ath = ath0
+		}
+		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
+
+		updateEventOptions(eventSelD3, sport);
+	});
+
+	eventSel.addEventListener("change", () => {
+		const sport = sportSel.value;
+		const event = eventSel.value;
+
+		let ath = averageAthlete(1992, 2016, sport, event, resArray)
+
+		const svg3d = d3.select('#display');
+
+		//drawAthlete(ath, svg3d, 200, 0, 0)
+	
+		//const ath = new Athlete(2012, 2016, 1, 22, 200, 134, 'sport', 'event');
+	
+		if(ath.nb_samples == 0){
+			ath = ath0
+		}
+		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 	});
 	
 
@@ -169,27 +201,6 @@ whenDocumentLoaded(() => {
 		const event = eventSel.value;
 
 		let ath = averageAthlete(1992, 2016, sport, event, resArray)
-
-		d3.select("#sport_disp")
-		.text("Sport : " + ath.sport);
-
-		d3.select("#event_disp")
-		.text("Event : " + ath.event);
-
-		d3.select("#years_disp")
-		.text("From years : " + ath.start_year + " - " + ath.end_year);
-
-		d3.select("#samples_disp")
-		.text("Number of samples : " + ath.nb_samples);
-
-		d3.select("#age_disp")
-		.text("Mean age : " + ath.age);
-
-		d3.select("#height_disp")
-		.text("Mean height : " + ath.height);
-
-		d3.select("#weight_disp")
-		.text("Mean weight : " + ath.weight);
 
 		const svg3d = d3.select('#display');
 
