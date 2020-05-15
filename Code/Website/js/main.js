@@ -9,12 +9,14 @@ function whenDocumentLoaded(action) {
 
 // represents an olympic result
 class Result {
-	constructor(age, height, weight, sport, event, year) {
+	constructor(age, height, weight, sport, event, event_sex, event_w_sex, year) {
 		this.age = age;
 		this.height = height;
 		this.weight = weight;
 		this.sport = sport;
 		this.event = event;
+		this.event_sex = event_sex;
+		this.event_w_sex = event_w_sex;
 		this.year = year;
 	}
 }
@@ -24,7 +26,7 @@ function createResultArray(resArray) {
 	d3.csv("../data/athlete_events_red.csv", function(d) {
 
 		// add eash row to resArray and return the sport feature only
-		resArray.push(new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event, +d["Year"]));
+		resArray.push(new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event_w_sport, d.Event_sex, d.Event_w_sex, +d["Year"]));
 		//console.log(new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event, +d["Year"]));
 		
 		return {
