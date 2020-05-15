@@ -93,7 +93,6 @@ function brushmoved() {
     if (s == null) {
     } else {
         avgYears = s.map(inverseX).map(Math.round)
-        console.log(avgYears)
         handle.attr("display", null)
             .attr("transform", function(d, i) { return "translate(" + s[i] + ", 16 )"; });
     }
