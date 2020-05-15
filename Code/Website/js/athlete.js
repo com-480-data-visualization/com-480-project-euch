@@ -11,10 +11,7 @@ class Athlete {
 	  this.event = event;
 	}
 }
-/*
-
-
-*/
+var data_f, sameEvent, sameSport, btwYear;
 
 function prepareData(start_year, end_year, sport, event, resArray) {
 	console.log("Start year : " + start_year)

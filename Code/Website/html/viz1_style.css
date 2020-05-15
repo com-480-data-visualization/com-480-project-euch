@@ -168,18 +168,19 @@ optgroup {
 	background-color:transparent;
 }
 
+#chart1 , #chart2, #chart3{
+    height: 25%;
+}
+
 #chart1 {
-    height: 30%;
+	margin-top: 3% ;
 }
-#chart2 {
-    height: 30%;
-}
-#chart3 {
-	height: 30%;
-}
+
 #chartx {
+	margin-top: 2%;
 	height: 10%;
 }
+
 
 
 .label {

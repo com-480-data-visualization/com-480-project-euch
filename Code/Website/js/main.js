@@ -119,7 +119,9 @@ whenDocumentLoaded(() => {
 	sportSel.addEventListener("change", () => {
 		const sport = sportSel.value
 
-		let ath = averageAthlete(1992, 2016, sport, 'All', resArray)
+		//let ath = averageAthlete(1992, 2016, sport, 'All', resArray)
+		let ath = displayResults(sport, "All")
+
 
 		const svg3d = d3.select('#display');
 
@@ -139,7 +141,9 @@ whenDocumentLoaded(() => {
 		const sport = sportSel.value;
 		const event = eventSel.value;
 
-		let ath = averageAthlete(1992, 2016, sport, event, resArray)
+		//let ath = averageAthlete(1992, 2016, sport, event, resArray)
+
+		let ath = displayResults(sport, event)
 
 		const svg3d = d3.select('#display');
 
@@ -193,9 +197,9 @@ whenDocumentLoaded(() => {
 			}
 			});
 
-
+/*
 	// add svg text that describes the mean athlete in the selected sport and event
-	button = document.getElementById('select_btn');
+	let button = document.getElementById('select_btn');
 	button.addEventListener('click', () => {
 
 		error.innerHTML = "";
@@ -217,7 +221,7 @@ whenDocumentLoaded(() => {
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 	});
 	
-
+*/
 
 	//svg = d3.select('#display');
 
