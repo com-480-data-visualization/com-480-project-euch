@@ -90,6 +90,9 @@ const purpleWeight = d3.color('hsl(274, 44%, 65%)');
 const lightGreen = d3.color('hsl(94, 38%, 70%)');
 const darkGreen = d3.color('hsl(94, 38%, 30%)');
 
+let start_year = 1896
+let end_year = 2016
+
 whenDocumentLoaded(() => {
 
 	SM = new Small_multiples(5);
@@ -152,7 +155,7 @@ whenDocumentLoaded(() => {
 				error.innerHTML = "Please select a sport to add in the small multiples.";
 			} else {
 				error.innerHTML = "";
-				let ath = averageAthlete(1992, 2016, sport, event, resArray);
+				let ath = averageAthlete(start_year, end_year, sport, event, resArray);
 				SM.add(ath);
 				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 			}
@@ -168,7 +171,7 @@ whenDocumentLoaded(() => {
 		const sport = sportSel.value;
 		const event = eventSel.value;
 
-		let ath = averageAthlete(1992, 2016, sport, event, resArray)
+		let ath = displayResults(sport, event)
 
 		d3.select("#sport_disp")
 		.text("Sport : " + ath.sport);
@@ -213,3 +216,23 @@ whenDocumentLoaded(() => {
 
 
 });
+
+
+/**
+ * This function is responsible for constructing the average player and constructing the graphs over time
+ * associated with him (weight, height, age)
+ * @param sport that was selected
+ * @param event that was selected
+ * @returns {Athlete} the avg athlete
+ */
+function displayResults(sport, event) {
+	// years used for avg computations are extracted from the selector in graphs.js
+	start_year = avgYears[0]
+	end_year = avgYears[1]
+
+	prepareData(start_year, end_year,  sport, event, resArray)
+	let ath = averageAthlete(start_year, end_year, sport, event, resArray)
+	constructCharts()
+
+	return ath
+}

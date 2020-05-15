@@ -163,14 +163,19 @@ select, option {
 }
 
 #chart1 {
-    height: 33.3%;
+    height: 30%;
 }
 #chart2 {
-    height: 33.3%;
+    height: 30%;
 }
 #chart3 {
-    height: 33.3%;
+    height: 30%;
 }
+
+#chartx {
+	height: 10%;
+}
+
 
 .label {
 	font-family: Arial, Helvetica, sans-serif;
