@@ -168,12 +168,20 @@ optgroup {
 	background-color:transparent;
 }
 
-#chart1, #chart2, #chart3 {
-    height: 28%;
+#chart1 , #chart2, #chart3{
+    height: 25%;
 }
+
 #chart1 {
-	margin-top: 3.5%;
+	margin-top: 3% ;
 }
+
+#chartx {
+	margin-top: 2%;
+	height: 10%;
+}
+
+
 
 .label {
 	font-family: Arial, Helvetica, sans-serif;
