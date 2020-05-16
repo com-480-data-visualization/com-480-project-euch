@@ -93,10 +93,18 @@ const darkGreen = d3.color('hsl(94, 38%, 30%)');
 let start_year = 1896
 let end_year = 2016
 
+let currSport
+let currEvent = "All"
+
+let loaded = false
+// default athlete
+let ath0;
 whenDocumentLoaded(() => {
 
+	ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
+
+	loaded = true
 	SM = new Small_multiples(5);
-	const ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
 
 	svg = d3.select('#display');
 
@@ -117,33 +125,29 @@ whenDocumentLoaded(() => {
 
 	// update events selection list given change in sports selection list
 	sportSel.addEventListener("change", () => {
-		const sport = sportSel.value
+		currSport = sportSel.value
 
-		//let ath = averageAthlete(1992, 2016, sport, 'All', resArray)
-		let ath = displayResults(sport, "All")
-
+		// display results will prepare data, build the average athlete and construct the graphs,
+		// finally it will return the average athlete computed
+		let ath = displayResults(currSport, "All")
 
 		const svg3d = d3.select('#display');
-
-		//drawAthlete(ath, svg3d, 200, 0, 0)
-	
-		//const ath = new Athlete(2012, 2016, 1, 22, 200, 134, 'sport', 'event');
 	
 		if(ath.nb_samples == 0){
 			ath = ath0
 		}
-		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
+		drawAthleteDescription(ath, svg3d, 0, 0, lightGreen, darkGreen);
 
-		updateEventOptions(eventSelD3, sport);
+		updateEventOptions(eventSelD3, currSport);
 	});
 
 	eventSel.addEventListener("change", () => {
-		const sport = sportSel.value;
-		const event = eventSel.value;
+		currSport = sportSel.value;
+		currEvent = eventSel.value;
 
-		//let ath = averageAthlete(1992, 2016, sport, event, resArray)
-
-		let ath = displayResults(sport, event)
+		// display results will prepare data, build the average athlete and construct the graphs,
+		// finally it will return the average athlete computed
+		let ath = displayResults(currSport, currEvent)
 
 		const svg3d = d3.select('#display');
 
@@ -178,8 +182,7 @@ whenDocumentLoaded(() => {
 	});
 
 
-
-	//add button, may write an error
+	//add button to SM, may write an error
 	error = document.getElementById("error_message");
 	document.getElementById('add_btn')
 		.addEventListener('click',() => {
@@ -191,7 +194,9 @@ whenDocumentLoaded(() => {
 				error.innerHTML = "Please select a sport to add in the small multiples.";
 			} else {
 				error.innerHTML = "";
-				let ath = averageAthlete(start_year, end_year, sport, event, resArray);
+
+				prepareData(avgYears[0], avgYears[1], sport, event, resArray)
+				let ath = averageAthlete(avgYears[0], avgYears[1], sport, event);
 				SM.add(ath);
 				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 			}
@@ -245,9 +250,27 @@ function displayResults(sport, event) {
 	start_year = avgYears[0]
 	end_year = avgYears[1]
 
-	prepareData(start_year, end_year,  sport, event, resArray)
+	prepareData(start_year, end_year,  sport, event, resArray)  // create data:_f data _all_years
 	let ath = averageAthlete(start_year, end_year, sport, event, resArray)
 	constructCharts()
 
+
 	return ath
+}
+
+/**
+ * Updates vizualization using current sports and event selected
+ */
+function updateViz() {
+	if(!loaded) return
+
+
+	if(currSport !== undefined) {
+		let ath = displayResults(currSport, currEvent)
+		if(ath.nb_samples === 0){
+			ath = ath0
+		}
+		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen)
+	}
+
 }
