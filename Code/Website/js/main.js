@@ -42,8 +42,8 @@ function createResultArray(resArray) {
 
 // add the given list of sports as options to the given selection list (in d3), remove all previous options
 function addSportOptions(sportSel, sports){
-	sportSel.select('optgroup').selectAll('option').remove();
-	sportSel.select('optgroup').selectAll('option')
+	sportSel.selectAll('option').remove();
+	sportSel.selectAll('option')
 		.data(['None'].concat(sports.sort()))
 		.enter()
 		.append('option')
@@ -57,12 +57,12 @@ function addSportOptions(sportSel, sports){
 
 // add the given list of event as options to the given selection list (in d3), remove all previous options
 function updateEventOptions(eventSel, selectedSport){
-	eventSel.select('optgroup').selectAll('option').remove();
+	eventSel.selectAll('option').remove();
 	const events = resArray.filter(function(d){
 		return d.sport == selectedSport;
 	});
 	const events_unique = d3.map(events, function(d){return d.event;}).keys();
-	eventSel.select('optgroup').selectAll('option')
+	eventSel.selectAll('option')
 		.data(['All'].concat(events_unique.sort())) // add All field
 		.enter()
 		.append('option')

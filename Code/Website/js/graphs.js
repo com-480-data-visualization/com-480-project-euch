@@ -105,25 +105,38 @@ function brushmoved() {
 function initCharts() {
 // Y axis label:
     svgChartWeight.append("text")
+        .attr('class', 'chart_label')
         .attr("text-anchor", "end")
         .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 20)
-        .attr("x", -margin.top - chartHeight/2 + 50)
-        .text("Avg Weight")
+        .attr("y", -margin.left + 40)
+        .attr("x", -margin.top - chartHeight/2 + 43)
+        .text("Weight [kg]")
+        .attr("font-family", 'Arial, Helvetica, sans-serif')
+		.attr("font-size", "12px")
+		.attr("fill", "black")
+    
 
     svgChartHeight.append("text")
+        .attr('class', 'chart_label')
         .attr("text-anchor", "end")
         .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 20)
-        .attr("x", -margin.top - chartHeight/2 + 50)
-        .text("Avg Height")
+        .attr("y", -margin.left + 40)
+        .attr("x", -margin.top - chartHeight/2 + 43)
+        .text("Height [cm]")
+        .attr("font-family", 'Arial, Helvetica, sans-serif')
+		.attr("font-size", "12px")
+		.attr("fill", "black")
 
     svgChartAge.append("text")
+        .attr('class', 'chart_label')
         .attr("text-anchor", "end")
         .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 20)
-        .attr("x", -margin.top - chartHeight/2 + 50)
-        .text("Avg Age")
+        .attr("y", -margin.left + 40)
+        .attr("x", -margin.top - chartHeight/2 + 43)
+        .text("Age [years]")
+        .attr("font-family", 'Arial, Helvetica, sans-serif')
+		.attr("font-size", "12px")
+		.attr("fill", "black")
 
     // x axis on the last div
     xAxis = g.call(d3.axisBottom(x).tickSize(5).tickFormat(d3.format("d")))
@@ -185,9 +198,12 @@ function startChart(svg_, type) {
             chartId = "#chart2"
             lineColor ='hsl(274, 44%, 65%)';
 
+            const weightGroupByYearValues = weightGroupByYear.map(d => d.value) // y-values in the chart
+
             y = d3.scaleLinear()
-                .domain([d3.min(data_all_years, function(d) {return d.weight}),
-                         d3.max(data_all_years, function (d){return d.weight})])
+                .domain([
+                    Math.floor(d3.min(weightGroupByYearValues) / 10) * 10,
+                    Math.ceil(d3.max(weightGroupByYearValues) / 10) * 10])
                 .range([ chartHeight, 0 ]);
 
 
@@ -218,10 +234,11 @@ function startChart(svg_, type) {
 
             chartId = "#chart1"
             lineColor = 'hsl(11, 56%, 66%)';
+            const heightGroupByYearValues = heightGroupByYear.map(d => d.value) // y-values in the chart
             y = d3.scaleLinear()
-                .domain(
-                    [d3.min(data_all_years, function(d) {return d.height}),
-                     d3.max(data_all_years, function (d){return d.height})])
+                .domain([
+                    Math.floor(d3.min(heightGroupByYearValues) / 10) * 10,
+                    Math.ceil(d3.max(heightGroupByYearValues) / 10) * 10])
                 .range([ chartHeight, 0 ]);
 
 
@@ -253,9 +270,12 @@ function startChart(svg_, type) {
             data_select = ageGroupByYearSelect
 
             lineColor = 'hsl(94, 38%, 50%)';
+
+            const ageGroupByYearValues = ageGroupByYear.map(d => d.value) // y-values in the chart
             y = d3.scaleLinear()
-                .domain([d3.min(data_all_years, function(d) {return d.age}),
-                         d3.max(data_all_years, function (d){return d.age})])
+                .domain([
+                    Math.floor(d3.min(ageGroupByYearValues) / 10) * 10,
+                    Math.ceil(d3.max(ageGroupByYearValues) / 10) * 10])
                 .range([ chartHeight, 0 ]);
 
             break;
