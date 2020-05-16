@@ -13,8 +13,8 @@ class Athlete {
 }
 let data_f, data_all_years;
 function prepareData(start_year, end_year, sport, event, resArray) {
-	console.log("Start year : " + start_year)
-	console.log("End year : " + end_year)
+	//console.log("Start year : " + start_year)
+	//console.log("End year : " + end_year)
 
 	data_all_years = resArray.filter(function(d){
 		const sameEvent = event === 'All' ? true : d.event === event;

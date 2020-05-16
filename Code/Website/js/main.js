@@ -22,7 +22,7 @@ class Result {
 }
 
 // store the results, add unique sports as option to the sports selection list
-function createResultArray(resArray) {
+function createResultArray(resArray, sportsArray, eventsMap) {
 	d3.csv("../data/athlete_events_red.csv", function(d) {
 
 		// add eash row to resArray and return the sport feature only
@@ -31,14 +31,24 @@ function createResultArray(resArray) {
 		
 		return {
 			sport: d.Sport,
+			event: d.Event_w_sport,
 		};
 	}).then(function(data) {		
 		// for each unique sport, create an option value in the sports selection list
 		const sportSel =  d3.select('#sport_selector');
-		sports_unique = d3.map(data, function(d){return d.sport;}).keys()		
+		sports_unique = d3.map(data, d => d.sport).keys();
+		sports_unique.forEach(sport => {			
+			sportsArray.push(sport)
+			data_this_sport = data.filter(row => row.sport === sport)
+			events_unique = d3.map(data_this_sport, d => d.event).keys();
+			events_unique.forEach(e => {
+				eventsMap.set(e, sport);
+			});	
+		});	
 		addSportOptions(sportSel, sports_unique);
-	});
+	}).then(d => autocomplete(document.getElementById("search_bar"), sportsArray.concat(Array.from(eventsMap.keys()))));
 }
+
 
 // add the given list of sports as options to the given selection list (in d3), remove all previous options
 function addSportOptions(sportSel, sports){
@@ -101,8 +111,7 @@ let loaded = false
 let ath0;
 whenDocumentLoaded(() => {
 
-	ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
-
+	ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0')
 	loaded = true
 	SM = new Small_multiples(5);
 
@@ -112,10 +121,11 @@ whenDocumentLoaded(() => {
 
 	// create the results array	
 	resArray = [];
+	sportsArray = [];
+	eventsMap = new Map();
 
+	createResultArray(resArray, sportsArray, eventsMap);
 	
-	createResultArray(resArray);
-
 	// find selectors, both in d3 or basic JS selection
 	const sportSelD3 = d3.select('#sport_selector');
 	const sportSel = document.getElementById('sport_selector');
@@ -125,7 +135,7 @@ whenDocumentLoaded(() => {
 
 	// update events selection list given change in sports selection list
 	sportSel.addEventListener("change", () => {
-		currSport = sportSel.value
+		currSport = sportSel.value;		
 
 		// display results will prepare data, build the average athlete and construct the graphs,
 		// finally it will return the average athlete computed
@@ -133,9 +143,6 @@ whenDocumentLoaded(() => {
 
 		const svg3d = d3.select('#display');
 	
-		if(ath.nb_samples == 0){
-			ath = ath0
-		}
 		drawAthleteDescription(ath, svg3d, 0, 0, lightGreen, darkGreen);
 
 		updateEventOptions(eventSelD3, currSport);
@@ -150,14 +157,6 @@ whenDocumentLoaded(() => {
 		let ath = displayResults(currSport, currEvent)
 
 		const svg3d = d3.select('#display');
-
-		//drawAthlete(ath, svg3d, 200, 0, 0)
-	
-		//const ath = new Athlete(2012, 2016, 1, 22, 200, 134, 'sport', 'event');
-	
-		if(ath.nb_samples == 0){
-			ath = ath0
-		}
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 	});
 	
@@ -181,6 +180,24 @@ whenDocumentLoaded(() => {
 		SM.sort("",asc_selector.value == "ascending");
 	});
 
+	console.log(sportsArray);
+	
+	document.getElementById('search_bar').addEventListener("keyup", function(e) {
+		if(e.keyCode === 13){
+			const search_value = this.value;			
+			
+			if (sportsArray.includes(search_value)) {
+				sportSel.value = search_value;
+				sportSel.dispatchEvent(new Event('change'));
+			} else if (Array.from(eventsMap.keys()).includes(search_value)) {
+				sportSel.value = eventsMap.get(search_value);
+				updateEventOptions(eventSelD3, sportSel.value)
+				eventSel.value = search_value;
+				eventSel.dispatchEvent(new Event('change'));
+			}
+		}
+	});
+
 
 	//add button to SM, may write an error
 	error = document.getElementById("error_message");
@@ -201,40 +218,6 @@ whenDocumentLoaded(() => {
 				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 			}
 			});
-
-/*
-	// add svg text that describes the mean athlete in the selected sport and event
-	let button = document.getElementById('select_btn');
-	button.addEventListener('click', () => {
-
-		error.innerHTML = "";
-
-		const sport = sportSel.value;
-		const event = eventSel.value;
-
-		let ath = displayResults(sport, event)
-
-		const svg3d = d3.select('#display');
-
-		//drawAthlete(ath, svg3d, 200, 0, 0)
-	
-		//const ath = new Athlete(2012, 2016, 1, 22, 200, 134, 'sport', 'event');
-	
-		if(ath.nb_samples == 0){
-			ath = ath0
-		}
-		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
-	});
-	
-*/
-
-	//svg = d3.select('#display');
-
-	//const ath = new Athlete(2012, 2016, 1, 22, 190, 90, 'sport', 'event');
-
-	//drawAthleteDescription(ath, svg, 0, 0);
-
-
 });
 
 
@@ -254,7 +237,6 @@ function displayResults(sport, event) {
 	let ath = averageAthlete(start_year, end_year, sport, event, resArray)
 	constructCharts()
 
-
 	return ath
 }
 
@@ -267,9 +249,6 @@ function updateViz() {
 
 	if(currSport !== undefined) {
 		let ath = displayResults(currSport, currEvent)
-		if(ath.nb_samples === 0){
-			ath = ath0
-		}
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen)
 	}
 

@@ -4,7 +4,12 @@
  * @param  {} xOffset relative x postition
  * @param  {} yOffset relative y position 
  */
-function drawAthleteDescription(athlete, svgContainer, xOffset, yOffset){
+function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
+
+	let athlete = ath
+	if(athlete.nb_samples == 0){
+		athlete = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
+	}
 
 	svgHeight = parseInt(svg.style("height"));
 	svgWidth = parseInt(svg.style("width"));

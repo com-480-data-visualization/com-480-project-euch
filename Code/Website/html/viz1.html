@@ -44,6 +44,11 @@
 					<select class='selection_button' id="event_selector">
 						<option value="all">All</option>
 					</select> 
+					<form id='search_form' autocomplete="off">
+						<div class="autocomplete">
+						  <input id="search_bar" type="text" name="search" placeholder="Search a sport..">
+						</div>
+					  </form>
 					<button class='selection_button' id="add_btn">Compare</button>
 					<p id="error_message"><p>
 				</div>
@@ -137,6 +142,8 @@
 	<script src="../js/athlete.js"></script>
 	<script src="../js/smallMultiple.js"></script>
 	<script src="../js/graphs.js"></script>
+	<script src="../js/autocomplete.js"></script>
+
 
 </body>
 </html>
