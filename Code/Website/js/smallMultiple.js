@@ -1,16 +1,16 @@
 function createButton(SM,svg,index){
 	//creation of the button, inspired from:
 	//https://bl.ocks.org/Lulkafe/95a63ddea80d4d02cc4ab8bedd48dfd8
-	var size_button = 30, 
+	var size_button = 20, 
 	x = 0,
 	y = 0,
 	rx = 4,
 	ry = 4,
-	crossStrokeWidth = 3;
+	crossStrokeWidth = 1.5;
 
     var crossStyle = {
         "stroke-width": crossStrokeWidth,
-        "stroke": "black"
+        "stroke": "grey"
     },
     r = size_button / 2,
     ofs = size_button / 6,
@@ -51,58 +51,149 @@ function createButton(SM,svg,index){
 
 //add some text below the drawing of the athlete 
 function createTextAthlete(svg,athlete) {
+	let width = parseInt(svg.style("width"))
+	let height = parseInt(svg.style("height"))
+
+	let event = "";
+	if(athlete.event == "All"){
+		addSex(svg,athlete.event);
+		event = athlete.event;
+	} else {
+		var index_split = athlete.event.indexOf(" ");  
+		addSex(svg,athlete.event.substr(0, index_split)); 
+		event = athlete.event.substr(index_split + 1);
+	}
+
 	var sport = svg.append("g");
 
+	const margin_text = 40;
+	if(athlete.sport == "Archery"){
+		var icon_sport = svg.append("g");
+		icon_sport.append('image')
+		    .attr('xlink:href', '../res/olympic_icons/'+athlete.sport+'.svg')
+		    .attr('width', 50)
+		    .attr('height', 50)
+		    .attr('x', 0)
+		    .attr('y', parseInt(svg.style("height")) - 50);
+		sport.append("text")	
+			.attr("x",margin_text+20)
+			.attr("y",height - 20)
+			.text(event)
+			.attr("font-family","sans-serif")
+			.attr("font-size",10);
+
+	} else {
 	sport.append("text")
-		.attr("x",5)
-		.attr("y",50)
-		.text(athlete.sport)
+		.attr("x",margin_text)
+		.attr("y",height - 20)
+		.text(athlete.sport+", "+event)
 		.attr("font-family","sans-serif")
 		.attr("font-size",10);
+	}
+	var year = svg.append("g");
 
-	var event = svg.append("g");
-
-	event.append("text")
-		.attr("x",5)
-		.attr("y",65)
-		.text(athlete.event)
-		.attr("font-family","sans-serif")
-		.attr("font-size",10);
-
-	event.append("text")
-		.attr("x",5)
-		.attr("y",80)
+	year.append("text")
+		.attr("x",margin_text)
+		.attr("y",height-5)
 		.text("From "+athlete.start_year+" to "+athlete.end_year)
 		.attr("font-family","sans-serif")
 		.attr("font-size",10);
 }
 
 
-function addSex(athlete,svg){
-	var sex = svg.append("g");
+function addSex(svg,sex_athlete){
+	let height = parseInt(svg.style("height"));
+	let width  = parseInt(svg.style("width"));
+	//To add a sex to the class athlete
+	if(sex_athlete == "Mens"){
+		var sex = svg.append("g");
+		sex.append('image')
+		    .attr('xlink:href', '../res/male-svgrepo-com.svg')
+		    .attr('width', 20)
+		    .attr('height', 20)
+		    .attr('x', width - 25)
+		    .attr('y', height - 25);
+	} else if (sex_athlete == "Womens"){
+		var sex = svg.append("g");
+		sex.append('image')
+		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
+		    .attr('width', 25)
+		    .attr('height', 25)
+		    .attr('x', width - 25)
+		    .attr('y', height - 30);
+	} else {
+		var sex_f = svg.append("g");
+		var sex_m = svg.append("g");
+		
+		sex_m.append('image')
+		    .attr('xlink:href', '../res/male-svgrepo-com.svg')
+		    .attr('width', 20)
+		    .attr('height', 20)
+		    .attr('x', width-25)
+		    .attr('y', height - 40)
+		    //6,parseInt(svg.style("height")) - 4
+		sex_f.append('image')
+		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
+		    .attr('width', 25)
+		    .attr('height', 25)
+		    .attr('x', width-26)
+		    .attr('y', height - 30);
+		    //5,parseInt(svg.style("height")) - 30
 
-	//To add a sex to the class athlete...
-	svg.append('image')
-    .attr('xlink:href', '../res/male-svgrepo-com.svg')
-    .attr('width', 30)
-    .attr('height', 30)
-    .attr('x', parseInt(svg.style("width")) - 35)
-    .attr('y',5);
+	}
+}
+
+
+//Select an athlete and display it
+function selectAthlete(SM,athlete,rect_svg,index){
+	description_svg = d3.select("#display");
+	const sportSel = document.getElementById('sport_selector');
+	const eventSel = document.getElementById('event_selector');
+	if(rect_svg.attr("fill-opacity") == 0){
+		SM.unselectAll();
+		sportSel.value = athlete.sport;
+		sportSel.dispatchEvent(new Event('change'));
+		eventSel.value = athlete.event;
+		eventSel.dispatchEvent(new Event('change'));
+		rect_svg.attr("fill-opacity",0.1);
+		SM.setSelectedElement(index);
+	} else {
+		sportSel.value = "None";
+		sportSel.dispatchEvent(new Event('change'));
+		eventSel.value = "All";
+		eventSel.dispatchEvent(new Event('change'));
+		rect_svg.attr("fill-opacity",0);
+	}
 }
 
 //Create a small multiple frame
-function createSMFrame(SM,athlete,svg,index){
-	//Add Sex of the athlete
-	addSex(athlete,svg);
-
-	//Create de button
-	createButton(SM,svg,index);
+function createSMFrame(SM,athlete,svg,index,isSelected){
 
 	//Add some information about the athlete
 	createTextAthlete(svg,athlete);
 
 	//Add Athlete
-	drawAthlete(athlete, svg, 150, 10, -20, 0);
+	let width = parseInt(svg.style("width"))
+	let height = parseInt(svg.style("height"))
+	drawAthlete(athlete, svg, height*0.95, 0, -40, 0);
+
+	var rect_svg = svg.append("rect")
+		.attr('id','SM_select'+index)
+		.attr("width", "100%")
+		.attr("height", "100%")
+		.attr("fill","blue")
+	
+	if(isSelected){
+		rect_svg.attr("fill-opacity",0.1);
+	} else {
+		rect_svg.attr("fill-opacity",0);
+	}
+	
+	rect_svg.on("click", function(){selectAthlete(SM,athlete,rect_svg,index);})
+
+	//Create de button
+
+	createButton(SM,svg,index);
 }
 
 // represents the small multiples
@@ -113,6 +204,7 @@ class Small_multiples {
 		this.athletes = [];
 		this.sorted_by = "No sorting";
 		this.ascending = true;
+		this.selected_element = -1;
 	}
 
 
@@ -149,6 +241,18 @@ class Small_multiples {
 
 	isFull(){
 		return this.cursor == this.number_SM;
+	}
+
+	setSelectedElement(index){
+		this.selected_element = index;
+	}
+
+	unselectAll(){
+		var i;
+		for (i=0;i<this.cursor;i++){
+			d3.select("#SM_select"+i).attr("fill-opacity",0);
+		}
+		this.selected_element = -1;
 	}
 
 	sort(sort_by, ascending) {
@@ -189,7 +293,18 @@ class Small_multiples {
 		}
 
 		if (!(this.sorted_by == "No sorting")){
-			this.athletes.sort(sortFunction(this.sorted_by,this.ascending));
+			let indices = this.athletes.map((val, ind) => {return {"val":val,"ind":ind};});
+           	indices.sort((a, b) => {return sortFunction(this.sorted_by,this.ascending)(a["val"],b["val"]);});
+           	var i;
+           	console.log(indices)
+           	for(i=0; i<this.cursor; i++){
+           		console.log(indices[i]);
+           		if(indices[i]["ind"] == this.selected_element){
+           			this.selected_element = i;
+           			break;
+           		}
+           	}
+			this.athletes = indices.map(e => e["val"]);
 			this.refresh_SM();
 		} 
 		
@@ -202,7 +317,8 @@ class Small_multiples {
 			let svg = d3.select("#elem_"+i);
 			svg.selectAll("*").remove();
 			if(i < this.cursor){
-				createSMFrame(this,this.athletes[i],svg,i);
+				let isSelected = this.selected_element == i;
+				createSMFrame(this,this.athletes[i],svg,i,isSelected);
 			}
 		}
 	}

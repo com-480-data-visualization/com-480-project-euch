@@ -115,6 +115,8 @@ whenDocumentLoaded(() => {
 	loaded = true
 	SM = new Small_multiples(5);
 
+	let div_err = document.getElementById("div_err");
+	let text_err = document.getElementById("text_error")
 	svg = d3.select('#display');
 
 	drawAthleteDescription(ath0, svg, 0, 0, lightGreen, darkGreen);
@@ -139,13 +141,15 @@ whenDocumentLoaded(() => {
 
 		// display results will prepare data, build the average athlete and construct the graphs,
 		// finally it will return the average athlete computed
+		SM.unselectAll();
 		let ath = displayResults(currSport, "All")
 
 		const svg3d = d3.select('#display');
 	
 		drawAthleteDescription(ath, svg3d, 0, 0, lightGreen, darkGreen);
-
 		updateEventOptions(eventSelD3, currSport);
+		div_err.style.opacity = 0;
+		text_err.innerHTML = "";
 	});
 
 	eventSel.addEventListener("change", () => {
@@ -158,6 +162,10 @@ whenDocumentLoaded(() => {
 
 		const svg3d = d3.select('#display');
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
+		SM.unselectAll();
+		div_err.style.opacity = 0;
+		text_err.innerHTML = "";
+
 	});
 	
 
@@ -166,7 +174,9 @@ whenDocumentLoaded(() => {
 	
 	//remove all elements of SM
 	document.getElementById('remove_all')
-		.addEventListener('click',() => {SM.removeAll();});
+		.addEventListener('click',() => {
+						SM.removeAll();
+						div_err.style.opacity = 0;});
 	
 
 	//sorted by selector
@@ -200,17 +210,29 @@ whenDocumentLoaded(() => {
 
 
 	//add button to SM, may write an error
-	error = document.getElementById("error_message");
+	let error = d3.select("#error_message");
+
+	error.append("g").append('image')
+		    .attr('xlink:href', '../res/error-svgrepo-com.svg')
+		    .attr('width', 20)
+		    .attr('height', 20)
+		    .attr('x', 0)
+		    .attr('y', 0);
+
 	document.getElementById('add_btn')
 		.addEventListener('click',() => {
 			const sport = sportSel.value;
 			const event = eventSel.value;
 			if(SM.isFull()){
-				error.innerHTML = "The small multiples is Full. Please remove an element";
+				div_err.style.opacity = 1;
+				text_err.innerHTML = "The comparison grid is full, please remove an element.";
 			} else if(sport == "None") {
-				error.innerHTML = "Please select a sport to add in the small multiples.";
+				div_err.style.opacity = 1;
+				text_err.innerHTML = "Please select a sport to add in the small multiples.";
 			} else {
-				error.innerHTML = "";
+				div_err.style.opacity = 0;
+				text_err.innerHTML = "";
+
 
 				prepareData(avgYears[0], avgYears[1], sport, event, resArray)
 				let ath = averageAthlete(avgYears[0], avgYears[1], sport, event);

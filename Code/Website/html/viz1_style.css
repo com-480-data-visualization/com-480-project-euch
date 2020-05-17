@@ -41,10 +41,31 @@ p {
 	background-color: transparent;
 }
 
-#error_message {
+
+
+#div_err {
 	display: inline-block;
-	color: red;
-	padding-left: 20px;
+	margin-top: 11.5px;
+	opacity:0;
+	float: right;
+	height: 20px;
+	width:530px;
+}
+
+#error_message {
+	float: left;
+	width: 20px;
+	height: 20px;
+}
+
+
+#text_error{
+	height: 20px;
+	float:left;
+	margin-left: 20px;
+	text-align: left;
+	opacity: 0;
+	font-style: italic;
 }
 
 #data_selection {
@@ -189,10 +210,6 @@ p {
 	font-size: 11px;
 }
 
-#error_message {
-	margin-top: 10px;
-	margin-bottom: 0px;
-}
 
 /* Autocomplete styling */
 
