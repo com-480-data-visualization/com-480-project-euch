@@ -175,7 +175,7 @@ function createSMFrame(SM,athlete,svg,index,isSelected){
 	//Add Athlete
 	let width = parseInt(svg.style("width"))
 	let height = parseInt(svg.style("height"))
-	drawAthlete(athlete, svg, height*0.95, 0, -40, 0);
+	drawAthlete(athlete, svg, height*0.9, 0, -40, 0);
 
 	var rect_svg = svg.append("rect")
 		.attr('id','SM_select'+index)
