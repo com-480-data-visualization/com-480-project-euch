@@ -81,6 +81,23 @@
 			<!-- elem_1, elem_2, elem_3, elem_4 -->
 			<!-- elem_5, elem_6, elem_7, elem_8 -->
 			<div id=small_multiple>
+
+				<div id=filter>
+					<select id="sort_selector">
+						<option value="none">No sorting</option>
+						<option value="weight">Sort by weight</option>
+						<option value="height">Sort by height</option>
+						<option value="age">Sort by age</option>
+					</select>
+
+					<select id="asc_selector">
+						<option value="ascending">Ascending</option>
+						<option value="descending">Descending</option>
+					</select>
+
+					<button id="remove_all">Remove all</button>
+				</div>
+
 				<div id=grid>
 					<!-- div for elem_0 of the Small Multiple-->
 					<div class="elements_SM" id = 'elem_0_div'> 
@@ -112,24 +129,8 @@
 
 						</svg>
 					</div>
-				</div>
-				<!-- div buttons to filter the small multiple-->			
-				<div id="filter">
-					<select id="sort_selector">
-						<option value="none">No sorting</option>
-						<option value="weight">Sort by weight</option>
-						<option value="height">Sort by height</option>
-						<option value="age">Sort by age</option>
-					</select>
-
-					<select id="asc_selector">
-						<option value="ascending">Ascending</option>
-						<option value="descending">Descending</option>
-					</select>
-
-					<button id="remove_all">Clear</button>
-				</div>
-</div>
+				</div>	
+			</div>
 
 
 	</main>
