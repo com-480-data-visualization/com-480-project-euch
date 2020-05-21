@@ -114,6 +114,7 @@ whenDocumentLoaded(() => {
 	ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0')
 	loaded = true
 	SM = new Small_multiples(5);
+	SM.refresh_SM();
 
 	let div_err = document.getElementById("div_err");
 	let text_err = document.getElementById("text_error")
@@ -236,6 +237,8 @@ whenDocumentLoaded(() => {
 
 				prepareData(avgYears[0], avgYears[1], sport, event, resArray)
 				let ath = averageAthlete(avgYears[0], avgYears[1], sport, event);
+
+				
 				SM.add(ath);
 				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 			}
