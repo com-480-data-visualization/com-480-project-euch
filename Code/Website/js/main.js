@@ -186,10 +186,19 @@ whenDocumentLoaded(() => {
 	});
 
 
-	//ascending selector
-	document.getElementById('asc_selector').addEventListener("change", () => {
+	//ascending and descending selector
+	/*document.getElementById('asc_selector').addEventListener("change", () => {
 		SM.sort("",asc_selector.value == "ascending");
-	});
+	});*/
+
+	document.getElementById('asc').addEventListener("click", () => {
+			SM.sort("",true);
+		});
+
+	document.getElementById('des').addEventListener("click", () => {
+			SM.sort("",false);
+		});	
+
 
 	console.log(sportsArray);
 	

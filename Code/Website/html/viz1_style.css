@@ -34,6 +34,33 @@ p {
 	
 }
 
+
+
+#asc {
+    width: 20px;
+    height:20px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    background-image: url('../res/ascending-sort-svgrepo-com.svg');
+    background-repeat: no-repeat;
+    border: solid;
+    border-color: white;
+    margin-right: 5px;
+}
+
+#des {
+    width: 20px;
+    height:20px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    background-image: url('../res/ascending-sort-svgrepo-com.svg');
+    background-repeat: no-repeat;
+    border: solid;
+    border-color: white;
+    margin-right: 10px;
+    transform: rotate(180deg);
+}
+
 #buttons {
 	text-align: left;
 	display: inline-block;
