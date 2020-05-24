@@ -1,6 +1,7 @@
 <!doctype html>
 
 <html lang="en">
+<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
 <head>
 	<meta charset="utf-8">
 
@@ -8,7 +9,10 @@
 	<meta name="description" content="Data-Viz">
 	<meta name="author" content="euch">
 
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="skeleton.css">
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="viz1_style.css">
 
 </head>
 
@@ -17,37 +21,135 @@
 	<!--Header containing banner and navigation-->
 	<header>
 		<!-- Banner-->
-		<p style="text-align:center;">
-			<img src="olympic_rings.jpg" alt="olympic rings" id="banner"/>
-		</p>
-
-		<!-- Menu -->
-		<nav class="container borderXwidth">
-			<a href="index.html">HOME</a>
-			<a href="viz1.html">VISUALIZATION 1</a>
-			<a href="about.html">ABOUT</a>
-		</nav>
-	</header>
-	<main>
-		<div id="description">
-			<p> <h2> Prototype of the website we will use for our Project for the CS-480 class.</h2><br/>
-				The instructions of the project can be found <a href="https://com-480-data-visualization.github.io/2020-project-guidelines/#latepolicy">here</a> and the github repository of our project can be found <a href="https://github.com/com-480-data-visualization/com-480-project-euch">here</a>
-				<br/><br/>
-				<h3>Our problematic is the following:</h3><br/>
-				We choose the dataset “120 years of Olympic history athletes and results” because of our overall interest in sport and more particularly in the Olympic games which are arguably the biggest and most entertaining sports competitions. Moreover, we wanted to create some visualizations about an international topic and that could interest anyone. Finally, considering the actual situation with the Covid-19 crisis, we did not want to make a visualization using a dataset that is related to something negative such as disasters or pandemics.
-				We will make two main visualizations following two different axes:
-				<ul>
-				<li> The first axis (VISUALIZATION 2) is a comparison of medals and participation of athletes in the past Olympic games. The goal of this visualization is to obtain a clear overview of the performances of a country, a region or a continent. Those performances can be compared with another country, region or continent at a specific Olympic game or over a given span of time. It will be aimed for the general public, at people that are not necessarily interested in sports but at least curious, for example, about a nation or a particular period of time.</li>
-				<li> The second visualization (VISUALIZATION 1) is focused on the physical characteristics of athletes depending on the sport they are playing. The characteristics we are comparing are morphological ones such as height and weight as well as the sex and age. It will allow, for example, to see the morphology of medal-winning athletes over the years for a given sport. One could also observe the average characteristics of participating athletes of a particular country or region. This visualization is aimed at people that are more deeply interested in sport and are curious about the physical characteristics of athletes for different sports over the years. It is more oriented in a scientific way and will contain some specific data about the athletes that is not necessarily interesting for the general public.</li>
-				</ul>
-			</p>
+		<div id='header'>
+			<div id='logo_title'>
+				<img src="olympic_rings.jpg" alt="olympic rings" id="logo"/>
+				<h1>Olympic athletes body among the years</h1>
+			</div>
 		</div>
+	</header>
+
+	<main>
+		<div id="visualization1">
+			<!-- div that contains element that selects and display -->
+			<div id ="selection" >
+				<!-- div that contains elements to select a sport/discipline-->
+				<div id ="buttons">
+					<select class='selection_button' id="sport_selector">
+						<option value="none">None</option>
+
+					</select>
+					<select class='selection_button' id="event_selector">
+						<option value="all">All</option>
+					</select> 
+					<form id='search_form' autocomplete="off">
+						<div class="autocomplete">
+						  <input id="search_bar" type="text" name="search" placeholder="Search a sport or discipline..">
+						</div>
+					  </form>
+					<button class='selection_button' id="add_btn">Compare</button>
+					<div id="div_err"><svg id="error_message" onmouseover="document.getElementById('text_error').style.opacity = 1;"
+						onmouseout="document.getElementById('text_error').style.opacity = 0;"></svg>
+					<span id="text_error">hello</span>
+					</div>
+				</div>
+
+				<!-- div that contains chart about the selection -->
+				<div id="chart_selection">
+					<div id="chart1">
+					</div>
+					<div id="chart2">
+					</div>
+					<div id="chart3">
+					</div>
+					<div id="chartx">
+					</div>
+				</div>
+
+				<!-- div that contains some data about the selection-->
+				<div id="data_selection">
+					<svg id="display">
+
+					</svg>
+				</div>
+
+			</div>
+
+			<!-- div that contains the small multiple element 1 to 8 in the following way-->
+			<!-- elem_1, elem_2, elem_3, elem_4 -->
+			<!-- elem_5, elem_6, elem_7, elem_8 -->
+			<div id=small_multiple>
+
+				<div id=filter>
+					<select id="sort_selector">
+						<option value="none">No sorting</option>
+						<option value="weight">Sort by weight</option>
+						<option value="height">Sort by height</option>
+						<option value="age">Sort by age</option>
+					</select>
+
+					<!-- <select id="asc_selector">
+						<option value="ascending">Ascending</option>
+						<option value="descending">Descending</option>
+					</select> -->
+
+					<button id="asc"></button>
+
+					<button id="des"></button>
+
+					<button id="remove_all">Clear</button>
+				</div>
+
+				<div id=grid>
+					<!-- div for elem_0 of the Small Multiple-->
+					<div class="elements_SM" id = 'elem_0_div'> 
+						<svg id="elem_0">
+
+						</svg>
+					</div>
+					<!-- div for elem_1 of the Small Multiple-->
+					<div class="elements_SM" id = 'elem_1_div'>
+						<svg id="elem_1">
+
+						</svg>
+					</div>
+					<!-- div for elem_2 of the Small Multiple-->
+					<div class="elements_SM" id = 'elem_2_div'>
+						<svg id="elem_2">
+
+						</svg>
+					</div>			
+					<!-- div for elem_2 of the Small Multiple-->
+					<div class="elements_SM" id = 'elem_3_div'>
+						<svg id="elem_3">
+
+						</svg>
+					</div>		
+					<!-- div for elem_2 of the Small Multiple-->
+					<div class="elements_SM" id = 'elem_4_div'>
+						<svg id="elem_4">
+
+						</svg>
+					</div>
+				</div>	
+			</div>
+
+
 	</main>
 
-	<hr>
 	<footer>
   		<span>CS-480 Data Visualization EPFL, group: euch</span>
 	</footer>
+	<script src="../lib/d3.min.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.min.js"></script>
+	<script src="../js/drawAthlete.js"></script>
+	<script src="../js/drawAthleteDescription.js"></script>
+	<script src="../js/main.js"></script>
+	<script src="../js/athlete.js"></script>
+	<script src="../js/smallMultiple.js"></script>
+	<script src="../js/graphs.js"></script>
+	<script src="../js/autocomplete.js"></script>
+
 
 </body>
 </html>

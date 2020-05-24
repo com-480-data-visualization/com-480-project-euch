@@ -1,25 +1,22 @@
 function createButton(SM,svg,index){
 	//creation of the button, inspired from:
 	//https://bl.ocks.org/Lulkafe/95a63ddea80d4d02cc4ab8bedd48dfd8
-	var size_button = 20, 
-	x = 0,
-	y = 0,
+	var size_button = 25, 
+	x = 3,
+	y = 3,
 	rx = 4,
 	ry = 4,
 	crossStrokeWidth = 1.5;
 
-    var crossStyle = {
-        "stroke-width": crossStrokeWidth,
-        "stroke": "grey"
-    },
-    r = size_button / 2,
+    var r = size_button / 2,
     ofs = size_button / 6,
     cross,
     g;
 
-    g = svg.append("g").on("click", function(){SM.remove(index);});
-    cross = g.append("g")
-
+	g = svg.append("g")
+		.on("click", function(){SM.remove(index);})
+		.attr('class', 'cross');
+	
     g.append("rect")
 		.attr("x", x)
 		.attr("y", y)
@@ -30,20 +27,19 @@ function createButton(SM,svg,index){
 		.attr("fill-opacity", 0);
  
 
-    cross.append("line")
+	g.append("line")
     	.attr("x1", x + ofs)
         .attr("y1", y + ofs)
         .attr("x2", (x + size_button) - ofs)
         .attr("y2", (y + size_button) - ofs)
-		.attr("stroke-width", crossStrokeWidth)
 		.attr("stroke", "black");
 
-    cross.append("line")
+
+	g.append("line")
         .attr("x1", (x + size_button) - ofs)
         .attr("y1", y + ofs)
         .attr("x2", x + ofs)
         .attr("y2", (y + size_button) - ofs)
-		.attr("stroke-width", crossStrokeWidth)
 		.attr("stroke", "black");
 
 
@@ -64,34 +60,57 @@ function createTextAthlete(svg,athlete) {
 		event = athlete.event.substr(index_split + 1);
 	}
 
-	var sport = svg.append("g");
-
 	const margin_text = 10;
 
-	sport.append("text")
+	svg.append("text")
+		.attr('class', 'sm_sport')
 		.attr("x",margin_text)
-		.attr("y",height - 22)
+		.attr("y",height - 26)
 		.text(athlete.sport)
-		.attr("font-family","Railway")
-		.attr("font-size",15);
 	
-	var ev = svg.append("g");
-
-	ev.append("text")
+	svg.append("text")
+		.attr('class', 'sm_event')
 		.attr("x",margin_text)
-		.attr("y",height-5)
+		.attr("y",height-9)
 		.text(event)
-		.attr("font-family","Railway")
-		.attr("font-size",15);
 
-	var year = svg.append("g");
+	svg.append("text")
+		.attr('class', 'sm_year')
+		.attr('text-anchor', 'middle')
+		.attr("x",width/2)
+		.attr("y",20)
+		.text(athlete.start_year+" - "+athlete.end_year)
 
-	year.append("text")
-		.attr("x",width - 73)
-		.attr("y",13)
-		.text(athlete.start_year+" to "+athlete.end_year)
-		.attr("font-family","Railway")
-		.attr("font-size",13);
+	const lineHeight = height - 48;
+
+	svg.append('line')
+		.attr('class', 'sm_textline')
+		.attr('x1', margin_text)
+		.attr('x2', width - margin_text)
+		.attr('y1', lineHeight)
+		.attr('y2', lineHeight)
+
+	
+	const feat_offset = 15
+	const dist_from_line = 8
+
+	svg.append('text')
+		.attr('class', 'sm_feat')
+		.attr('x', margin_text)
+		.attr('y', lineHeight-dist_from_line)
+		.text(athlete.age.toFixed(1) + ' years')
+
+	svg.append('text')
+		.attr('class', 'sm_feat')
+		.attr('x', margin_text)
+		.attr('y', lineHeight-dist_from_line-feat_offset)
+		.text(athlete.height.toFixed(1) + ' cm')
+
+	svg.append('text')
+		.attr('class', 'sm_feat')
+		.attr('x', margin_text)
+		.attr('y', lineHeight-dist_from_line-(2*feat_offset))
+		.text(athlete.weight.toFixed(1) + ' kg')
 }
 
 
@@ -177,7 +196,7 @@ function createSMFrame(SM,athlete,svg,index,isSelected){
 	//Add Athlete
 	let width = parseInt(svg.style("width"));
 	let height = parseInt(svg.style("height"));
-	drawAthlete(athlete, svg, height*0.9, 0, -40, 0);
+	drawAthlete(athlete, svg, height*0.82, 0, -55, 0);
 
 	var rect_svg = svg.append("rect")
 		.attr('id','SM_select'+index)
@@ -231,12 +250,12 @@ function createAddFrame(SM,svg){
 
 	//append plus image
 	plus.append('image')
+		.attr('id', 'plus')
 		.attr('xlink:href', '../res/add-svgrepo-com.svg')
 		.attr('width', 70)
 		.attr('height', 70)
 		.attr('x', width/2 - 35)
 		.attr('y', height/2 - 35)
-		.style("opacity", 0.5);
 
 }
 

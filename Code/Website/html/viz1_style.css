@@ -297,6 +297,48 @@ button:hover {
 	background-color:transparent;
 }
 
+#plus {
+	opacity: 0.4;
+}
+
+#plus:hover {
+	opacity: 0.6;
+}
+
+.cross {
+	stroke-width: 1.5px;
+	opacity: 0.8;
+}
+
+.cross:hover {
+	stroke-width: 2.5px;
+	opacity: 1;
+	pointer-events: bounding-box;
+}
+
+.sm_sport {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.sm_event {
+	font-size: 14px;
+}
+
+.sm_year {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.sm_textline {
+	stroke-width: 1px;
+	stroke: #9b9b9b;
+}
+
+.sm_feat {
+	font-size: 12px;
+}
+
 
 
 
