@@ -1,14 +1,36 @@
 
-#banner {
+#header {
+    width: 100%;
+    background-color: white;
+    height: 200px;
+    text-align: center;
+}
+
+#logo_title {
+    display: inline-block;
+}
+
+
+#logo     {
 	height: 100px;
 	width: auto;
-	text-align: middle;
+    float: left;
+    margin-top: 40px;
 }
+
+
+
+h1 {
+    width: 1110px;
+    margin-top: 57px;
+}
+
+
 
 
 body {
     content: "";
-    background: url('../res/sprint.jpg');
+    background: url('../res/og_colors.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;

@@ -9,6 +9,8 @@
 	<meta name="description" content="Data-Viz">
 	<meta name="author" content="euch">
 
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="skeleton.css">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="viz1_style.css">
 
@@ -19,16 +21,12 @@
 	<!--Header containing banner and navigation-->
 	<header>
 		<!-- Banner-->
-		<p style="text-align:center;">
-			<img src="olympic_rings.jpg" alt="olympic rings" id="banner"/>
-		</p>
-
-		<!-- Menu -->
-		<nav class="container borderXwidth">
-			<a href="index.html">HOME</a>
-			<a href="viz1.html">VISUALIZATION</a>
-			<a href="about.html">ABOUT</a>
-		</nav>
+		<div id='header'>
+			<div id='logo_title'>
+				<img src="olympic_rings.jpg" alt="olympic rings" id="logo"/>
+				<h1>Olympic athletes body among the years</h1>
+			</div>
+		</div>
 	</header>
 
 	<main>
@@ -46,7 +44,7 @@
 					</select> 
 					<form id='search_form' autocomplete="off">
 						<div class="autocomplete">
-						  <input id="search_bar" type="text" name="search" placeholder="Search a sport..">
+						  <input id="search_bar" type="text" name="search" placeholder="Search a sport or discipline..">
 						</div>
 					  </form>
 					<button class='selection_button' id="add_btn">Compare</button>
@@ -95,11 +93,9 @@
 						<option value="descending">Descending</option>
 					</select> -->
 
-					<button id="asc">
-					</button>
+					<button id="asc"></button>
 
-					<button id="des">
-					</button>
+					<button id="des"></button>
 
 					<button id="remove_all">Clear</button>
 				</div>

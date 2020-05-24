@@ -1,6 +1,76 @@
+
+
+
+/* ************************************** Default styling ************************************** */
+
 * { box-sizing: 
 	border-box;
 }
+
+p {
+	margin: 0px;
+}
+
+/* Select styling */
+
+select {
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+
+	background-image:
+	  linear-gradient(45deg, transparent 50%, gray 50%),
+	  linear-gradient(135deg, gray 50%, transparent 50%),
+	  linear-gradient(to right, #ccc, #ccc);
+	background-position:
+	  calc(100% - 20px) calc(1em + 2px),
+	  calc(100% - 15px) calc(1em + 2px),
+	  calc(100% - 2.5em) 0.5em;
+	background-size:
+	  5px 5px,
+	  5px 5px,
+	  1px 1.5em;
+	background-repeat: no-repeat;
+  }
+
+button:focus,
+a:focus, a:active,
+button::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+select::-moz-focus-inner,
+input[type="file"] > input[type="button"]::-moz-focus-inner {
+	outline: none !important;
+}
+select:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #000;
+}
+
+/* Button styling */
+
+
+button {
+	width: 120px;
+	background-color: white;
+	vertical-align: top;
+}
+
+button:hover {
+	color: #ffffff !important;
+	background: #636363;
+	border-color: #636363 !important;
+	transition: all 0.4s ease 0s;
+}
+
+
+
+
+/* ************************************** Visulaisation div ************************************** */
 
 #visualization1 {
 	width: 1200px;
@@ -13,10 +83,8 @@
 
 
 
-p {
-	margin: 0px;
-}
 
+/* ************************************** Selection ************************************** */
 
 #selection {
 	display: inline-block;
@@ -26,40 +94,16 @@ p {
 	margin-bottom: 40px; 
 	width: 98%;
 	height: 50%;
-	background-color:#fffffff0;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	
+	background-color:#ffffff;
+	border-top: 0px solid black;
+	border-bottom: 0px solid black;
+	border-left: 0px solid black;
+	border-right: 0px solid black;
+	border-radius: 10px;
+	box-shadow: 5px 7px 10px #00000034;
 }
 
-
-
-#asc {
-    width: 20px;
-    height:20px;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    background-image: url('../res/ascending-sort-svgrepo-com.svg');
-    background-repeat: no-repeat;
-    border: solid;
-    border-color: white;
-    margin-right: 5px;
-}
-
-#des {
-    width: 20px;
-    height:20px;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    background-image: url('../res/ascending-sort-svgrepo-com.svg');
-    background-repeat: no-repeat;
-    border: solid;
-    border-color: white;
-    margin-right: 10px;
-    transform: rotate(180deg);
-}
+/* ******************* Selection buttons ******************* */
 
 #buttons {
 	text-align: left;
@@ -69,7 +113,24 @@ p {
 	background-color: transparent;
 }
 
+#sport_selector, #event_selector, #search_form, #add_btn{
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 120px;
+}
 
+#sport_selector {
+	width: 220px;
+}
+
+#event_selector {
+	width: 300px;
+}
+
+#search_form {
+	width: 300px;
+	display: inline-block;
+}
 
 #div_err {
 	display: inline-block;
@@ -96,21 +157,15 @@ p {
 	font-style: italic;
 }
 
+/* ******************* Athlete description ******************* */
+
+
 #data_selection {
 	float:left;
 	display: inline-block;
 	background-color: transparent;
 	height: 90%;
 	width: 25%;
-}
-
-#chart_selection {
-	display: inline-block;
-	float: right;
-	width: 75%;
-	height: 90%;
-	background-color: transparent;
-	items: center;
 }
 
 #display {
@@ -120,95 +175,20 @@ p {
 	background-color:transparent;
 }
 
-#small_multiple{
-	margin-left: 1%;	
-	width: 98%;
-	height: 40%;
-	background-color: transparent;
-}
-
-#grid {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-	border-top: 1px dashed black;
-	border-bottom: 1px dashed black;
-}
-
-
-.elements_SM {
-	display: inline-block;
-	float: left;
-	width: 20%;
-	height: 100%;
-	border-right: 1px dashed black;
-	border-top: 0px dashed black;
-	border-bottom: 0px dashed black;
-	background-color: #fffffff0;
-}
-
-#elem_0_div {
-	border-left: 1px dashed black;
-}
-
-#filter {
-	background-color: transparent;
-	text-align: left;
-	display: inline-block;
-	width: 100%;
-	height: 40px;	
-}		
-
-
-#sort_selector,#remove_all, #asc_selector {
-	margin-right: 10px;
-}
-
-
-#sport_selector, #event_selector, #select_btn, #add_btn{
-	margin-top: 10px;
-	margin-left: 10px;
-}
-
-#sport_selector {
-	margin-left: 14px;
-}
-
-#remove_all, #sort_selector, #asc_selector, 
-#sport_selector, #event_selector, #select_btn, #add_btn{
-	width: 120px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	text-align:center;
-	display: table-cell;
-	vertical-align: middle;
-	color: #494949 !important;
-	text-decoration: none;
-	background: #ffffff;
-	border: 1px solid #494949 !important;
-	display: inline-block;
-	
+.label {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
 
+/* ******************* Charts description ******************* */
 
-#event_selector {
-	width: 180px;
-}
-
-#remove_all:hover, #select_btn:hover, #add_btn:hover{
-	color: #ffffff !important;
-	background: #636363;
-	border-color: #636363 !important;
-	transition: all 0.4s ease 0s;
-}
-
-#elem_0, #elem_1, #elem_2, #elem_3, #elem_4 {
-	float:left;
-	height: 100%;
-	width: 100%;
-	background-color:transparent;
+#chart_selection {
+	display: inline-block;
+	float: right;
+	width: 75%;
+	height: 90%;
+	background-color: transparent;
+	items: center;
 }
 
 #chart1 , #chart2, #chart3{
@@ -224,27 +204,103 @@ p {
 	height: 10%;
 }
 
-.label {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
-}
-
 .chart_label {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
 
 
-/* Autocomplete styling */
 
+/* ************************************** Small multiple ************************************** */
 
-#search_form {
-	width: 150px;
-	display: inline-block;
-	margin-top: 10px;
-	margin-left: 10px;
-	vertical-align: middle;
+#small_multiple{
+	margin-left: 1%;	
+	width: 98%;
+	height: 40%;
+	background-color: transparent;
 }
+
+/* ******************* Buttons ******************* */
+
+#filter {
+	background-color: transparent;
+	text-align: left;
+	display: inline-block;
+	width: 100%;
+	height: 40px;
+	margin-bottom: 8px;	
+}
+
+
+#sort_selector {
+	width: 170px;
+}
+
+#remove_all {
+	margin-left: 10px;
+}
+
+#asc {
+	background-image: url('../res/ascending_2.svg');
+}
+
+#des {
+	background-image: url('../res/descending.svg');
+}
+
+#asc, #des {
+	background-repeat: no-repeat;
+	background-size: 60%;
+	background-position: center; 
+	width: 38px;
+	padding: 0px;
+}
+
+#sort_selector, #asc, #des, #remove_all {
+	box-shadow: 5px 7px 10px #00000034;
+}
+
+
+/* ******************* Grid ******************* */
+
+#grid {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	border-top: 0px dashed black;
+	border-bottom: 0px dashed black;
+}
+
+.elements_SM {
+	display: inline-block;
+	float: left;
+	width: 19.2%;
+	margin-right: 1%;
+	height: 100%;
+	border-right: 0px dashed black;
+	border-top: 0px dashed black;
+	border-bottom: 0px dashed black;
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 5px 7px 10px #00000034;
+
+}
+
+#elem_4_div {
+	margin-right: 0%;
+}
+
+#elem_0, #elem_1, #elem_2, #elem_3, #elem_4 {
+	float:left;
+	height: 100%;
+	width: 100%;
+	background-color:transparent;
+}
+
+
+
+
+/* ************************************** Autocomplete ************************************** */
 
 .autocomplete {
 	/*the container must be positioned relative:*/
@@ -257,8 +313,6 @@ input {
 	border: 1px solid black;
 	background-color: #ffffff;
 	padding: 4px;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
 }
 input[type=text] {
 	background-color: #ffffff;
@@ -275,8 +329,6 @@ input[type=text] {
 	top: 100%;
 	left: 0;
 	right: 0;
-	font-size: 12px;
-	font-family: Arial, Helvetica, sans-serif;
 	text-align: left;
 	width: 100%;
 }
@@ -295,6 +347,10 @@ input[type=text] {
 	background-color: #e9e9e9 !important;
 	color: #000000;
 }
+
+
+
+
 
 
 
