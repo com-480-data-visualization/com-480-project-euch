@@ -6,6 +6,7 @@ height = 360 - margin.top - margin.bottom;
 let chartHeight = 70;
 let chartWidth = 750;
 
+
 // append the svg object to the body of the page
 let svgChartHeight = d3.select("#chart1")
     .append("svg")
@@ -14,6 +15,7 @@ let svgChartHeight = d3.select("#chart1")
     .append("g")
     .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")")
+
 
 let svgChartWeight = d3.select("#chart2")
     .append("svg")
@@ -57,7 +59,7 @@ var svgx = svgChartX.append("svg")
         .attr("transform",
             "translate(" + margin.left + ",10)")
 const brush = d3.brushX()
-    .extent([[-5, -handleRadius +2], [chartWidth + 5,  handleRadius * 2 + 2]])
+    .extent([[0, -handleRadius +2], [chartWidth,  handleRadius * 2 + 2]])
     .on("start brush end", brushmoved);
 
 
@@ -71,14 +73,14 @@ var handle = gBrush.selectAll(".handle--custom")
     .data([{type: "w"}, {type: "e"}])
     .enter().append("path")
     .attr("class", "handle--custom")
-    .attr("fill", "Red")
+    .attr("fill", "#ADD8E6")
     .attr("fill-opacity", 1)
     .attr("stroke", "#000")
-    .attr("stroke-width", 00)
+    .attr("stroke-width", 0)
     .attr("cursor", "ew-resize")
     .attr("d", d3.arc()
         .innerRadius(0)
-        .outerRadius(handleRadius)
+        .outerRadius(handleRadius + 2)
         .startAngle(0)
         .endAngle(function(d, i) { return i ? Math.PI : -Math.PI; }))
     .attr("display" , "none");
@@ -88,11 +90,22 @@ var avgYears = [1896,2016]
 
 gBrush.call(brush.move, avgYears.map(x));
 
+let heightColor = 'hsl(11, 56%, 66%)';
+let weightColor = 'hsl(274, 44%, 65%)';
+let ageColor = 'hsl(94, 38%, 50%)';
+
+
 function brushmoved() {
     let s = d3.event.selection;
+    console.log(s)
     if (s == null) {
         var mousex = d3.mouse(this)[0]
-        gBrush.call(brush.move, [mousex, mousex+.001]);
+        console.log(mousex)
+        if(mousex > 0 && mousex < 750) {
+            gBrush.call(brush.move, [mousex, mousex+.001]);
+        } else {
+            handle.attr("display", "none")
+        }
     } else {
         avgYears = s.map(inverseX).map(Math.round)
         updateViz()
@@ -149,13 +162,31 @@ function initCharts() {
         .attr("transform", "translate(-15,0)")
         .call(d3.axisLeft(y).tickSize(5).tickFormat(d3.format("d")));
 
+    svgChartWeight.select(".domain")
+        .attr("stroke",weightColor)
+        .attr("stroke-width","2")
+        .attr("opacity","1");
+
+
     svgChartHeight.append("g")
         .attr("transform", "translate(-15,0)")
         .call(d3.axisLeft(y).tickSize(5).tickFormat(d3.format("d")));
 
+    svgChartHeight.select(".domain")
+        .attr("stroke",heightColor)
+        .attr("stroke-width","2")
+        .attr("opacity","1");
+
+
     svgChartAge.append("g")
         .attr("transform", "translate(-15,0)")
         .call(d3.axisLeft(y).tickSize(5).tickFormat(d3.format("d")));
+
+    svgChartAge.select(".domain")
+        .attr("stroke",ageColor)
+        .attr("stroke-width","2")
+        .attr("opacity","1");
+
 }
 
 initCharts()
@@ -168,6 +199,8 @@ function startChart(svg_, type) {
     let chartId
     let data
     let data_select
+
+    var unit = "Kg";
 
     var lineColor;
     switch(type) {
@@ -196,7 +229,7 @@ function startChart(svg_, type) {
             data_select = weightGroupByYearSelect
 
             chartId = "#chart2"
-            lineColor ='hsl(274, 44%, 65%)';
+            lineColor = weightColor;
 
             const weightGroupByYearValues = weightGroupByYear.map(d => d.value) // y-values in the chart
 
@@ -205,6 +238,7 @@ function startChart(svg_, type) {
                     Math.floor(d3.min(weightGroupByYearValues) / 10) * 10,
                     Math.ceil(d3.max(weightGroupByYearValues) / 10) * 10])
                 .range([ chartHeight, 0 ]);
+
 
 
             break;
@@ -233,7 +267,7 @@ function startChart(svg_, type) {
             data_select = heightGroupByYearSelect
 
             chartId = "#chart1"
-            lineColor = 'hsl(11, 56%, 66%)';
+            lineColor = heightColor;
             const heightGroupByYearValues = heightGroupByYear.map(d => d.value) // y-values in the chart
             y = d3.scaleLinear()
                 .domain([
@@ -242,6 +276,8 @@ function startChart(svg_, type) {
                 .range([ chartHeight, 0 ]);
 
 
+            //update unti for tooltip text
+            unit = "cm";
             break;
         case 2:
             //age
@@ -269,7 +305,7 @@ function startChart(svg_, type) {
             })
             data_select = ageGroupByYearSelect
 
-            lineColor = 'hsl(94, 38%, 50%)';
+            lineColor = ageColor;
 
             const ageGroupByYearValues = ageGroupByYear.map(d => d.value) // y-values in the chart
             y = d3.scaleLinear()
@@ -278,6 +314,7 @@ function startChart(svg_, type) {
                     Math.ceil(d3.max(ageGroupByYearValues) / 10) * 10])
                 .range([ chartHeight, 0 ]);
 
+            unit = "ys"
             break;
     }
 
@@ -285,6 +322,11 @@ function startChart(svg_, type) {
     svg_.append("g")
         .attr("transform", "translate(-15,0)")
         .call(d3.axisLeft(y).tickSize(5).tickValues(y.domain()).tickFormat(d3.format("d")));
+
+    svg_.select(".domain")
+        .attr("stroke",lineColor)
+        .attr("stroke-width","2")
+        .attr("opacity","1");
 
 
     // Add the line
@@ -308,7 +350,6 @@ function startChart(svg_, type) {
             .y(function(d) { return y(d.value) })
         )
 
-
     // Add the points
     svg_
         .append('g')
@@ -321,14 +362,39 @@ function startChart(svg_, type) {
         .attr("r", 3)
         .attr("fill", "Black")
         .attr("fill-opacity", 0.3)
-        .on('mouseover', function (d, i) {
+        .on("mouseover", function(d) {
             d3.select(this).transition()
                 .duration('50')
-                .attr('fill-opacity', '1'); })
-        .on('mouseout', function (d, i) {
+                .attr('fill-opacity', '1')
+
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .7);
+            let yeartext = d.key
+            let valuetext = d3.format(".1f")(d.value) + " " + unit
+            tooltip.html(function(){
+                return yeartext + " <br> " + valuetext
+            })
+                .style("left", (d3.event.pageX - 15) + "px")
+                .style("top", (d3.event.pageY - 35) + "px")
+                .style("background", "#D3D3D3")
+
+        ;})
+
+
+        .on('mouseout', function (d) {
             d3.select(this).transition()
                  .duration('50')
-                 .attr('fill-opacity', '0.3')});
+                 .attr('fill-opacity', '0.3')
+
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0);
+        });
+
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
     svg_
         .append('g')
@@ -345,11 +411,32 @@ function startChart(svg_, type) {
         .on('mouseover', function (d, i) {
             d3.select(this).transition()
                 .duration('50')
-                .attr('fill', lineColor); })
+                .attr('fill', lineColor);
+            console.log("Hover")
+
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .7);
+            let keyText = d.key
+            let valueText = d3.format(".1f")(d.value) + " " + unit
+
+            tooltip.html(function(){
+                return keyText + " <br> " + valueText
+            })                .style("left", (d3.event.pageX - 15) + "px")
+                .style("top", (d3.event.pageY - 35) + "px")
+                .style("background", lineColor)
+
+        })
         .on('mouseout', function (d, i) {
             d3.select(this).transition()
                 .duration('50')
-                .attr('fill', "White")});
+                .attr('fill', "White")
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0);
+        });
+
+
 
 }
 

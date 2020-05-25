@@ -101,6 +101,8 @@ button:hover {
 	border-right: 0px solid black;
 	border-radius: 10px;
 	box-shadow: 5px 7px 10px #00000034;
+	opacity : 0.92
+
 }
 
 /* ******************* Selection buttons ******************* */
@@ -189,6 +191,7 @@ button:hover {
 	height: 90%;
 	background-color: transparent;
 	items: center;
+
 }
 
 #chart1 , #chart2, #chart3{
@@ -300,6 +303,25 @@ button:hover {
 #plus {
 	opacity: 0.4;
 }
+
+div.tooltip {
+	position: absolute;
+	text-align: center;
+	width: 60px;
+	height: 34px;
+	padding: 2px;
+	font: 12px sans-serif;
+	font-weight:bold;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+rect.selection {
+	fill: #ADD8EB;
+	opacity: 1;
+}
+
 
 #plus:hover {
 	opacity: 0.6;
