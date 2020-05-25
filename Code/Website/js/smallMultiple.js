@@ -94,23 +94,41 @@ function createTextAthlete(svg,athlete) {
 	const feat_offset = 15
 	const dist_from_line = 8
 
-	svg.append('text')
+	age_text = svg.append('text')
 		.attr('class', 'sm_feat')
 		.attr('x', margin_text)
 		.attr('y', lineHeight-dist_from_line)
-		.text(athlete.age.toFixed(1) + ' years')
+	
+	age_text.append('tspan')
+		.text(athlete.age.toFixed(1))
+		.attr('font-weight', 'bold')
 
-	svg.append('text')
+	age_text.append('tspan')
+		.text(' years')
+
+	height_text = svg.append('text')
 		.attr('class', 'sm_feat')
 		.attr('x', margin_text)
 		.attr('y', lineHeight-dist_from_line-feat_offset)
-		.text(athlete.height.toFixed(1) + ' cm')
 
-	svg.append('text')
+	height_text.append('tspan')
+		.text(athlete.height.toFixed(1))
+		.attr('font-weight', 'bold')
+
+	height_text.append('tspan')
+		.text(' cm')
+
+	weight_text = svg.append('text')
 		.attr('class', 'sm_feat')
 		.attr('x', margin_text)
 		.attr('y', lineHeight-dist_from_line-(2*feat_offset))
-		.text(athlete.weight.toFixed(1) + ' kg')
+
+	weight_text.append('tspan')
+		.text(athlete.weight.toFixed(1))
+		.attr('font-weight', 'bold')
+
+	weight_text.append('tspan')
+		.text(' kg')
 }
 
 

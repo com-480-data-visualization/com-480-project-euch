@@ -33,7 +33,7 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 	const slowAnim = 1500; const midAnim = 900; const fastAnim = 600;
 
 	// controls the space of the drawing in the SVG
-	const xFactor = 0.25;
+	const xFactor = 0.23;
 	const xLeft = xFactor * svgWidth;
 	const xRight = (1 - xFactor) * svgWidth;
 	const axisBottom = 0.8 * svgHeight;
@@ -243,7 +243,7 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 		.attr('y2', (d) => {return d.y2})
 
 	// distance between the weight circle and the center of the label text
-	const paddingFromCircle = 12
+	const paddingFromCircle = 17
 	const weightLabelTranslation = d3Transform()
 		.translate([
 			arcCenterX - Math.cos(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle),

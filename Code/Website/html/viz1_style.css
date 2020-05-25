@@ -328,13 +328,13 @@ rect.selection {
 }
 
 .cross {
-	stroke-width: 1.5px;
-	opacity: 0.8;
+	stroke-width: 2.5px;
+	opacity: 0.4;
 }
 
 .cross:hover {
 	stroke-width: 2.5px;
-	opacity: 1;
+	opacity: 0.8;
 	pointer-events: bounding-box;
 }
 

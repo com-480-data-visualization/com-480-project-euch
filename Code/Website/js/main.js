@@ -84,21 +84,21 @@ function updateEventOptions(eventSel, selectedSport){
 		});
 }
 
-const minAge = 18; //10 actually
-const maxAge = 35; //97 actually
+const minAge = 10; //10 actually
+const maxAge = 45; //97 actually
 const minWeight = 25; 
 const maxWeight = 200; //214 actually
 const minHeight = 127;
 const maxHeight = 220; // 227 actually
 const minBMI = 15; // 8 actually (wtf?)
-const maxBMI = 40; //60 actually
+const maxBMI = 35; //60 actually
 
 const ageGreen = d3.color('hsl(94, 38%, 50%)');
 const brownHeight = d3.color('hsl(11, 56%, 66%)');
 const purpleWeight = d3.color('hsl(274, 44%, 65%)');
 
-const lightGreen = d3.color('hsl(94, 38%, 70%)');
-const darkGreen = d3.color('hsl(94, 38%, 30%)');
+const lightGreen = d3.color('hsl(94, 100%, 90%)');
+const darkGreen = d3.color('hsl(94, 100%, 10%)');
 
 let start_year = 1896
 let end_year = 2016
