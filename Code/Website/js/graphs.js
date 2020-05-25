@@ -454,9 +454,13 @@ function resetCharts()  {
     svgChartWeight.selectAll("g").remove();
     svgChartWeight.selectAll("path").remove();
 
+
     svgChartHeight.selectAll("g").remove();
     svgChartHeight.selectAll("path").remove();
 
     svgChartAge.selectAll("g").remove();
     svgChartAge.selectAll("path").remove();
+    
+    d3.selectAll(".tooltip").remove();
+
 }
