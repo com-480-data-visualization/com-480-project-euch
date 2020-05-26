@@ -28,7 +28,9 @@ function prepareData(start_year, end_year, sport, event, resArray) {
 		const btwYear = d.year >= start_year && d.year <= end_year;
 		return btwYear;
 	});
+
 }
+
 
 // create an average athlete that represents all athletes from a given sport, event and time window
 function averageAthlete(start_year, end_year, sport, event){

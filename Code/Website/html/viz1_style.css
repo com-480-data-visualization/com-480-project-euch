@@ -78,7 +78,7 @@ button:hover {
 	background-color: transparent;
 	margin: 0 auto;
 	margin-top: 80px;
-	margin-bottom: 500px;
+	margin-bottom: 100px;
 }
 
 
@@ -212,6 +212,24 @@ button:hover {
 	font-size: 11px;
 }
 
+div.tooltip {
+	position: absolute;
+	text-align: center;
+	width: 70px;
+	height: 34px;
+	padding: 2px;
+	font: 12px sans-serif;
+	font-weight:bold;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+
+rect.selection {
+	fill: #ADD8EB;
+	opacity: 1;
+}
 
 
 /* ************************************** Small multiple ************************************** */
@@ -304,24 +322,6 @@ button:hover {
 	opacity: 0.4;
 }
 
-div.tooltip {
-	position: absolute;
-	text-align: center;
-	width: 60px;
-	height: 34px;
-	padding: 2px;
-	font: 12px sans-serif;
-	font-weight:bold;
-	border: 0px;
-	border-radius: 8px;
-	pointer-events: none;
-}
-
-rect.selection {
-	fill: #ADD8EB;
-	opacity: 1;
-}
-
 
 #plus:hover {
 	opacity: 0.6;
@@ -361,8 +361,87 @@ rect.selection {
 	font-size: 12px;
 }
 
+/* ************************************** circle packing *************************** */
+
+#separation {
+	display : inline-block;
+	width : 100%;
+	height : 200px;
+	background-color:#ffffff;
+	opacity : 0.92;
+	margin-bottom : 100px;
+	padding : 50px;
+}
+
+#separation h1 {
+	text-align: center;
+	margin : 0 auto;
+
+}
 
 
+#circlePacking {
+	display: table;
+
+	margin: 0 auto;
+
+	width: 1180px;
+	height: 820px;
+
+
+}
+
+#main2 {
+	width : 100%;
+	height : 60%;
+}
+
+#graph_config {
+	background-color:#ffffff;
+	float : right;
+	padding : 20px;
+	margin-right : 150px;
+	margin-top: 0px;
+	border-top: 0px solid black;
+	border-bottom: 0px solid black;
+	border-left: 0px solid black;
+	border-right: 0px solid black;
+	border-radius: 10px;
+	box-shadow: 5px 7px 10px #00000034;
+
+	opacity : 0.96;
+}
+
+#circle_graph_svg {
+	float : left;
+	background-color:#ffffff;
+	width: 850px;
+	height : 780px ;
+	border-top: 0px solid black;
+	border-bottom: 0px solid black;
+	border-left: 0px solid black;
+	border-right: 0px solid black;
+	border-radius : 10px;
+	box-shadow: 5px 7px 10px #00000034;
+	opacity : 0.96;
+}
+
+div.circleTooltip {
+	position: absolute;
+	text-align: center;
+	width: 160px;
+	height: 70px;
+	padding: 5px;
+	font: 16px Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	border-top: 0px solid black;
+	border-bottom: 0px solid black;
+	border-left: 0px solid black;
+	border-right: 0px solid black;
+	border-radius : 15px;
+	box-shadow: 5px 7px 10px #00000034;
+	pointer-events: none;
+}
 
 /* ************************************** Autocomplete ************************************** */
 

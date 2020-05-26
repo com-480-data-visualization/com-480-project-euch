@@ -25,9 +25,10 @@ class Result {
 function createResultArray(resArray, sportsArray, eventsMap) {
 	d3.csv("../data/athlete_events_red.csv", function(d) {
 
-		// add eash row to resArray and return the sport feature only
-		resArray.push(new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event_w_sport, d.Event_sex, d.Event_w_sex, +d["Year"]));
-		//console.log(new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event, +d["Year"]));
+		// add each row to resArray and return the sport feature only
+		let res = new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event_w_sport, d.Event_sex, d.Event_w_sex, +d["Year"])
+		resArray.push(res);
+		//console.log(res);
 		
 		return {
 			sport: d.Sport,
@@ -109,6 +110,9 @@ let currEvent = "All"
 let loaded = false
 // default athlete
 let ath0;
+
+var currClassify
+
 whenDocumentLoaded(() => {
 
 	ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0')
@@ -128,6 +132,7 @@ whenDocumentLoaded(() => {
 	eventsMap = new Map();
 
 	createResultArray(resArray, sportsArray, eventsMap);
+
 	
 	// find selectors, both in d3 or basic JS selection
 	const sportSelD3 = d3.select('#sport_selector');
@@ -200,8 +205,6 @@ whenDocumentLoaded(() => {
 		});	
 
 
-	console.log(sportsArray);
-	
 	document.getElementById('search_bar').addEventListener("keyup", function(e) {
 		if(e.keyCode === 13){
 			const search_value = this.value;			
@@ -252,6 +255,35 @@ whenDocumentLoaded(() => {
 				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 			}
 			});
+
+	// circle packing
+	//default is height
+
+	// Function that change a color
+	function changeCircleClassification() {
+		let radioValue = d3.select('input[name="classify"]:checked').node().value
+		resetCircleGraph()
+
+		switch(radioValue) {
+			case "height" :
+				circleGraph(1)
+				break;
+			case "weight" :
+				circleGraph(0)
+				break;
+			case "age" :
+				circleGraph(2)
+				break;
+		}
+
+	}
+
+// Event listener to the radio button
+	d3.select("#graph_config").on("change", changeCircleClassification )
+
+	// initialise circle chart
+	changeCircleClassification()
+
 });
 
 

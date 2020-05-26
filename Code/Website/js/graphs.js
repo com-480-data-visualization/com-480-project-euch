@@ -67,8 +67,6 @@ var gBrush =
     g.attr("class", "brush")
     .call(brush)
 
-
-
 var handle = gBrush.selectAll(".handle--custom")
     .data([{type: "w"}, {type: "e"}])
     .enter().append("path")
@@ -95,12 +93,13 @@ let weightColor = 'hsl(274, 44%, 65%)';
 let ageColor = 'hsl(94, 38%, 50%)';
 
 
+let packingWidth = 800
+let packingHeight = 780
+
 function brushmoved() {
     let s = d3.event.selection;
-    console.log(s)
     if (s == null) {
         var mousex = d3.mouse(this)[0]
-        console.log(mousex)
         if(mousex > 0 && mousex < 750) {
             gBrush.call(brush.move, [mousex, mousex+.001]);
         } else {
@@ -238,8 +237,6 @@ function startChart(svg_, type) {
                     Math.floor(d3.min(weightGroupByYearValues) / 10) * 10,
                     Math.ceil(d3.max(weightGroupByYearValues) / 10) * 10])
                 .range([ chartHeight, 0 ]);
-
-
 
             break;
         case 1:
@@ -412,7 +409,6 @@ function startChart(svg_, type) {
             d3.select(this).transition()
                 .duration('50')
                 .attr('fill', lineColor);
-            console.log("Hover")
 
             tooltip.transition()
                 .duration(200)
@@ -422,7 +418,8 @@ function startChart(svg_, type) {
 
             tooltip.html(function(){
                 return keyText + " <br> " + valueText
-            })                .style("left", (d3.event.pageX - 15) + "px")
+            })
+                .style("left", (d3.event.pageX - 15) + "px")
                 .style("top", (d3.event.pageY - 35) + "px")
                 .style("background", lineColor)
 
@@ -435,9 +432,6 @@ function startChart(svg_, type) {
                 .duration(200)
                 .style("opacity", 0);
         });
-
-
-
 }
 
 function constructCharts() {
@@ -460,7 +454,189 @@ function resetCharts()  {
 
     svgChartAge.selectAll("g").remove();
     svgChartAge.selectAll("path").remove();
-    
+
     d3.selectAll(".tooltip").remove();
+
+}
+
+function resetCircleGraph() {
+    d3.select("#circle_graph_svg").selectAll("g").remove();
+    d3.selectAll(".circleTooltip").remove();
+
+}
+
+function circleGraph(type) {
+    var svg = d3.select("#circle_graph_svg")
+
+
+    let tooltip = d3.select("#circlePacking")
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "circleTooltip")
+        .style("background-color", "#D3D3D3")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "2px")
+
+    var mouseover = function(d) {
+        d3.select(this)
+            .style("stroke-width", 4)
+            .style("fill-opacity", 1)
+        tooltip
+            .style("opacity", .8)
+
+    }
+    var mouseleave = function(d) {
+        d3.select(this)
+            .style("stroke-width", 1)
+            .style("fill-opacity", 0.8)
+
+        tooltip
+            .style("opacity", 0)
+    }
+    var mousemove = function(d) {
+        let sport_text = d.key
+        var value_text = ""
+        switch(type) {
+            case 0 :
+                //weight
+                value_text =  d3.format(".1f")(d.value) + " Kg"
+                break;
+            case 1:
+                //height
+                value_text =  d3.format(".1f")(d.value) + " cm"
+                break;
+            case 2 :
+                //age
+                value_text =  d3.format(".1f")(d.value) + " years"
+                break
+        }
+        tooltip
+            .html(function(){
+                return sport_text + " <br> " + value_text
+            })
+            .style("font-size", "16px")
+            .style("left", (d3.event.pageX + 25) + "px")
+            .style("top", (d3.event.pageY - 35) + "px")
+    }
+
+
+
+    d3.csv("../data/athlete_events_red.csv", function(d) {
+        return {
+            age : +d["Age"],
+            height : +d["Height"],
+            weight : +d["Weight"],
+            sport : d.Sport,
+            year : +d["Year"]
+        }
+
+    }).then(function(data) {
+
+
+        let groupBySport;
+
+        switch(type) {
+            case 0 :
+                groupBySport = d3.nest()
+                    .key(function(d){return d.sport; })
+                    .rollup(function(v) { return d3.mean(v, function(d) { return d.weight; }); })
+                    .entries(data);
+                break;
+            case 1 :
+                groupBySport = d3.nest()
+                    .key(function(d){return d.sport; })
+                    .rollup(function(v) { return d3.mean(v, function(d) { return d.height; }); })
+                    .entries(data);
+                break;
+            case 2 :
+                groupBySport = d3.nest()
+                    .key(function(d){return d.sport; })
+                    .rollup(function(v) { return d3.mean(v, function(d) { return d.age; }); })
+                    .entries(data);
+                break;
+
+        }
+
+
+
+        let groupBySportKeys = groupBySport.map(d => d.key)
+        let groupBySportValue = groupBySport.map(d => d.value)
+
+        //groupBySport.forEach(function(d) {console.log(d.key)})
+
+        let color = d3.scaleOrdinal()
+            .domain(groupBySportKeys)
+            .range(d3.schemeSet3)
+        // Size scale
+        var size = d3.scalePow()
+            .domain([d3.min(groupBySportValue), d3.max(groupBySportValue)])
+            .range([10,70])
+
+
+        var node = svg.append("g")
+            .selectAll("circle")
+            .data(groupBySport)
+            .enter()
+            .append("circle")
+            .attr("class", "node")
+            .attr("r", function(d){ return size(d.value)})
+            .attr("cx", packingWidth / 2)
+            .attr("cy", packingHeight / 2)
+            .style("fill", function(d){ return color(d.key)})
+            .style("fill-opacity", 0.8)
+            .attr("stroke", "black")
+            .style("stroke-width", 1)
+            .on("mouseover", mouseover)
+            .on("mouseleave", mouseleave)
+            .on("mousemove", mousemove)
+            .call(d3.drag() // call specific function when circle is dragged
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+
+
+        var simulation = d3.forceSimulation()
+            .force("center", d3.forceCenter().x(packingWidth / 2).y(packingHeight / 2)) // Attraction to the center of the svg area
+            .force("charge", d3.forceManyBody().strength(.1)) // Nodes are attracted one each other of value is > 0
+            .force("collide", d3.forceCollide().strength(.4).radius(function(d){ return size(d.value) }).iterations(1)) // Force that avoids circle overlapping
+
+        // Apply these forces to the nodes and update their positions.
+        // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
+        simulation
+            .nodes(groupBySport)
+            .on("tick", function(d){
+                node
+                    .attr("cx", function(d){
+                        if(d.x < 0) return 0
+                        if(d.x > packingWidth) return packingWidth
+                        return d.x
+                    })
+                    .attr("cy", function(d){ if(d.y < 0) return 0
+                        if(d.y > packingHeight) return packingHeight
+                        return d.y
+                    })
+            });
+
+        function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(.03).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+        function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(.03);
+            d.fx = null;
+            d.fy = null;
+        }
+
+    })
+
+
+
 
 }
