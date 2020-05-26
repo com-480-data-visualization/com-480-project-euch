@@ -6,7 +6,6 @@ height = 360 - margin.top - margin.bottom;
 let chartHeight = 70;
 let chartWidth = 750;
 
-
 // append the svg object to the body of the page
 let svgChartHeight = d3.select("#chart1")
     .append("svg")
@@ -91,7 +90,6 @@ gBrush.call(brush.move, avgYears.map(x));
 let heightColor = 'hsl(11, 56%, 66%)';
 let weightColor = 'hsl(274, 44%, 65%)';
 let ageColor = 'hsl(94, 38%, 50%)';
-
 
 let packingWidth = 800
 let packingHeight = 780
@@ -534,7 +532,6 @@ function circleGraph(type) {
 
     }).then(function(data) {
 
-
         let groupBySport;
 
         switch(type) {
@@ -559,12 +556,12 @@ function circleGraph(type) {
 
         }
 
-
-
         let groupBySportKeys = groupBySport.map(d => d.key)
         let groupBySportValue = groupBySport.map(d => d.value)
 
-        //groupBySport.forEach(function(d) {console.log(d.key)})
+        /*groupBySport = groupBySport.sort(function(x, y){
+            return d3.ascending(x.value, y.value);
+        })*/
 
         let color = d3.scaleOrdinal()
             .domain(groupBySportKeys)
@@ -598,14 +595,15 @@ function circleGraph(type) {
 
 
         var simulation = d3.forceSimulation()
-            .force("center", d3.forceCenter().x(packingWidth / 2).y(packingHeight / 2)) // Attraction to the center of the svg area
-            .force("charge", d3.forceManyBody().strength(.1)) // Nodes are attracted one each other of value is > 0
-            .force("collide", d3.forceCollide().strength(.4).radius(function(d){ return size(d.value) }).iterations(1)) // Force that avoids circle overlapping
-
+            .force("forceX", d3.forceX().strength(.1).x(packingWidth * .5))
+            .force("forceY", d3.forceY().strength(.1).y(packingHeight * .5))
+            .force("center", d3.forceCenter().x(packingWidth * .5).y(packingHeight * .5))
+            .force("charge", d3.forceManyBody().strength(-25));
         // Apply these forces to the nodes and update their positions.
         // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
         simulation
             .nodes(groupBySport)
+            .force("collide", d3.forceCollide().strength(.1).radius(function(d){ return size(d.value) + 3; }).iterations(10))
             .on("tick", function(d){
                 node
                     .attr("cx", function(d){
@@ -629,7 +627,7 @@ function circleGraph(type) {
             d.fy = d3.event.y;
         }
         function dragended(d) {
-            if (!d3.event.active) simulation.alphaTarget(.03);
+            if (!d3.event.active) simulation.alphaTarget(0.005);
             d.fx = null;
             d.fy = null;
         }
