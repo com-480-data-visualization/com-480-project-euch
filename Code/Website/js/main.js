@@ -120,8 +120,6 @@ whenDocumentLoaded(() => {
 	SM = new Small_multiples(5);
 	SM.refresh_SM();
 
-	let div_err = document.getElementById("div_err");
-	let text_err = document.getElementById("text_error")
 	svg = d3.select('#display');
 
 	drawAthleteDescription(ath0, svg, 0, 0, lightGreen, darkGreen);
@@ -154,8 +152,6 @@ whenDocumentLoaded(() => {
 	
 		drawAthleteDescription(ath, svg3d, 0, 0, lightGreen, darkGreen);
 		updateEventOptions(eventSelD3, currSport);
-		div_err.style.opacity = 0;
-		text_err.innerHTML = "";
 	});
 
 	eventSel.addEventListener("change", () => {
@@ -169,8 +165,6 @@ whenDocumentLoaded(() => {
 		const svg3d = d3.select('#display');
 		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
 		SM.unselectAll();
-		div_err.style.opacity = 0;
-		text_err.innerHTML = "";
 
 	});
 	
@@ -181,8 +175,7 @@ whenDocumentLoaded(() => {
 	//remove all elements of SM
 	document.getElementById('remove_all')
 		.addEventListener('click',() => {
-						SM.removeAll();
-						div_err.style.opacity = 0;});
+						SM.removeAll();});
 	
 
 	//sorted by selector
@@ -222,39 +215,6 @@ whenDocumentLoaded(() => {
 	});
 
 
-	//add button to SM, may write an error
-	let error = d3.select("#error_message");
-
-	error.append("g").append('image')
-		    .attr('xlink:href', '../res/error-svgrepo-com.svg')
-		    .attr('width', 20)
-		    .attr('height', 20)
-		    .attr('x', 0)
-		    .attr('y', 0);
-
-	document.getElementById('add_btn')
-		.addEventListener('click',() => {
-			const sport = sportSel.value;
-			const event = eventSel.value;
-			if(SM.isFull()){
-				div_err.style.opacity = 1;
-				text_err.innerHTML = "The comparison grid is full, please remove an element.";
-			} else if(sport == "None") {
-				div_err.style.opacity = 1;
-				text_err.innerHTML = "Please select a sport to add in the small multiples.";
-			} else {
-				div_err.style.opacity = 0;
-				text_err.innerHTML = "";
-
-
-				prepareData(avgYears[0], avgYears[1], sport, event, resArray)
-				let ath = averageAthlete(avgYears[0], avgYears[1], sport, event);
-
-				
-				SM.add(ath);
-				drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen);
-			}
-			});
 
 	// circle packing
 	//default is height

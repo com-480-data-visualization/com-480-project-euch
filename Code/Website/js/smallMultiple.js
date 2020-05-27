@@ -247,18 +247,12 @@ function createAddFrame(SM,svg){
 		const event = document.getElementById('event_selector').value;
 
 		if(sport == "None") {
-				let div_err = document.getElementById("div_err");
-				let text_err = document.getElementById("text_error")
-				div_err.style.opacity = 1;
-				text_err.innerHTML = "Please select a sport to add in the small multiples.";
+			//do nothing
 		} else {
 		prepareData(avgYears[0], avgYears[1], sport, event, resArray)
 		let ath = averageAthlete(avgYears[0], avgYears[1], sport, event);
 		if(ath.nb_samples == 0){
-			let div_err = document.getElementById("div_err");
-			let text_err = document.getElementById("text_error")
-			div_err.style.opacity = 1;
-			text_err.innerHTML = "Please select a valid range of years";
+			//do nothing
 		}else{
 			SM.add(ath);	
 		}
