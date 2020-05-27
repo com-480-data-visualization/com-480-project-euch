@@ -305,6 +305,9 @@ class Small_multiples {
 	remove(index) {
 		this.athletes.splice(index,1);
 		this.cursor = this.cursor -1;
+		if(this.cursor == index){
+			this.unselectAll()
+		}
 		this.refresh_SM();
 	}
 
