@@ -139,7 +139,7 @@ function addSex(svg,sex_athlete){
 	if(sex_athlete == "Mens"){
 		var sex = svg.append("g");
 		sex.append('image')
-		    .attr('xlink:href', '../res/male-svgrepo-com.svg')
+		    .attr('xlink:href', 'res/male-svgrepo-com.svg')
 		    .attr('width', 23)
 		    .attr('height', 23)
 		    .attr('x', width - 34)
@@ -147,7 +147,7 @@ function addSex(svg,sex_athlete){
 	} else if (sex_athlete == "Womens"){
 		var sex = svg.append("g");
 		sex.append('image')
-		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
+		    .attr('xlink:href', 'res/female-svgrepo-com.svg')
 		    .attr('width', 28)
 		    .attr('height', 28)
 		    .attr('x', width - 34)
@@ -157,14 +157,14 @@ function addSex(svg,sex_athlete){
 		var sex_m = svg.append("g");
 		
 		sex_m.append('image')
-		    .attr('xlink:href', '../res/male-svgrepo-com.svg')
+		    .attr('xlink:href', 'res/male-svgrepo-com.svg')
 		    .attr('width', 20)
 		    .attr('height', 20)
 		    .attr('x', width-33)
 		    .attr('y', height - 41)
 		    //6,parseInt(svg.style("height")) - 4
 		sex_f.append('image')
-		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
+		    .attr('xlink:href', 'res/female-svgrepo-com.svg')
 		    .attr('width', 25)
 		    .attr('height', 25)
 		    .attr('x', width-33)
@@ -266,7 +266,7 @@ function createAddFrame(SM,svg){
 	//append plus image
 	plus.append('image')
 		.attr('id', 'plus')
-		.attr('xlink:href', '../res/add-svgrepo-com.svg')
+		.attr('xlink:href', 'res/add-svgrepo-com.svg')
 		.attr('width', 70)
 		.attr('height', 70)
 		.attr('x', width/2 - 35)
