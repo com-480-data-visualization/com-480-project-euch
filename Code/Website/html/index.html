@@ -11,7 +11,6 @@
 
 	<link rel="stylesheet" href="normalize.css">
 	<link rel="stylesheet" href="skeleton.css">
-	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="viz1_style.css">
 
 </head>
@@ -24,23 +23,43 @@
 		<div id='header'>
 			<div id='logo_title'>
 				<img src="olympic_rings.jpg" alt="olympic rings" id="logo"/>
-				<h1>Olympic athletes body among the years</h1>
+				<h1>Differences in olympic athletes physiques</h1>
 			</div>
 		</div>
 	</header>
 
 	<main>
-		<div id="main2">
+		<div id="bubble_chart">
 			<div id="circlePacking">
 				<svg id="circle_graph_svg">
 				</svg>
+				<div id = 'intro'>
+					<h6>
+						Olympics Games are composed of various sport, from marathon to gymnastics and all these sports require different physiques. 
+					</h6>
+					<h6>
+						You can visualize the average <b>height</b>, <b>weight</b> and <b>age</b> by hovering your mouse over the bubbles. 
+					</h6>
+					<h6>You can also move to bubbles to rearrange them as you like.</h6>
+				</div>
 				<div id="graph_config">
 					<input type="radio" name="classify" value="height" checked> Height<br>
 					<input type="radio" name="classify" value="weight"> Weight<br>
 					<input type="radio" name="classify" value="age"> Age<br>
 				</div>
 			</div>
-	
+			<div id='down_arrow'></div>
+			<div id= 'intro2'>
+				<h6> Let's go a little deeper... Each sport is declined in several disciplines. </h6>
+				<h6> You can now select the <b>sport</b>, the <b>discipline</b> and the <b>time window</b> 
+					for computing the average physique of the athletes.</h6>
+				<h6>The little athlete figure change to represent your selection. 
+					The <span id='higher'><b>HIGHER</b></span> and the<span id='larger'> <b> larger </b> </span>the figure is, 
+					the taller and the heavier the athletes are. The age is depicted with the <span id='color'><b>color</b></span>, the lighter the youger.</h6>
+				<h6>You can also <b>save</b> a figure by adding it to the grid, 
+					so that you can compare different discipline side-by-side.</h6>
+			</div>
+
 		</div>
 		<div id="visualization1">
 			<!-- div that contains element that selects and display -->
@@ -100,9 +119,9 @@
 						<option value="descending">Descending</option>
 					</select> -->
 
-					<button id="asc"></button>
+					<button id="asc" onclick="change_asc_desc_selected(true)"></button>
 
-					<button id="des"></button>
+					<button id="des"  onclick="change_asc_desc_selected(false)"></button>
 
 					<button id="remove_all">Clear</button>
 				</div>
@@ -147,13 +166,9 @@
 
 	</main>
 
-
-	<div id="separation">
-		<h1>Overall Morphology and Age by Sport</h1>
-	</div>
-
 	<footer>
-  		<span>CS-480 Data Visualization EPFL, group: euch</span>
+		  <h6>CS-480 Data Visualization EPFL 2020. Group euch.</h6>
+		  <h6>Benno Schneeberger - Rodrigo Granja - Sylvain Lugeon</h6>
 	</footer>
 	<script src="../lib/d3.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.min.js"></script>

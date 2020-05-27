@@ -7,6 +7,17 @@ function whenDocumentLoaded(action) {
 	}
 }
 
+function change_asc_desc_selected(asc){		
+	if(d3.select('#sort_selector').node().value != 'none'){
+		let current = asc ? '#asc' : '#des';
+		let other = asc ? '#des' : '#asc';
+		const currentButton =  d3.select(current);
+		const otherButton = d3.select(other);
+		currentButton.classed('selected', true)
+		otherButton.classed('selected', false)
+	}
+}
+
 // represents an olympic result
 class Result {
 	constructor(age, height, weight, sport, event, event_sex, event_w_sex, year) {
@@ -180,6 +191,13 @@ whenDocumentLoaded(() => {
 
 	//sorted by selector
 	document.getElementById('sort_selector').addEventListener("change", () => {
+		if(sort_selector.value == 'none'){
+			d3.select('#asc').classed('selected', false)
+			d3.select('#des').classed('selected', false)
+		}
+		else if (!d3.select('#des').classed('selected') ){
+			d3.select('#asc').classed('selected', true)
+		}
 		SM.sort(sort_selector.value,"");
 	});
 

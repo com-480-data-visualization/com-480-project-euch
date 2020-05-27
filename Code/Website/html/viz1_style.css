@@ -60,14 +60,191 @@ button {
 	vertical-align: top;
 }
 
-button:hover {
+#remove_all:hover {
 	color: #ffffff !important;
-	background: #636363;
-	border-color: #636363 !important;
+	background: #686868;
+	border-color: #b6b6b6 !important;
 	transition: all 0.4s ease 0s;
 }
 
+/* ************************************** Header, footer *************************** */
 
+
+#header {
+    width: 100%;
+    background-color: white;
+    height: 200px;
+    text-align: center;
+    opacity : 0.96
+
+}
+
+#logo_title {
+    display: inline-block;
+}
+
+
+#logo     {
+	height: 100px;
+	width: auto;
+    float: left;
+    margin-top: 40px;
+}
+
+
+h1 {
+    width: 1110px;
+    margin-top: 57px;
+}
+
+body {
+    content: "";
+    background: url('../res/ground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+footer {
+    margin: 0 auto;
+	text-align: center;
+	padding: 3em 3em;
+	background-color: white;
+	opacity: 0.96;
+}
+
+/* ************************************** Bubble chart *************************** */
+
+
+#bubble_chart {
+
+	margin: 0 auto;
+	padding-left: 12px;
+	padding-right: 12px;
+	margin-top: 150px;
+
+	width: 1200px;
+	height: 1000px;
+}
+
+#circlePacking {
+	display: inline-block;
+
+	margin: 0 auto;
+
+	width: 1200px;
+	height: 500px;
+
+
+}
+
+#intro {
+	background-color:#ffffff;
+	float : left;
+	width : 476px;
+	margin-left: 100px;
+	margin-right: 0px;
+
+	border-radius: 10px;
+	box-shadow: 5px 7px 10px #00000034;
+
+	opacity : 0.96;
+
+	text-align: justify;
+	text-justify: inter-word;
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	margin-top: 0px;
+}
+
+#graph_config {
+	background-color:#ffffff;
+	float : left;
+	padding : 20px;
+	margin-left: 30px;
+	margin-top: 106px;
+	border-top: 0px solid black;
+	border-bottom: 0px solid black;
+	border-left: 0px solid black;
+	border-right: 0px solid black;
+	border-radius: 10px;
+	box-shadow: 5px 7px 10px #00000034;
+
+	opacity : 0.96;
+}
+
+#circle_graph_svg {
+	float : left;
+	background-color:#ffffff;
+	width: 600px;
+	height : 500px ;
+	border-radius : 10px;
+	box-shadow: 5px 7px 10px #00000034;
+	opacity : 0.96;
+}
+
+div.circleTooltip {
+	position: absolute;
+	text-align: center;
+	width: 160px;
+	height: 70px;
+	padding: 5px;
+	font: 16px Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	border-radius : 15px;
+	box-shadow: 5px 7px 10px #00000034;
+	pointer-events: none;
+}
+
+#down_arrow {
+	background-image: url('../res/arrow_down.svg');
+	width: 200px;
+	height: 100px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: auto;
+	margin-top: 70px;
+	margin-bottom: 70px;
+}
+
+#intro2 {
+	background-color:#ffffff;
+	float : right;
+	width : 1176px;
+
+	border-radius : 10px;
+	box-shadow: 5px 7px 10px #00000034;
+	opacity : 0.96;
+	opacity : 0.96;
+
+	text-align: justify;
+	text-justify: inter-word;
+	padding-right: 20px;
+	padding-left: 20px;
+
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-right: 0px;
+}
+
+h6 {
+	font-size: 18px;
+}
+
+#higher {
+	font-size: 19px;
+}
+
+#larger {
+	letter-spacing: 5px;
+}
+
+#color {
+	color: #5F9B31;
+}
 
 
 /* ************************************** Visulaisation div ************************************** */
@@ -77,8 +254,8 @@ button:hover {
 	height: 900px;
 	background-color: transparent;
 	margin: 0 auto;
-	margin-top: 80px;
-	margin-bottom: 100px;
+	margin-top: 50px;
+	margin-bottom: 300px;
 }
 
 
@@ -101,7 +278,7 @@ button:hover {
 	border-right: 0px solid black;
 	border-radius: 10px;
 	box-shadow: 5px 7px 10px #00000034;
-	opacity : 0.92
+	opacity : 0.96
 
 }
 
@@ -281,6 +458,13 @@ rect.selection {
 	box-shadow: 5px 7px 10px #00000034;
 }
 
+.selected {
+	color: #ffffff !important;
+	background: rgb(183, 237, 255);
+	border-color: #636363 !important;
+	transition: all 0.4s ease 0s;
+}
+
 
 /* ******************* Grid ******************* */
 
@@ -290,6 +474,7 @@ rect.selection {
 	height: 100%;
 	border-top: 0px dashed black;
 	border-bottom: 0px dashed black;
+	opacity: 0.96;
 }
 
 .elements_SM {
@@ -304,6 +489,7 @@ rect.selection {
 	background-color: #ffffff;
 	border-radius: 10px;
 	box-shadow: 5px 7px 10px #00000034;
+	opacity: 0.96;
 
 }
 
@@ -324,7 +510,8 @@ rect.selection {
 
 
 #plus:hover {
-	opacity: 0.6;
+	opacity: 0.8;
+	transition: all 0.4s ease 0s;
 }
 
 .cross {
@@ -336,6 +523,7 @@ rect.selection {
 	stroke-width: 2.5px;
 	opacity: 0.8;
 	pointer-events: bounding-box;
+	transition: all 0.4s ease 0s;
 }
 
 .sm_sport {
@@ -361,87 +549,19 @@ rect.selection {
 	font-size: 12px;
 }
 
-/* ************************************** circle packing *************************** */
-
-#separation {
-	display : inline-block;
-	width : 100%;
-	height : 200px;
-	background-color:#ffffff;
-	opacity : 0.92;
-	margin-bottom : 100px;
-	padding : 50px;
-}
-
-#separation h1 {
-	text-align: center;
-	margin : 0 auto;
-
-}
-
-
-#circlePacking {
-	display: table;
-
-	margin: 0 auto;
-
-	width: 1180px;
-	height: 820px;
-
-
-}
-
-#main2 {
-	width : 100%;
-	height : 60%;
-}
-
-#graph_config {
-	background-color:#ffffff;
-	float : right;
-	padding : 20px;
-	margin-right : 150px;
-	margin-top: 0px;
-	border-top: 0px solid black;
-	border-bottom: 0px solid black;
-	border-left: 0px solid black;
-	border-right: 0px solid black;
+.sm_is_selected {
+	fill: rgb(0, 162, 255);
+	fill-opacity: 0.15;
 	border-radius: 10px;
-	box-shadow: 5px 7px 10px #00000034;
-
-	opacity : 0.96;
+	transition: all 0.4s ease 0s;
 }
 
-#circle_graph_svg {
-	float : left;
-	background-color:#ffffff;
-	width: 600px;
-	height : 500px ;
-	border-top: 0px solid black;
-	border-bottom: 0px solid black;
-	border-left: 0px solid black;
-	border-right: 0px solid black;
-	border-radius : 10px;
-	box-shadow: 5px 7px 10px #00000034;
-	opacity : 0.96;
+.sm_not_selected {
+	fill-opacity: 0;
+	border-radius: 10px;
+	transition: all 0.4s ease 0s;
 }
 
-div.circleTooltip {
-	position: absolute;
-	text-align: center;
-	width: 160px;
-	height: 70px;
-	padding: 5px;
-	font: 16px Arial, Helvetica, sans-serif;
-	font-weight:bold;
-	border-top: 0px solid black;
-	border-bottom: 0px solid black;
-	border-left: 0px solid black;
-	border-right: 0px solid black;
-	border-radius : 15px;
-	box-shadow: 5px 7px 10px #00000034;
-	pointer-events: none;
-}
 
 /* ************************************** Autocomplete ************************************** */
 

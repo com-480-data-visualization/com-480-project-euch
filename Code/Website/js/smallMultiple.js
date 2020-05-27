@@ -142,16 +142,16 @@ function addSex(svg,sex_athlete){
 		    .attr('xlink:href', '../res/male-svgrepo-com.svg')
 		    .attr('width', 23)
 		    .attr('height', 23)
-		    .attr('x', width - 28)
-		    .attr('y', height - 28);
+		    .attr('x', width - 34)
+		    .attr('y', height - 36);
 	} else if (sex_athlete == "Womens"){
 		var sex = svg.append("g");
 		sex.append('image')
 		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
 		    .attr('width', 28)
 		    .attr('height', 28)
-		    .attr('x', width - 28)
-		    .attr('y', height - 33);
+		    .attr('x', width - 34)
+		    .attr('y', height - 39);
 	} else {
 		var sex_f = svg.append("g");
 		var sex_m = svg.append("g");
@@ -160,15 +160,15 @@ function addSex(svg,sex_athlete){
 		    .attr('xlink:href', '../res/male-svgrepo-com.svg')
 		    .attr('width', 20)
 		    .attr('height', 20)
-		    .attr('x', width-25)
-		    .attr('y', height - 40)
+		    .attr('x', width-33)
+		    .attr('y', height - 41)
 		    //6,parseInt(svg.style("height")) - 4
 		sex_f.append('image')
 		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
 		    .attr('width', 25)
 		    .attr('height', 25)
-		    .attr('x', width-26)
-		    .attr('y', height - 30);
+		    .attr('x', width-33)
+		    .attr('y', height - 32);
 		    //5,parseInt(svg.style("height")) - 30
 
 	}
@@ -180,7 +180,7 @@ function selectAthlete(SM,athlete,rect_svg,index){
 	description_svg = d3.select("#display");
 	const sportSel = document.getElementById('sport_selector');
 	const eventSel = document.getElementById('event_selector');
-	if(rect_svg.attr("fill-opacity") == 0){
+	if(rect_svg.classed('sm_not_selected')){
 		SM.unselectAll();
 		//Change the brush position
 		let avgYears = [athlete.start_year,athlete.end_year]; 
@@ -190,7 +190,8 @@ function selectAthlete(SM,athlete,rect_svg,index){
 		sportSel.dispatchEvent(new Event('change'));
 		eventSel.value = athlete.event;
 		eventSel.dispatchEvent(new Event('change'));
-		rect_svg.attr("fill-opacity",0.1);
+		rect_svg.classed('sm_is_selected', true);
+		rect_svg.classed('sm_not_selected', false);
 		SM.setSelectedElement(index);
 	} else {
 
@@ -201,7 +202,8 @@ function selectAthlete(SM,athlete,rect_svg,index){
 		sportSel.dispatchEvent(new Event('change'));
 		eventSel.value = "All";
 		eventSel.dispatchEvent(new Event('change'));
-		rect_svg.attr("fill-opacity",0);
+		rect_svg.classed('sm_is_selected', false);
+		rect_svg.classed('sm_not_selected', true);
 	}
 }
 
@@ -220,12 +222,13 @@ function createSMFrame(SM,athlete,svg,index,isSelected){
 		.attr('id','SM_select'+index)
 		.attr("width", "100%")
 		.attr("height", "100%")
-		.attr("fill","blue")
 	
 	if(isSelected){
-		rect_svg.attr("fill-opacity",0.1);
+		rect_svg.classed("sm_is_selected", true);
+		rect_svg.classed("sm_not_selected", false);
 	} else {
-		rect_svg.attr("fill-opacity",0);
+		rect_svg.classed("sm_is_selected", false);
+		rect_svg.classed("sm_not_selected", true);
 	}
 	
 	rect_svg.on("click", function(){selectAthlete(SM,athlete,rect_svg,index);})
@@ -329,7 +332,8 @@ class Small_multiples {
 	unselectAll(){
 		var i;
 		for (i=0;i<this.cursor;i++){
-			d3.select("#SM_select"+i).attr("fill-opacity",0);
+			d3.select("#SM_select"+i).classed("sm_not_selected",true);
+			d3.select("#SM_select"+i).classed("sm_is_selected",false)
 		}
 		this.selected_element = -1;
 	}
