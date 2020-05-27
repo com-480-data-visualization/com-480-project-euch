@@ -526,7 +526,7 @@ function circleGraph(type) {
 
 
 
-    d3.csv("../data/athlete_events_red.csv", function(d) {
+    d3.csv("data/athlete_events_red.csv", function(d) {
         return {
             age : +d["Age"],
             height : +d["Height"],
