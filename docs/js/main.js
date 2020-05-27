@@ -34,7 +34,7 @@ class Result {
 
 // store the results, add unique sports as option to the sports selection list
 function createResultArray(resArray, sportsArray, eventsMap) {
-	d3.csv("../data/athlete_events_red.csv", function(d) {
+	d3.csv("data/athlete_events_red.csv", function(d) {
 
 		// add each row to resArray and return the sport feature only
 		let res = new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event_w_sport, d.Event_sex, d.Event_w_sex, +d["Year"])
