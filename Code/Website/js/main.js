@@ -115,7 +115,7 @@ var currClassify
 
 whenDocumentLoaded(() => {
 
-	ath0 = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0')
+	ath0 = new Athlete(0, 0, 1, minAge, 0.04, 0, '0', '0')
 	loaded = true
 	SM = new Small_multiples(5);
 	SM.refresh_SM();

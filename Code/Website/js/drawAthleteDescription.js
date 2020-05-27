@@ -8,7 +8,7 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 
 	let athlete = ath
 	if(athlete.nb_samples == 0){
-		athlete = new Athlete(0, 0, 1, 18, 0.01, 0, '0', '0');
+		athlete = ath0
 	}
 
 	svgHeight = parseInt(svg.style("height"));
@@ -174,7 +174,7 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 			{"tick": 50, 'xshift':1, 'yshift':8},
 			{"tick": 100, 'xshift':-9, 'yshift':9},
 			{"tick": 150, 'xshift':-17, 'yshift':8},
-			{"tick": 200, 'xshift':-18, 'yshift':3},
+			{"tick": 200, 'xshift':-18, 'yshift':3}
 		];
  
 		const ticksArcLength = radius * 0.1;
@@ -199,7 +199,6 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 			.attr('x', (d,i) => {return arcCenterX - Math.cos(weightAxisScale(d.tick)) * (radius-ticksArcLength) + d.xshift})
 			.attr('y', (d,i) => {return arcCenterY - Math.sin(weightAxisScale(d.tick)) * (radius-ticksArcLength) + d.yshift})
 			.text((d,i) => {return d.tick})
-			.attr("font-family", 'Arial, Helvetica, sans-serif')
 			.attr("font-size", "10px")
 			.attr("fill", "black")
 
@@ -219,8 +218,7 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 		{'class': 'athleteWeightLine',
 		'x1': arcCenterX, 
 		'y1': arcCenterY, 
-		'x2': arcCenterX - Math.cos(weightAxisScale(athlete.weight)) * arrowLength, 
-		'y2': arcCenterY - Math.sin(weightAxisScale(athlete.weight)) * arrowLength}
+		'angle': weightAxisScale(athlete.weight)}
 	];
 
 	const u_athleteWeightLine = weightGroup.selectAll(".athleteWeightLine").data(athleteWeightLine);
@@ -231,16 +229,30 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 		.attr('class', (d) => {return d.class})
 		.attr('x1', (d) => {return d.x1})
 		.attr('y1', (d) => {return d.y1})
-		.attr('x2', (d) => {return d.x2})
-		.attr('y2', (d) => {return d.y2})
+		.attr('x2', (d) => {return arcCenterX - Math.cos(d.angle) * arrowLength})
+		.attr('y2', (d) => {return arcCenterY - Math.sin(d.angle) * arrowLength})
+		.attr('last_angle', d => d.angle)
 		.style('stroke', 'black')
 		.style('stroke-width', 2);
 	
 	// animate weight line
 	u_athleteWeightLine.transition()
 		.duration(slowAnim)
-		.attr('x2', (d) => {return d.x2})
-		.attr('y2', (d) => {return d.y2})
+		.attrTween('y2', function(d) {				
+			const self = this;
+			const i = d3.interpolate(this.attributes.last_angle.value, d.angle);			
+			return function(t) {
+				return arcCenterY - Math.sin(i(t)) * arrowLength;
+			};
+		})
+		.attrTween('x2', function(d) {				
+			const self = this;
+			const i = d3.interpolate(this.attributes.last_angle.value, d.angle);			
+			return function(t) {
+				return arcCenterX - Math.cos(i(t)) * arrowLength;
+			};
+		})
+		.attr('last_angle', d => d.angle);
 
 	// distance between the weight circle and the center of the label text
 	const paddingFromCircle = 17
@@ -249,7 +261,7 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 			arcCenterX - Math.cos(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle),
 			arcCenterY - Math.sin(weightAxisScale(athlete.weight)) * (radius + paddingFromCircle)]);
 
-	const weightLabel = [{'class': 'label', 'content': athlete.weight.toFixed(1)}];
+	const weightLabel = [{'class': 'label', 'content': athlete.weight.toFixed(1), 'angle' : weightAxisScale(athlete.weight)}];
 
 	const u_weightLabel = weightGroup.selectAll(".label").data(weightLabel);
 
@@ -261,15 +273,15 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 		.attr('dominant_baseline', 'middle')
 		.attr('text-anchor', 'middle')
 		.attr("fill", "black")
-		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
 		.attr('font-weight', 'bold')
-		.attr('transform', weightLabelTranslation);
+		.attr('x', d => arcCenterX - Math.cos(d.angle) * (radius + paddingFromCircle) )
+		.attr('y', d => arcCenterY - Math.sin(d.angle) * (radius + paddingFromCircle) )
+		.attr('last_angle', d => d.angle)
 
 	// animate weight label
 	u_weightLabel.transition()
 		.duration(slowAnim)
-		.attr('transform', weightLabelTranslation)
 		.tween('text', function() {				
 			const self = this;
 			const currentValue = this.textContent.slice(0, -2);
@@ -277,7 +289,22 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 			return function(t) {
 				self.textContent = i(t).toFixed(1) + 'kg';
 			};
-		});
+		})
+		.attrTween('y', function(d) {				
+			const self = this;
+			const i = d3.interpolate(this.attributes.last_angle.value, d.angle);			
+			return function(t) {
+				return arcCenterY - Math.sin(i(t)) * (radius + paddingFromCircle);
+			};
+		})
+		.attrTween('x', function(d) {				
+			const self = this;
+			const i = d3.interpolate(this.attributes.last_angle.value, d.angle);			
+			return function(t) {
+				return arcCenterX - Math.cos(i(t)) * (radius + paddingFromCircle);
+			};
+		})
+		.attr('last_angle', d => d.angle);
 
 
 	// ******************************************* AGE *******************************************
@@ -314,7 +341,6 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 			.attr('y', axisBottom + agePadding + 0.7 * ageBarHeight)
 			.text((d,i) => {return d.value})
 			.attr('text-anchor', (d,i) => {return d.aligned})
-			.attr("font-family", "sans-serif")
 			.attr("font-size", "10px")
 			.attr("fill", "black")
 	}
@@ -353,7 +379,6 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 		.attr('x', ageAxisScale(athlete.age))
 		.attr('y', axisBottom + agePadding + ageBarHeight + 14)
 		.text((d) => {return d.content + ' years'})
-		.attr("font-family", "sans-serif")
 		.attr('text-anchor', 'middle')
 		.attr("font-size", "11px")
 		.attr("fill", "black")
