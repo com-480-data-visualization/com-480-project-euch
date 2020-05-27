@@ -415,8 +415,8 @@ rect.selection {
 #circle_graph_svg {
 	float : left;
 	background-color:#ffffff;
-	width: 850px;
-	height : 780px ;
+	width: 600px;
+	height : 500px ;
 	border-top: 0px solid black;
 	border-bottom: 0px solid black;
 	border-left: 0px solid black;

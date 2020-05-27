@@ -94,6 +94,8 @@ let ageColor = 'hsl(94, 38%, 50%)';
 let packingWidth = 800
 let packingHeight = 780
 
+
+
 function brushmoved() {
     let s = d3.event.selection;
     if (s == null) {
@@ -466,6 +468,9 @@ function resetCircleGraph() {
 function circleGraph(type) {
     var svg = d3.select("#circle_graph_svg")
 
+    let svgHeight = parseInt(svg.style("height"));
+	let svgWidth = parseInt(svg.style("width"));
+
 
     let tooltip = d3.select("#circlePacking")
         .append("div")
@@ -569,7 +574,7 @@ function circleGraph(type) {
         // Size scale
         var size = d3.scalePow()
             .domain([d3.min(groupBySportValue), d3.max(groupBySportValue)])
-            .range([10,70])
+            .range([5,40])
 
 
         var node = svg.append("g")
@@ -579,8 +584,8 @@ function circleGraph(type) {
             .append("circle")
             .attr("class", "node")
             .attr("r", function(d){ return size(d.value)})
-            .attr("cx", packingWidth / 2)
-            .attr("cy", packingHeight / 2)
+            .attr("cx", svgWidth / 2)
+            .attr("cy", svgHeight / 2)
             .style("fill", function(d){ return color(d.key)})
             .style("fill-opacity", 0.8)
             .attr("stroke", "black")
@@ -595,9 +600,9 @@ function circleGraph(type) {
 
 
         var simulation = d3.forceSimulation()
-            .force("forceX", d3.forceX().strength(.1).x(packingWidth * .5))
-            .force("forceY", d3.forceY().strength(.1).y(packingHeight * .5))
-            .force("center", d3.forceCenter().x(packingWidth * .5).y(packingHeight * .5))
+            .force("forceX", d3.forceX().strength(.1).x(svgWidth * .5))
+            .force("forceY", d3.forceY().strength(.1).y(svgHeight * .5))
+            .force("center", d3.forceCenter().x(svgWidth * .5).y(svgHeight * .5))
             .force("charge", d3.forceManyBody().strength(-25));
         // Apply these forces to the nodes and update their positions.
         // Once the force algorithm is happy with positions ('alpha' value is low enough), simulations will stop.
@@ -608,11 +613,11 @@ function circleGraph(type) {
                 node
                     .attr("cx", function(d){
                         if(d.x < 0) return 0
-                        if(d.x > packingWidth) return packingWidth
+                        if(d.x > svgWidth) return svgWidth
                         return d.x
                     })
                     .attr("cy", function(d){ if(d.y < 0) return 0
-                        if(d.y > packingHeight) return packingHeight
+                        if(d.y > svgHeight) return svgHeight
                         return d.y
                     })
             });
