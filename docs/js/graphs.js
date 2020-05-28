@@ -7,7 +7,7 @@ let chartHeight = 70;
 let chartWidth = 750;
 
 // append the svg object to the body of the page
-let svgChartHeight = d3.select("#chart1")
+let svgChartHeight = d3.select("#chart2")
     .append("svg")
     .attr("width", chartWidth + margin.left + margin.right)
     .attr("height", chartHeight + margin.top + margin.bottom)
@@ -16,7 +16,7 @@ let svgChartHeight = d3.select("#chart1")
         "translate(" + margin.left + "," + margin.top + ")")
 
 
-let svgChartWeight = d3.select("#chart2")
+let svgChartWeight = d3.select("#chart1")
     .append("svg")
     .attr("width", chartWidth + margin.left + margin.right)
     .attr("height", chartHeight + margin.top + margin.bottom)
@@ -199,7 +199,7 @@ function startChart(svg_, type) {
     let data
     let data_select
 
-    var unit = "Kg";
+    var unit = "kg";
 
     var lineColor;
     switch(type) {
@@ -412,15 +412,15 @@ function startChart(svg_, type) {
 
             tooltip.transition()
                 .duration(200)
-                .style("opacity", .7);
+                .style("opacity", .9);
             let keyText = d.key
             let valueText = d3.format(".1f")(d.value) + " " + unit
 
             tooltip.html(function(){
                 return keyText + " <br> " + valueText
             })
-                .style("left", (d3.event.pageX - 15) + "px")
-                .style("top", (d3.event.pageY - 35) + "px")
+                .style("left", (d3.event.pageX - 20) + "px")
+                .style("top", (d3.event.pageY - 40) + "px")
                 .style("background", lineColor)
 
         })
@@ -504,7 +504,7 @@ function circleGraph(type) {
         switch(type) {
             case 0 :
                 //weight
-                value_text =  d3.format(".1f")(d.value) + " Kg"
+                value_text =  d3.format(".1f")(d.value) + " kg"
                 break;
             case 1:
                 //height
