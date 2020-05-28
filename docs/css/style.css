@@ -80,7 +80,8 @@ button {
 }
 
 #logo_title {
-    display: inline-block;
+	display: inline-block;
+	margin-left: 40px;
 }
 
 
@@ -93,8 +94,10 @@ button {
 
 
 h1 {
-    width: 1110px;
-    margin-top: 57px;
+    width: 1200px;
+	margin-top: 57px;
+	font-weight: 400;
+	margin-left: 0px;
 }
 
 body {

@@ -279,7 +279,13 @@ function displayResults(sport, event) {
 
 	prepareData(start_year, end_year,  sport, event, resArray)  // create data:_f data _all_years
 	let ath = averageAthlete(start_year, end_year, sport, event, resArray)
-	constructCharts()
+
+	if(currSport !== "None") {
+        constructCharts();
+    } else  {
+        resetCharts()
+        initCharts()
+    }
 
 	return ath
 }
