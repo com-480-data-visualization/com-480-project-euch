@@ -28,3 +28,6 @@ Report of milestone 2 is in [milestone2_euch.pdf](https://github.com/com-480-dat
 
 **80% of the final grade**
 
+The website can be accessed [here](https://com-480-data-visualization.github.io/com-480-project-euch/).
+A video describing our visualisation is available [here](https://www.youtube.com/watch?v=dQw4w9WgXcQ), as well as a [process book](https://github.com/com-480-data-visualization/com-480-project-euch/blob/master/Process_Book_euch.pdf). 
+
