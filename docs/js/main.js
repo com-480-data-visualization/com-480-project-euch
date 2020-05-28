@@ -152,17 +152,19 @@ whenDocumentLoaded(() => {
 
 	// update events selection list given change in sports selection list
 	sportSel.addEventListener("change", () => {
-		currSport = sportSel.value;		
+		currSport = sportSel.value;
+		updateEventOptions(eventSelD3, currSport);
+		currEvent = eventSel.value
 
 		// display results will prepare data, build the average athlete and construct the graphs,
 		// finally it will return the average athlete computed
 		SM.unselectAll();
-		let ath = displayResults(currSport, "All")
+
+		let ath = displayResults(currSport, currEvent)
 
 		const svg3d = d3.select('#display');
 	
-		drawAthleteDescription(ath, svg3d, 0, 0, lightGreen, darkGreen);
-		updateEventOptions(eventSelD3, currSport);
+		drawAthleteDescription(ath, svg3d, 0, 0, lightGreen, darkGreen);	
 	});
 
 	eventSel.addEventListener("change", () => {
