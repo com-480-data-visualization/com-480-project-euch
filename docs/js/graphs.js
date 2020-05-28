@@ -487,7 +487,7 @@ function circleGraph(type) {
             .style("stroke-width", 4)
             .style("fill-opacity", 1)
         tooltip
-            .style("opacity", .8)
+            .style("opacity", .9)
 
     }
     var mouseleave = function(d) {
