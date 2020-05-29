@@ -56,7 +56,6 @@ function createResultArray(resArray, sportsArray, eventsMap) {
 		// add each row to resArray and return the sport feature only
 		let res = new Result(+d["Age"], +d["Height"], +d["Weight"], d.Sport, d.Event_w_sport, d.Event_sex, d.Event_w_sex, +d["Year"])
 		resArray.push(res);
-		//console.log(res);
 		
 		return {
 			sport: d.Sport,
