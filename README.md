@@ -8,6 +8,19 @@
 
 [Milestone 1](#milestone-1-friday-3rd-april-5pm) • [Milestone 2](#milestone-2-friday-1st-may-5pm) • [Milestone 3](#milestone-3-thursday-28th-may-5pm)
 
+
+
+## Structure of the Repository
+
+- **Exploratory_data_analysis**: contains the python notebook used for the exploratory data analysis
+- **Milestones**: contains the reports for Milestone 1 and  2
+- **doc**: contains the code of the visualization separated in different folders
+  - **css**: folder containing CSS source files
+  - **data**: folder containing our data set in multiple CSV files
+  - **js**: folder containing Javascript source files
+  - **res**: folder containing images used in our visualization
+  - index.html: main page of our visualization
+
 ## Milestone 1 (Friday 3rd April, 5pm)
 
 **10% of the final grade**
