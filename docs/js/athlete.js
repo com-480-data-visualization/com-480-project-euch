@@ -1,4 +1,5 @@
-// represents an average athlete
+
+//The class Athlete represent an average athlete with all the characteristics that defines it
 class Athlete {
 	constructor(start_year, end_year, nb_samples, age, height, weight, sport, event) {
 	  this.start_year = start_year;
@@ -12,6 +13,9 @@ class Athlete {
 	}
 }
 let data_f, data_all_years;
+
+//Given the start/end year, the sport, event and the result Array 
+// it prepares the the data to be used in description, or graphs.  
 function prepareData(start_year, end_year, sport, event, resArray) {
 	//console.log("Start year : " + start_year)
 	//console.log("End year : " + end_year)
@@ -32,7 +36,7 @@ function prepareData(start_year, end_year, sport, event, resArray) {
 }
 
 
-// create an average athlete that represents all athletes from a given sport, event and time window
+// Create and return an average athlete that represents all athletes from a given sport, event and time window
 function averageAthlete(start_year, end_year, sport, event){
 
 
