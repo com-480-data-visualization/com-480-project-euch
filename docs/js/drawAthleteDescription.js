@@ -11,12 +11,12 @@ function drawAthleteDescription(ath, svgContainer, xOffset, yOffset){
 		athlete = ath0
 	}
 
-	svgHeight = parseInt(svg.style("height"));
-	svgWidth = parseInt(svg.style("width"));
+	svgHeight = parseInt(svgContainer.style("height"));
+	svgWidth = parseInt(svgContainer.style("width"));
 
 	// create gradient for age axis
 	if(svgContainer.select('defs').empty()){
-		var svgDefs = svg.append('defs');
+		var svgDefs = svgContainer.append('defs');
 		var gradient = svgDefs.append('linearGradient')
 			.attr('id', 'gradient');
 	
