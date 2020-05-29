@@ -6,7 +6,7 @@ height = 360 - margin.top - margin.bottom;
 let chartHeight = 70;
 let chartWidth = 750;
 
-// append the svg object to the body of the page
+// append the svg objects to the body of the page
 let svgChartHeight = d3.select("#chart2")
     .append("svg")
     .attr("width", chartWidth + margin.left + margin.right)
@@ -62,6 +62,7 @@ const brush = d3.brushX()
     .on("start brush end", brushmoved);
 
 
+//Initialize brush
 var gBrush =
     g.attr("class", "brush")
     .call(brush)
@@ -82,7 +83,7 @@ var handle = gBrush.selectAll(".handle--custom")
         .endAngle(function(d, i) { return i ? Math.PI : -Math.PI; }))
     .attr("display" , "none");
 
-
+//Set of years by default
 var avgYears = [1896,2016]
 
 gBrush.call(brush.move, avgYears.map(x));
@@ -95,7 +96,7 @@ let packingWidth = 800
 let packingHeight = 780
 
 
-
+//Method called when the brushed is moved
 function brushmoved() {
     let s = d3.event.selection;
     if (s == null) {
@@ -190,6 +191,7 @@ function initCharts() {
 
 initCharts()
 
+//Intialize the charts
 function startChart(svg_, type) {
     // construct groupBy
 
@@ -434,6 +436,7 @@ function startChart(svg_, type) {
         });
 }
 
+//Constructs the 3 charts after the data preparation
 function constructCharts() {
     resetCharts()
 
@@ -443,6 +446,8 @@ function constructCharts() {
     startChart(svgChartAge,  2);
 }
 
+
+// Reset the 3 charts
 function resetCharts()  {
     //reset chart
     svgChartWeight.selectAll("g").remove();
@@ -459,12 +464,16 @@ function resetCharts()  {
 
 }
 
+//Reset the circle packing chart
 function resetCircleGraph() {
     d3.select("#circle_graph_svg").selectAll("g").remove();
     d3.selectAll(".circleTooltip").remove();
 
 }
 
+
+// Code used for the circle packing
+//It was mainly taken from examples on the internet
 function circleGraph(type) {
     var svg = d3.select("#circle_graph_svg")
 
