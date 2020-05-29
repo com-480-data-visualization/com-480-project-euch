@@ -151,10 +151,9 @@ function displayResults(sport, event) {
 function updateViz() {
 	if(!loaded) return
 
-
 	if(currSport !== undefined) {
 		let ath = displayResults(currSport, currEvent)
-		drawAthleteDescription(ath, svg, 0, 0, lightGreen, darkGreen)
+		drawAthleteDescription(ath, d3.select('#display'), 0, 0, lightGreen, darkGreen)
 	}
 
 }
