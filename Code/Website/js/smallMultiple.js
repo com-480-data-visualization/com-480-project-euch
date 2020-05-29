@@ -1,4 +1,6 @@
+//Create the close button of the SM frame and add it to the svg
 function createButton(SM,svg,index){
+
 	//creation of the button, inspired from:
 	//https://bl.ocks.org/Lulkafe/95a63ddea80d4d02cc4ab8bedd48dfd8
 	var size_button = 25, 
@@ -45,7 +47,11 @@ function createButton(SM,svg,index){
 
 }
 
-//add some text below the drawing of the athlete 
+//Create the text of a SM frame and add it to the svg, i.e.
+//- Sport
+//- Event
+//- Year Selected
+//- weight, height and age
 function createTextAthlete(svg,athlete) {
 	let width = parseInt(svg.style("width"))
 	let height = parseInt(svg.style("height"))
@@ -131,10 +137,11 @@ function createTextAthlete(svg,athlete) {
 		.text(' kg')
 }
 
-
+// Add the correspond sex icon of the SM frame to the svg (men,women or mixed)
 function addSex(svg,sex_athlete){
 	let height = parseInt(svg.style("height"));
 	let width  = parseInt(svg.style("width"));
+	
 	//To add a sex to the class athlete
 	if(sex_athlete == "Mens"){
 		var sex = svg.append("g");
@@ -162,30 +169,29 @@ function addSex(svg,sex_athlete){
 		    .attr('height', 20)
 		    .attr('x', width-25)
 		    .attr('y', height - 40)
-		    //6,parseInt(svg.style("height")) - 4
 		sex_f.append('image')
 		    .attr('xlink:href', '../res/female-svgrepo-com.svg')
 		    .attr('width', 25)
 		    .attr('height', 25)
 		    .attr('x', width-26)
 		    .attr('y', height - 30);
-		    //5,parseInt(svg.style("height")) - 30
-
 	}
 }
 
 
-//Select an athlete and display it
+//Select an athlete and display it above
 function selectAthlete(SM,athlete,rect_svg,index){
 	description_svg = d3.select("#display");
 	const sportSel = document.getElementById('sport_selector');
 	const eventSel = document.getElementById('event_selector');
+	//if that case is not already selected
 	if(rect_svg.attr("fill-opacity") == 0){
 		SM.unselectAll();
 		//Change the brush position
 		let avgYears = [athlete.start_year,athlete.end_year]; 
 		gBrush.call(brush.move, avgYears.map(x));
 
+		//change the selectors
 		sportSel.value = athlete.sport;
 		sportSel.dispatchEvent(new Event('change'));
 		eventSel.value = athlete.event;
@@ -235,7 +241,7 @@ function createSMFrame(SM,athlete,svg,index,isSelected){
 	createButton(SM,svg,index);
 }
 
-
+// Create the frame with the plus button
 function createAddFrame(SM,svg){
 	var plus = svg.append("g");
 	let width = parseInt(svg.style("width"));
@@ -318,14 +324,17 @@ class Small_multiples {
 		this.refresh_SM();
 	}
 
+	//return true if the small multiple is full
 	isFull(){
 		return this.cursor == this.number_SM;
 	}
 
+	//Set the selected element value
 	setSelectedElement(index){
 		this.selected_element = index;
 	}
 
+	//Unselect selected case
 	unselectAll(){
 		var i;
 		for (i=0;i<this.cursor;i++){
@@ -334,6 +343,7 @@ class Small_multiples {
 		this.selected_element = -1;
 	}
 
+	//Sort the SM by weight,height or age in an ascending or descending manner
 	sort(sort_by, ascending) {
 
 		if(sort_by == ""){
@@ -371,7 +381,9 @@ class Small_multiples {
 				}
 		}
 
+
 		if (!(this.sorted_by == "No sorting")){
+			//Sorting using indexes to keep the selected element in memory
 			let indices = this.athletes.map((val, ind) => {return {"val":val,"ind":ind};});
            	indices.sort((a, b) => {return sortFunction(this.sorted_by,this.ascending)(a["val"],b["val"]);});
            	var i;
@@ -389,8 +401,8 @@ class Small_multiples {
 		
 	}
 
+	//refresh the SM by displaying all elements from the current athletes array 
 	refresh_SM(){
-		//display all element from the athletes array
 		var i;
 		for (i=0;i<this.number_SM;i++){
 			let svg = d3.select("#elem_"+i);
