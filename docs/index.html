@@ -4,21 +4,21 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Olympic Visualization</title>
+	<title>Olympic Athletes and their Morphologies</title>
 	<meta name="description" content="Data-Viz">
 	<meta name="author" content="euch">
 
+	<!-- Importing the css stylesheets -->
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/skeleton.css">
 	<link rel="stylesheet" href="css/style.css">
-
+	
 </head>
 
 <body>
 
-	<!--Header containing banner and navigation-->
+	<!-- Header-->
 	<header>
-		<!-- Banner-->
 		<div id='header'>
 			<div id='logo_title'>
 				<img src="res/olympic_rings.jpg" alt="olympic rings" id="logo"/>
@@ -27,11 +27,18 @@
 		</div>
 	</header>
 
+	<!-- Content-->	
 	<main>
+
+		<!-- Upper visualisation -->	
 		<div id="bubble_chart">
 			<div id="circlePacking">
+
+				<!-- Bubble chart -->					
 				<svg id="circle_graph_svg">
 				</svg>
+
+				<!-- Intro to topic -->	
 				<div id = 'intro'>
 					<h6>
 						Olympics Games are composed of various sport, from marathon to gymnastics and all these sports require different physiques. 
@@ -41,13 +48,16 @@
 					</h6>
 					<h6>You can also move to bubbles to rearrange them as you like.</h6>
 				</div>
+
+				<!-- Bubble chart selector -->	
 				<div id="graph_config">
 					<input type="radio" name="classify" value="height" checked> Height<br>
 					<input type="radio" name="classify" value="weight"> Weight<br>
 					<input type="radio" name="classify" value="age"> Age<br>
 				</div>
 			</div>
-			<!-- <div id='down_arrow'></div> -->
+
+			<!-- Intro to bottom visualisation -->	
 			<div id= 'intro2'>
 				<h6> Let's go a little deeper... Each sport is declined in several disciplines. </h6>
 				<h6> You can now select the <b>sport</b>, the <b>discipline</b> and the <b>time window</b> 
@@ -58,16 +68,18 @@
 				<h6>You can also <b>save</b> a figure by adding it to the grid, 
 					so that you can compare different disciplines side-by-side.</h6>
 			</div>
-
 		</div>
+
+		<!-- Bottom visualisation -->	
 		<div id="visualization1">
-			<!-- div that contains element that selects and display -->
+
+			<!-- Selection part -->
 			<div id ="selection" >
-				<!-- div that contains elements to select a sport/discipline-->
+
+				<!-- Selection buttons -->
 				<div id ="buttons">
 					<select class='selection_button' id="sport_selector">
 						<option value="none">None</option>
-
 					</select>
 					<select class='selection_button' id="event_selector">
 						<option value="all">All</option>
@@ -79,7 +91,7 @@
 					  </form>
 				</div>
 
-				<!-- div that contains chart about the selection -->
+				<!-- Charts of the selection -->
 				<div id="chart_selection">
 					<div id="chart1">
 					</div>
@@ -91,7 +103,7 @@
 					</div>
 				</div>
 
-				<!-- div that contains some data about the selection-->
+				<!-- Athlete drawing of the selection -->
 				<div id="data_selection">
 					<svg id="display">
 
@@ -100,11 +112,10 @@
 
 			</div>
 
-			<!-- div that contains the small multiple element 1 to 8 in the following way-->
-			<!-- elem_1, elem_2, elem_3, elem_4 -->
-			<!-- elem_5, elem_6, elem_7, elem_8 -->
+			<!-- Small multiples part -->
 			<div id=small_multiple>
 
+				<!-- Buttons -->
 				<div id=filter>
 					<select id="sort_selector">
 						<option value="none">No sorting</option>
@@ -112,63 +123,49 @@
 						<option value="height">Sort by height</option>
 						<option value="age">Sort by age</option>
 					</select>
-
-					<!-- <select id="asc_selector">
-						<option value="ascending">Ascending</option>
-						<option value="descending">Descending</option>
-					</select> -->
-
 					<button id="asc" onclick="change_asc_desc_selected(true)"></button>
-
 					<button id="des"  onclick="change_asc_desc_selected(false)"></button>
-
 					<button id="remove_all">Clear</button>
 				</div>
 
+				<!-- Grid displaying the selected athletes -->
 				<div id=grid>
-					<!-- div for elem_0 of the Small Multiple-->
 					<div class="elements_SM" id = 'elem_0_div'> 
 						<svg id="elem_0">
 
 						</svg>
 					</div>
-					<!-- div for elem_1 of the Small Multiple-->
 					<div class="elements_SM" id = 'elem_1_div'>
 						<svg id="elem_1">
 
 						</svg>
 					</div>
-					<!-- div for elem_2 of the Small Multiple-->
 					<div class="elements_SM" id = 'elem_2_div'>
 						<svg id="elem_2">
 
 						</svg>
 					</div>			
-					<!-- div for elem_2 of the Small Multiple-->
 					<div class="elements_SM" id = 'elem_3_div'>
 						<svg id="elem_3">
 
 						</svg>
 					</div>		
-					<!-- div for elem_2 of the Small Multiple-->
 					<div class="elements_SM" id = 'elem_4_div'>
 						<svg id="elem_4">
-
 						</svg>
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-
-
 	</main>
 
+	<!-- Footer -->
 	<footer>
 		  <h6>CS-480 Data Visualization EPFL 2020. Group euch.</h6>
 		  <h6>Benno Schneeberger - Rodrigo Granja - Sylvain Lugeon</h6>
 	</footer>
+
+	<!-- Running scripts -->
 	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<script src ="https://cdnjs.cloudflare.com/ajax/libs/d3-transform/1.0.4/d3-transform.min.js"></script>
 	<script src="js/drawAthlete.js"></script>
@@ -178,7 +175,6 @@
 	<script src="js/smallMultiple.js"></script>
 	<script src="js/graphs.js"></script>
 	<script src="js/autocomplete.js"></script>
-
 
 </body>
 </html>

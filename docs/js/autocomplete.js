@@ -1,3 +1,8 @@
+/**
+ * Add the values of an array to the possible option of the search bar
+ * @param  {} inp input form
+ * @param  {} arr possible options
+ */
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/

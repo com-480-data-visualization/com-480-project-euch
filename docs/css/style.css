@@ -60,14 +60,7 @@ button {
 	vertical-align: top;
 }
 
-#remove_all:hover {
-	color: #ffffff !important;
-	background: #686868;
-	border-color: #b6b6b6 !important;
-	transition: all 0.4s ease 0s;
-}
-
-/* ************************************** Header, footer *************************** */
+/* ************************************** Header, footer ************************************** */
 
 
 #header {
@@ -116,7 +109,7 @@ footer {
 	opacity: 0.96;
 }
 
-/* ************************************** Bubble chart *************************** */
+/* ************************************** Bubble chart ************************************** */
 
 
 #bubble_chart {
@@ -252,7 +245,7 @@ h6 {
 }
 
 
-/* ************************************** Visulaisation div ************************************** */
+/* ************************************** Main visualisation ************************************** */
 
 #visualization1 {
 	width: 1200px;
@@ -341,7 +334,7 @@ h6 {
 	font-style: italic;
 }
 
-/* ******************* Athlete description ******************* */
+/* ******************* Athlete drawing ******************* */
 
 
 #data_selection {
@@ -364,7 +357,7 @@ h6 {
 	font-size: 12px;
 }
 
-/* ******************* Charts description ******************* */
+/* ******************* Charts ******************* */
 
 #chart_selection {
 	display: inline-block;
@@ -416,7 +409,7 @@ rect.selection {
 
 /* ************************************** Small multiple ************************************** */
 
-#small_multiple{
+#small_multiple {
 	margin-left: 1%;	
 	width: 98%;
 	height: 40%;
@@ -467,6 +460,13 @@ rect.selection {
 	color: #ffffff !important;
 	background: rgb(183, 237, 255);
 	border-color: #636363 !important;
+	transition: all 0.4s ease 0s;
+}
+
+#remove_all:hover {
+	color: #ffffff !important;
+	background: #686868;
+	border-color: #b6b6b6 !important;
 	transition: all 0.4s ease 0s;
 }
 
