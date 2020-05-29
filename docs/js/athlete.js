@@ -17,8 +17,6 @@ let data_f, data_all_years;
 //Given the start/end year, the sport, event and the result Array 
 // it prepares the the data to be used in description, or graphs.  
 function prepareData(start_year, end_year, sport, event, resArray) {
-	//console.log("Start year : " + start_year)
-	//console.log("End year : " + end_year)
 
 	data_all_years = resArray.filter(function(d){
 		const sameEvent = event === 'All' ? true : d.event === event;

@@ -393,9 +393,7 @@ class Small_multiples {
 			let indices = this.athletes.map((val, ind) => {return {"val":val,"ind":ind};});
            	indices.sort((a, b) => {return sortFunction(this.sorted_by,this.ascending)(a["val"],b["val"]);});
            	var i;
-           	console.log(indices)
            	for(i=0; i<this.cursor; i++){
-           		console.log(indices[i]);
            		if(indices[i]["ind"] == this.selected_element){
            			this.selected_element = i;
            			break;

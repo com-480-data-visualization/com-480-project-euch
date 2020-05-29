@@ -252,6 +252,7 @@ whenDocumentLoaded(() => {
 		if(sort_selector.value == 'none'){
 			d3.select('#asc').classed('selected', false)
 			d3.select('#des').classed('selected', false)
+			SM.ascending = true
 		}
 		else if (!d3.select('#des').classed('selected') ){
 			d3.select('#asc').classed('selected', true)
